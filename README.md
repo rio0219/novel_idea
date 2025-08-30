@@ -112,3 +112,6 @@
 
 ## 画面遷移図
 Figma：https://www.figma.com/design/uRZgSEgftHHcxtT1WUlQim/tsumugiba?node-id=0-1&t=xaRG7P9cqqv2VQNh-1
+
+## ER図
+[![Image from Gyazo](https://i.gyazo.com/1620e6bfd9ea9531480ad467bf8eb81a.png)](https://gyazo.com/1620e6bfd9ea9531480ad467bf8eb81a)
