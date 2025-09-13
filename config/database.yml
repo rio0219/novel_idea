@@ -1,0 +1,24 @@
+# config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db                  # Docker Compose のサービス名
+  username: postgres        # docker-compose.yml の POSTGRES_USER
+  password: password        # docker-compose.yml の POSTGRES_PASSWORD
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: novel_idea_development
+
+test:
+  <<: *default
+  database: novel_idea_test
+
+production:
+  <<: *default
+  database: novel_idea_production
+  username: <%= ENV['DATABASE_USERNAME'] || 'postgres' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || 'password' %>
+
