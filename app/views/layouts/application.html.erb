@@ -23,11 +23,27 @@
         <!-- ナビゲーションリンク -->
         <ul class="flex space-x-4">
           <li><%= link_to "TOP", root_path, class: "hover:text-blue-500" %></li>
-          <li><%= link_to "ログイン", "#", class: "hover:text-blue-500" %></li>
-          <li><%= link_to "新規登録", "#", class: "hover:text-blue-500" %></li>
+
+          <% if user_signed_in? %>
+            <li class="text-gray-600">ログイン中: <%= current_user.email %></li>
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500" %>
+          <% else %>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500" %></li>
+          <% end %>
         </ul>
       </nav>
     </header>
+
+    <!-- フラッシュメッセージ -->
+    <div class="container mx-auto mt-4">
+      <% if notice %>
+        <p class="bg-green-100 text-green-800 p-2 rounded mb-2"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="bg-red-100 text-red-800 p-2 rounded mb-2"><%= alert %></p>
+      <% end %>
+    </div>
 
     <!-- メインコンテンツ -->
     <main class="container mx-auto p-4">
