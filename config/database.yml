@@ -18,7 +18,5 @@ test:
 
 production:
   <<: *default
-  database: novel_idea_production
-  username: <%= ENV['DATABASE_USERNAME'] || 'postgres' %>
-  password: <%= ENV['DATABASE_PASSWORD'] || 'password' %>
+  url: <%= ENV['DATABASE_URL'] %>
 
