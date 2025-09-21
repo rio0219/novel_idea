@@ -7,3 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+genres = %w[ファンタジー ミステリー 恋愛 SF ホラー エッセイ 児童書・童話 BL その他]
+genres.each do |name|
+  Genre.find_or_create_by!(name: name)
+end
