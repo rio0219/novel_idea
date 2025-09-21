@@ -1,0 +1,25 @@
+<h1>マイアイデア一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>ジャンル</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @works.each do |work| %>
+      <tr>
+        <td><%= work.title %></td>
+        <td><%= work.genre.name %></td>
+        <td>
+          <%= link_to "編集", edit_work_path(work) %> |
+          <%= link_to "削除", work, method: :delete, data: { confirm: "本当に削除しますか？" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "新規作成", new_work_path, class: "btn btn-primary" %>

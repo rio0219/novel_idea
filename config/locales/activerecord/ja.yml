@@ -2,6 +2,8 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      work: 作品
+      genre: ジャンル
     attributes:
       user:
         email: メールアドレス
@@ -9,3 +11,17 @@ ja:
         first_name: 名
         password: パスワード
         password_confirmation: パスワード確認
+      work:
+        title: タイトル
+        theme: テーマ/メッセージ
+        synopsis: あらすじ
+        genre: ジャンル
+        
+
+  works:
+    create:
+      success: "作品を作成しました"
+    update:
+      success: "作品を更新しました"
+    destroy:
+      success: "作品を削除しました"

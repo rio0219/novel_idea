@@ -1,0 +1,52 @@
+class WorksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_work, only: [ :edit, :update ]
+
+  def index
+    @works = current_user.works
+  end
+
+  def new
+    @work = current_user.works.build
+    @genres = Genre.all
+  end
+
+  def create
+    @work = current_user.works.build(work_params)
+    if @work.save
+      redirect_to root_path, notice: t("works.create.success")
+    else
+      @genres = Genre.all
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @genres = Genre.all
+  end
+
+  def update
+    if @work.update(work_params)
+      redirect_to root_path, notice: t("works.update.success")
+    else
+      @genres = Genre.all
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @work = current_user.works.find(params[:id])
+    @work.destroy
+    redirect_to root_path, notice: t("works.destroy.success")
+  end
+
+  private
+
+  def set_work
+    @work = current_user.works.find(params[:id])
+  end
+
+  def work_params
+    params.require(:work).permit(:title, :theme, :synopsis, :genre_id)
+  end
+end
