@@ -14,12 +14,12 @@
         <td><%= work.title %></td>
         <td><%= work.genre.name %></td>
         <td>
-          <%= link_to "編集", edit_work_path(work) %> |
-          <%= link_to "削除", work, method: :delete, data: { confirm: "本当に削除しますか？" } %>
+          <%= link_to t("buttons.edit"), edit_work_path(work) %> |
+          <%= link_to t("buttons.destroy"), work, method: :delete, data: { confirm: "本当に削除しますか？" } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to "新規作成", new_work_path, class: "btn btn-primary" %>
+<%= link_to t("buttons.new"), new_work_path, class: "btn btn-primary" %>
