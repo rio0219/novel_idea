@@ -1,0 +1,51 @@
+<!-- app/views/characters/_form.html.erb -->
+<%= form_with model: [@work, @character], local: true do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :age %>
+    <%= f.number_field :age %>
+  </div>
+
+  <div>
+    <%= f.label :gender %>
+    <%= f.text_field :gender %>
+  </div>
+
+  <div>
+    <%= f.label :hair_color %>
+    <%= f.text_field :hair_color %>
+  </div>
+
+  <div>
+    <%= f.label :eye_color %>
+    <%= f.text_field :eye_color %>
+  </div>
+
+  <div>
+    <%= f.label :physique %>
+    <%= f.text_field :physique %>
+  </div>
+
+  <div>
+    <%= f.label :other %>
+    <%= f.text_area :other %>
+  </div>
+
+  <div>
+    <%= f.label :personality %>
+    <%= f.text_area :personality %>
+  </div>
+
+  <div>
+    <%= f.label :background %>
+    <%= f.text_area :background %>
+  </div>
+
+  <div class="mt-4">
+    <%= f.submit class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+  </div>
+<% end %>

@@ -1,27 +1,27 @@
-<h2>アイデア編集</h2>
+<h2>基本設定</h2>
 
 <%= form_with model: @work, local: true do |f| %>
   <div>
-    <%= f.label :title, "タイトル" %><br>
+    <%= f.label :title %><br>
     <%= f.text_field :title %>
   </div>
 
   <div>
-    <%= f.label :genre_id, "ジャンル" %><br>
-    <%= f.collection_select :genre_id, @genres, :id, :name %>
+    <%= f.label :genre %><br>
+    <%= f.collection_select :genre, @genres, :id, :name, prompt: "ジャンルを選択してください" %>
   </div>
 
   <div>
-    <%= f.label :theme, "テーマ" %><br>
+    <%= f.label :theme %><br>
     <%= f.text_field :theme %>
   </div>
 
   <div>
-    <%= f.label :synopsis, "あらすじ" %><br>
+    <%= f.label :synopsis %><br>
     <%= f.text_area :synopsis %>
   </div>
 
   <div>
-    <%= f.submit "更新する", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= f.submit nil, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
   </div>
 <% end %>

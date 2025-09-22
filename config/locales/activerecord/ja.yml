@@ -4,6 +4,7 @@ ja:
       user: ユーザー
       work: 作品
       genre: ジャンル
+      character: キャラクター
     attributes:
       user:
         email: メールアドレス
@@ -16,6 +17,16 @@ ja:
         theme: テーマ/メッセージ
         synopsis: あらすじ
         genre: ジャンル
+      character:
+        name: 名前
+        age: 年齢
+        gender: 性別
+        hair_color: 髪の色
+        eye_color: 目の色
+        physique: 体格
+        other: その他
+        personality: 性格
+        background: キャラクター背景
         
 
   works:
@@ -25,3 +36,14 @@ ja:
       success: "作品を更新しました"
     destroy:
       success: "作品を削除しました"
+  helpers:
+    submit:
+      create: "作成"
+      update: "更新"
+      submit: 保存
+  buttons:
+    new: "新規作成"
+    edit: "編集"
+    update: "更新"
+    destroy: "削除"
+    back: "戻る"

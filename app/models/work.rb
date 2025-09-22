@@ -1,6 +1,7 @@
 class Work < ApplicationRecord
   belongs_to :user
   belongs_to :genre
+  has_many :characters, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 100 }
   validates :theme, length: { maximum: 50 }, allow_blank: true
