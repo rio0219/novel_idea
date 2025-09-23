@@ -5,6 +5,7 @@ ja:
       work: 作品
       genre: ジャンル
       character: キャラクター
+      worldview: 世界観
     attributes:
       user:
         email: メールアドレス
@@ -27,6 +28,15 @@ ja:
         other: その他
         personality: 性格
         background: キャラクター背景
+      worldview:
+        country: 国
+        culture: 文化
+        technology: 技術レベル
+        faction: 勢力
+  notices:
+    created: "%{resource}を作成しました"
+    updated: "%{resource}を更新しました"
+    destroyed: "%{resource}を削除しました"
         
 
   works:
@@ -36,6 +46,11 @@ ja:
       success: "作品を更新しました"
     destroy:
       success: "作品を削除しました"
+  worldviews:
+      new:
+        title: 世界観新規
+      edit:
+        title: 世界観編集
   helpers:
     submit:
       create: "作成"
