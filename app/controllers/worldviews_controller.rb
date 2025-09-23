@@ -1,6 +1,6 @@
 class WorldviewsController < ApplicationController
   before_action :set_work
-  before_action :set_worldview, only: [:edit, :update, :destroy]
+  before_action :set_worldview, only: [ :edit, :update, :destroy ]
 
   def new
     @worldview = @work.build_worldview
@@ -21,7 +21,7 @@ class WorldviewsController < ApplicationController
 
   def edit
   end
-  
+
 
   def update
     if @worldview.update(worldview_params)
