@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :works do
     resources :characters, except: :show
     resource :worldview, only: [ :new, :create, :edit, :update, :destroy ]
+    resources :plots
   end
 
   if Rails.env.development?

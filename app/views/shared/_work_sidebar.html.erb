@@ -1,0 +1,51 @@
+<div class="w-64 bg-gray-100 min-h-screen p-4">
+  <h3 class="text-lg font-semibold mb-4"><%= t("activerecord.models.work") %></h3>
+
+  <ul class="space-y-2">
+    <!-- 基本設定 -->
+    <li>
+      <%= link_to t("activerecord.models.work"),
+                  @work&.persisted? ? edit_work_path(@work) : new_work_path,
+                  class: "block px-3 py-2 rounded hover:bg-gray-200" %>
+    </li>
+
+    <!-- キャラクター -->
+    <li>
+      <% if @work&.persisted? %>
+        <%= link_to t("activerecord.models.character"),
+                    work_characters_path(@work),
+                    class: "block px-3 py-2 rounded hover:bg-gray-200" %>
+      <% else %>
+        <span class="block px-3 py-2 text-gray-400 cursor-not-allowed"><%= t("activerecord.models.character") %></span>
+      <% end %>
+    </li>
+
+    <!-- 世界観 -->
+    <li>
+      <% if @work&.persisted? %>
+        <% if @work.worldview.present? %>
+          <%= link_to t("activerecord.models.worldview"),
+                      edit_work_worldview_path(@work),
+                      class: "block px-3 py-2 rounded hover:bg-gray-200" %>
+        <% else %>
+          <%= link_to t("activerecord.models.worldview"),
+                      new_work_worldview_path(@work),
+                      class: "block px-3 py-2 rounded hover:bg-gray-200" %>
+        <% end %>
+      <% else %>
+        <span class="block px-3 py-2 text-gray-400 cursor-not-allowed"><%= t("activerecord.models.worldview") %></span>
+      <% end %>
+    </li>
+
+    <!-- プロット -->
+    <li>
+      <% if @work&.persisted? %>
+        <%= link_to t("activerecord.models.plot"),
+                    work_plots_path(@work),
+                    class: "block px-3 py-2 rounded hover:bg-gray-200" %>
+      <% else %>
+        <span class="block px-3 py-2 text-gray-400 cursor-not-allowed"><%= t("activerecord.models.plot") %></span>
+      <% end %>
+    </li>
+  </ul>
+</div>

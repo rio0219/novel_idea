@@ -2,6 +2,8 @@ class WorksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_work, only: [ :edit, :update ]
 
+  layout :select_layout
+
   def index
     @works = current_user.works
   end
@@ -14,7 +16,7 @@ class WorksController < ApplicationController
   def create
     @work = current_user.works.build(work_params)
     if @work.save
-      redirect_to root_path, notice: t("works.create.success")
+      redirect_to edit_work_path(@work), notice: t("works.create.success")
     else
       @genres = Genre.all
       render :new, status: :unprocessable_entity
@@ -48,5 +50,13 @@ class WorksController < ApplicationController
 
   def work_params
     params.require(:work).permit(:title, :theme, :synopsis, :genre_id)
+  end
+
+  def select_layout
+    if action_name == "index"
+      "application"
+    else
+      "work"
+    end
   end
 end

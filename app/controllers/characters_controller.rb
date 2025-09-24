@@ -2,6 +2,8 @@ class CharactersController < ApplicationController
   before_action :set_work
   before_action :set_character, only: [ :edit, :update, :destroy ]
 
+  layout "work"
+
   def index
     @work = Work.find(params[:work_id])
     @characters = @work.characters
