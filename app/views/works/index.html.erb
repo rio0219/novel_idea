@@ -1,25 +1,22 @@
-<h1>マイアイデア一覧</h1>
+<h2>マイアイデア一覧</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>タイトル</th>
-      <th>ジャンル</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @works.each do |work| %>
-      <tr>
-        <td><%= work.title %></td>
-        <td><%= work.genre.name %></td>
-        <td>
-          <%= link_to t("buttons.edit"), edit_work_path(work) %> |
-          <%= link_to t("buttons.destroy"), work, method: :delete, data: { confirm: "本当に削除しますか？" } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="actions mb-4">
+  <%= link_to "新規作成", new_work_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+</div>
 
-<%= link_to t("buttons.new"), new_work_path, class: "btn btn-primary" %>
+<% if @works.any? %>
+  <% @works.each do |work| %>
+    <div class="flex justify-between items-center border-b py-2">
+      <!-- 左側：タイトル -->
+      <span><%= work.title %></span>
+
+      <!-- 右側：ボタン -->
+      <div class="flex space-x-2">          
+        <%= link_to "編集", edit_work_path(work), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mr-2" %>
+        <%= link_to "削除", work_path(work), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>まだアイデアがありません</p>
+<% end %>

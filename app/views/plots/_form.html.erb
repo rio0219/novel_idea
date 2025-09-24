@@ -1,0 +1,20 @@
+<%= form_with(model: [@work, @plot]) do |f| %>
+  <div>
+    <%= f.label :chapter_title, t("activerecord.attributes.plot.chapter_title") %><br>
+    <%= f.text_field :chapter_title %>
+  </div>
+  <div>
+    <%= f.label :purpose, t("activerecord.attributes.plot.purpose") %><br>
+    <%= f.text_area :purpose %>
+  </div>
+  <div>
+    <%= f.label :event, t("activerecord.attributes.plot.event") %><br>
+    <%= f.text_area :event %>
+  </div>
+  <div>
+    <%= f.submit(
+        @plot.new_record? ? t("buttons.new") : t("buttons.update"),
+        class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      ) %>
+  </div>
+<% end %>

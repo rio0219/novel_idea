@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "MyApp" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- Tailwind CSS を読み込み -->
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-100 text-gray-800">
+    <!-- ヘッダー -->
+    <header class="bg-white shadow p-4">
+      <nav class="container mx-auto flex justify-between items-center">
+        <!-- ロゴ / サイト名 -->
+        <h1 class="text-xl font-bold">
+          <%= link_to "MyApp", root_path, class: "hover:text-blue-500" %>
+        </h1>
+
+        <!-- ナビゲーションリンク -->
+        <ul class="flex space-x-4">
+          <li><%= link_to "TOP", root_path, class: "hover:text-blue-500" %></li>
+
+          <% if user_signed_in? %>
+            <li class="text-gray-600">ログイン中: <%= current_user.email %></li>
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500" %>
+          <% else %>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500" %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- メイン部分を左右に分割 -->
+    <div class="flex">
+      <!-- 左サイドバー -->
+      <%= render "shared/work_sidebar", work: @work %>
+  
+      <!-- メインコンテンツ -->
+      <main class="flex-1 container mx-auto p-4">
+        <!-- フラッシュメッセージ -->
+        <% if notice %>
+          <p class="bg-green-100 text-green-800 p-2 rounded mb-2"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="bg-red-100 text-red-800 p-2 rounded mb-2"><%= alert %></p>
+        <% end %>
+  
+        <%= yield %>
+      </main>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-white shadow p-4 mt-10 text-center text-gray-500">
+      &copy; 2025 MyApp
+    </footer>
+  </body>
+</html>
+

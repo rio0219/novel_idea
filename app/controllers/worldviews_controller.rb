@@ -2,6 +2,8 @@ class WorldviewsController < ApplicationController
   before_action :set_work
   before_action :set_worldview, only: [ :edit, :update, :destroy ]
 
+  layout "work"
+
   def new
     @worldview = @work.build_worldview
   end

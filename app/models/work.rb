@@ -2,6 +2,7 @@ class Work < ApplicationRecord
   belongs_to :user
   belongs_to :genre
   has_many :characters, dependent: :destroy
+  has_many :plots, dependent: :destroy
   has_one :worldview, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 100 }

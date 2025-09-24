@@ -6,6 +6,7 @@ ja:
       genre: ジャンル
       character: キャラクター
       worldview: 世界観
+      plot: プロット
     attributes:
       user:
         email: メールアドレス
@@ -33,6 +34,10 @@ ja:
         culture: 文化
         technology: 技術レベル
         faction: 勢力
+      plot:
+        chapter_title: 章タイトル
+        purpose: 展開・目的
+        event: イベント
   notices:
     created: "%{resource}を作成しました"
     updated: "%{resource}を更新しました"
@@ -51,6 +56,13 @@ ja:
         title: 世界観新規
       edit:
         title: 世界観編集
+  plots:
+      index:
+        title: プロット一覧
+      new:
+        title: プロットを登録する
+      edit:
+        title: プロットを編集する
   helpers:
     submit:
       create: "作成"
