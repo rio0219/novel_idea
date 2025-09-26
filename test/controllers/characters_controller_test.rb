@@ -2,8 +2,10 @@ require "test_helper"
 
 class CharactersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @work = works(:one)
-    @character = characters(:one)
+    user = User.create!(email: "test@example.com", password: "password")
+    genre = Genre.create!(name: "test genre")
+    @work = Work.create!(title: "test work", user: user, genre: genre)
+    @character = @work.characters.create!(name: "test character")
   end
 
   test "should get index" do
