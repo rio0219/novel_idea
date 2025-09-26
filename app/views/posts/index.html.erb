@@ -1,0 +1,20 @@
+<h1>みんなのアイデア</h1>
+
+<%= link_to "新規投稿", new_post_path, class: "btn btn-primary" if user_signed_in? %>
+
+<ul>
+  <% @posts.each do |post| %>
+    <li>
+      <strong><%= post.user.email %></strong>
+      (<%= post.genre.name %>) :
+      <%= post.content %>
+
+      <% if user_signed_in? && post.user == current_user %>
+        <%= link_to "編集", edit_post_path(post), class: "btn btn-sm btn-warning" %>
+        <%= link_to "削除", post_path(post),
+              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+              class: "btn btn-sm btn-danger" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
