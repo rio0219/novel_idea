@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  content: MyText
-  response: MyText
-  user: one
+  content: "相談その1"
+  response: "返答その1"
+  user: user_one
 
 two:
-  content: MyText
-  response: MyText
-  user: two
+  content: "相談その2"
+  response: "返答その2"
+  user: user_two

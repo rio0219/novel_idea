@@ -1,5 +1,5 @@
 require_relative "boot"
-require 'dotenv'
+require "dotenv"
 Dotenv.load
 require "rails/all"
 require "devise"

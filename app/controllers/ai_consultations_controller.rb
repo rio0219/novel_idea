@@ -10,7 +10,7 @@ class AiConsultationsController < ApplicationController
 
   def create
     @consultation = current_user.ai_consultations.build(ai_consultation_params)
-  
+
     if @consultation.save
       response_text = call_ai_api(@consultation.content)
       @consultation.update(response: response_text)
@@ -18,8 +18,8 @@ class AiConsultationsController < ApplicationController
     else
       render :index
     end
-  end  
- 
+  end
+
 
   private
 
