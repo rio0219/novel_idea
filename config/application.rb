@@ -1,6 +1,11 @@
-require_relative "boot"
-require "dotenv"
-Dotenv.load
+rrequire_relative "boot"
+
+# development と test でのみ dotenv を読み込む
+if Rails.env.development? || Rails.env.test?
+  require "dotenv"
+  Dotenv.load
+end
+
 require "rails/all"
 require "devise"
 # Require the gems listed in Gemfile, including any gems
