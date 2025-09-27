@@ -1,13 +1,14 @@
 require_relative "boot"
 
+require "rails/all"  # Rails を先に読み込む
+require "devise"
+
 # development と test でのみ dotenv を読み込む
 if Rails.env.development? || Rails.env.test?
   require "dotenv"
   Dotenv.load
 end
 
-require "rails/all"
-require "devise"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -17,17 +18,12 @@ module App
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    # lib 下の不要なサブディレクトリを無視
     config.autoload_lib(ignore: %w[assets tasks])
+
+    # i18n 日本語化
     config.i18n.default_locale = :ja
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+
+    # ここにその他の設定を追加可能
   end
 end
