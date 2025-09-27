@@ -63,3 +63,5 @@ gem "devise-i18n", "~> 1.15"
 gem "rails-i18n"
 
 gem "letter_opener_web", "~> 3.0", group: :development
+gem "dotenv-rails", groups: [ :development, :test ]
+gem "ruby-openai"

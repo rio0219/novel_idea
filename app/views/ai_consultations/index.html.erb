@@ -1,0 +1,26 @@
+<h1>AI相談</h1>
+
+<%= form_with(model: @ai_consultation, url: ai_consultations_path, local: true) do |f| %>
+  <div>
+    <%= f.label :content, "相談内容" %><br>
+    <%= f.text_area :content, rows: 4 %>
+  </div>
+  <div>
+    <%= f.submit "相談する", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<% if session[:return_to].present? %>
+  <%= link_to "戻る", session[:return_to], class: "btn btn-secondary" %>
+<% end %>
+
+<hr>
+
+<h2>過去の相談</h2>
+<% @consultations.each do |consultation| %>
+  <div class="mb-4 p-2 border rounded">
+    <p><strong>あなた:</strong> <%= consultation.content %></p>
+    <p><strong>AI:</strong> <%= consultation.response.presence || "回答待ち..." %></p>
+  </div>
+<% end %>
+

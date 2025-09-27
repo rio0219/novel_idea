@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "ai_consultations/index"
+  get "ai_consultations/create"
   devise_for :users
   root "home#index"
 
@@ -6,6 +8,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+
+  resources :ai_consultations, only: [ :index, :create ]
 
   resources :works do
     resources :characters, except: :show
