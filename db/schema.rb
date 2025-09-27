@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_26_122024) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_26_144549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ai_consultations", force: :cascade do |t|
+    t.text "content"
+    t.text "response"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_ai_consultations_on_user_id"
+  end
 
   create_table "characters", force: :cascade do |t|
     t.bigint "work_id", null: false
@@ -101,6 +110,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_122024) do
     t.index ["work_id"], name: "index_worldviews_on_work_id"
   end
 
+  add_foreign_key "ai_consultations", "users"
   add_foreign_key "characters", "works"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
