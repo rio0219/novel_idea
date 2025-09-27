@@ -10,8 +10,8 @@
   </div>
 <% end %>
 
-<% if @return_to.present? %>
-  <%= link_to "戻る", @return_to, class: "btn btn-secondary" %>
+<% if session[:return_to].present? %>
+  <%= link_to "戻る", session[:return_to], class: "btn btn-secondary" %>
 <% end %>
 
 <hr>

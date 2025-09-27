@@ -5,7 +5,10 @@ class AiConsultationsController < ApplicationController
   def index
     @consultations = current_user.ai_consultations.order(created_at: :desc)
     @consultation = AiConsultation.new
-    @return_to = params[:return_to]
+    if params[:return_to].present?
+      session[:return_to] = params[:return_to]
+    end
+    @return_to = session[:return_to]
   end
 
   def create
