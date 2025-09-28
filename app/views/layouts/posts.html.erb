@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TSUMUGIBA</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="flex bg-beige-50">
+    <!-- サイドバー -->
+    <aside class="w-64 h-screen bg-white shadow-lg p-4 flex flex-col">
+      <h2 class="text-xl font-bold mb-6">TSUMUGIBA</h2>
+
+      <nav class="space-y-4">
+        <!-- マイページ -->
+        <% if user_signed_in? %>
+          <%= link_to "マイページ", user_path(current_user),
+                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+        <% end %>
+
+        <!-- 新規投稿 -->
+        <% if user_signed_in? %>
+          <%= link_to "新規作成", new_post_path,
+                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+        <% else %>
+          <%= link_to "新規作成 (要ログイン)", new_user_session_path,
+                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+        <% end %>
+
+        <!-- 一覧 -->
+        <%= link_to "みんなのアイデア一覧", posts_path,
+                    class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+      </nav>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 p-8">
+      <%= yield %>
+    </main>
+  </body>
+</html>

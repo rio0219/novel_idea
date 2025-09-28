@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   resources :ai_consultations, only: [ :index, :create ]
+  resources :users, only: [ :show, :edit, :update ]
 
   resources :works do
     resources :characters, except: :show
