@@ -1,22 +1,46 @@
-<h2>マイアイデア一覧</h2>
+<div class="max-w-3xl mx-auto mt-12 p-6 bg-cream-50 rounded-lg shadow text-center">
+  <!-- ロゴ・タイトル -->
+  <div class="mb-6">
+    <img src="https://via.placeholder.com/100" alt="ロゴ" class="mx-auto mb-4">
+    <h1 class="text-3xl font-bold mb-2">TSUMUGIBA</h1>
+    <p class="text-lg text-gray-600">― Novel Idea Studio ―</p>
+  </div>
 
-<div class="actions mb-4">
-  <%= link_to "新規作成", new_work_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
-</div>
+  <!-- メインボタン -->
+  <div class="mb-8">
+    <% if user_signed_in? %>
+      <%= link_to "アイデアを紡ぐ", works_path,
+          class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
+    <% else %>
+      <%= link_to "アイデアを紡ぐ", new_user_session_path,
+          class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
+    <% end %>
+    <p class="mt-3 text-gray-700">ネット小説執筆中時のアイデアを整理しよう</p>
+  </div>
 
-<% if @works.any? %>
-  <% @works.each do |work| %>
-    <div class="flex justify-between items-center border-b py-2">
-      <!-- 左側：タイトル -->
-      <span><%= work.title %></span>
-
-      <!-- 右側：ボタン -->
-      <div class="flex space-x-2">          
-        <%= link_to "編集", edit_work_path(work), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mr-2" %>
-        <%= link_to "削除", work_path(work), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
-      </div>
+  <!-- 説明ブロック -->
+  <div class="space-y-4 mb-8 text-left">
+    <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
+      <img src="https://via.placeholder.com/60" alt="アイコン1" class="mr-4">
+      <p>「キャラ」「世界観」「章構成」ごとにアイデアをまとめやすくするテンプレートをご用意してます。</p>
     </div>
-  <% end %>
-<% else %>
-  <p>まだアイデアがありません</p>
-<% end %>
+    <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
+      <img src="https://via.placeholder.com/60" alt="アイコン2" class="mr-4">
+      <p>AI相談で貴方のアイデアの悩みをサポート。</p>
+    </div>
+    <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
+      <img src="https://via.placeholder.com/60" alt="アイコン3" class="mr-4">
+      <p>ネット小説家仲間と繋がりアイデアを共有しよう。</p>
+    </div>
+  </div>
+
+  <!-- みんなのアイデアを見る -->
+  <div>
+    <%= link_to "みんなのアイデアを見にいく", posts_path,
+        class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
+  </div>
+
+  <footer class="mt-10 text-sm text-gray-500">
+    ©TSUMUGIBA
+  </footer>
+</div>
