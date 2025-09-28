@@ -1,0 +1,17 @@
+<h2 class="text-lg font-bold">プロフィール編集</h2>
+
+<%= form_with model: @user, local: true do |f| %>
+  <div class="mt-4">
+    <%= f.label :name, "名前" %>
+    <%= f.text_field :name, class: "w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mt-4">
+    <%= f.label :bio, "自己紹介" %>
+    <%= f.text_area :bio, rows: 3, class: "w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mt-6">
+    <%= f.submit "更新する", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+  </div>
+<% end %>

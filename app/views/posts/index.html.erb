@@ -4,16 +4,28 @@
 
 <ul>
   <% @posts.each do |post| %>
-    <li>
-      <strong><%= post.user.email %></strong>
-      (<%= post.genre.name %>) :
-      <%= post.content %>
+    <li class="mb-4 p-2 border rounded flex items-center gap-2">
+      <!-- ユーザーアイコン -->
+      <%= link_to user_path(post.user) do %>
+        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-beige-200 text-sm font-bold">
+          <%= post.user.initial_icon %>
+        </div>
+      <% end %>
 
+      <!-- ユーザー名とジャンル -->
+      <div>
+        <%= link_to post.user.name, user_path(post.user), class: "font-semibold text-blue-600 hover:underline" %>
+        (<%= post.genre.name %>) : <%= post.content %>
+      </div>
+
+      <!-- 編集・削除ボタン -->
       <% if user_signed_in? && post.user == current_user %>
-        <%= link_to "編集", edit_post_path(post), class: "btn btn-sm btn-warning" %>
-        <%= link_to "削除", post_path(post),
-              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-              class: "btn btn-sm btn-danger" %>
+        <div class="ml-auto flex gap-1">
+          <%= link_to "編集", edit_post_path(post), class: "btn btn-sm btn-warning" %>
+          <%= link_to "削除", post_path(post),
+                data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+                class: "btn btn-sm btn-danger" %>
+        </div>
       <% end %>
     </li>
   <% end %>
