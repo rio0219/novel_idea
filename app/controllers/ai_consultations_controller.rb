@@ -12,14 +12,15 @@ class AiConsultationsController < ApplicationController
   end
 
   def create
-    @consultation = current_user.ai_consultations.build(ai_consultation_params)
+    @ai_consultation = current_user.ai_consultations.build(ai_consultation_params)
 
-    if @consultation.save
-      response_text = call_ai_api(@consultation.content)
-      @consultation.update(response: response_text)
+    if @ai_consultation.save
+      response_text = call_ai_api(@ai_consultation.content)
+      @ai_consultation.update(response: response_text)
       redirect_to(params[:return_to].presence || ai_consultations_path, notice: "相談を送信しました。")
     else
-      render :index
+      @consultations = current_user.ai_consultations.order(created_at: :desc) # これが大事！
+      render :index, status: :unprocessable_entity
     end
   end
 

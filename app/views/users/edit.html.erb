@@ -1,17 +1,18 @@
-<h2 class="text-lg font-bold">プロフィール編集</h2>
+<h2 class="text-lg font-bold"><%= t("titles.plofile") %></h2>
+<%= render "shared/error_messages", object: @user %>
 
 <%= form_with model: @user, local: true do |f| %>
   <div class="mt-4">
-    <%= f.label :name, "名前" %>
+    <%= f.label :name, t("activerecord.attributes.user.name") %>
     <%= f.text_field :name, class: "w-full p-2 border rounded" %>
   </div>
 
   <div class="mt-4">
-    <%= f.label :bio, "自己紹介" %>
+    <%= f.label :bio, t("activerecord.attributes.user.bio") %>
     <%= f.text_area :bio, rows: 3, class: "w-full p-2 border rounded" %>
   </div>
 
   <div class="mt-6">
-    <%= f.submit "更新する", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+    <%= f.submit t("buttons.update"), class: "px-4 py-2 bg-blue-500 text-white rounded" %>
   </div>
 <% end %>

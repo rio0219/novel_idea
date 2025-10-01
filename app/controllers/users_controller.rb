@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def update
     if @user == current_user && @user.update(user_params)
-      redirect_to @user, notice: "プロフィールを更新しました"
+      redirect_to @user, notice: t("notices.updated", resource: User.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end

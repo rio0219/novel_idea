@@ -17,21 +17,21 @@
       <nav class="space-y-4">
         <!-- マイページ -->
         <% if user_signed_in? %>
-          <%= link_to "マイページ", user_path(current_user),
+          <%= link_to t("buttons.mypage"), user_path(current_user),
                       class: "block py-2 px-3 rounded hover:bg-beige-100" %>
         <% end %>
 
         <!-- 新規投稿 -->
         <% if user_signed_in? %>
-          <%= link_to "新規作成", new_post_path,
+          <%= link_to t("buttons.new"), new_post_path,
                       class: "block py-2 px-3 rounded hover:bg-beige-100" %>
         <% else %>
-          <%= link_to "新規作成 (要ログイン)", new_user_session_path,
+          <%= link_to t("buttons.new_notlogin"), new_user_session_path,
                       class: "block py-2 px-3 rounded hover:bg-beige-100" %>
         <% end %>
 
         <!-- 一覧 -->
-        <%= link_to "みんなのアイデア一覧", posts_path,
+        <%= link_to t("buttons.idea_list"), posts_path,
                     class: "block py-2 px-3 rounded hover:bg-beige-100" %>
       </nav>
     </aside>

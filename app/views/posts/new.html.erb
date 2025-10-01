@@ -1,15 +1,16 @@
-<h1>新規投稿</h1>
+<h1><%= t("titles.post_idea_new") %></h1>
+<%= render "shared/error_messages", object: @post %>
 
 <%= form_with model: @post, local: true do |f| %>
   <div>
-    <%= f.label :genre_id, "ジャンル" %><br>
+    <%= f.label :genre_id, t("activerecord.attributes.post.genre") %><br>
     <%= f.collection_select :genre_id, Genre.all, :id, :name, prompt: "選択してください" %>
   </div>
 
   <div>
-    <%= f.label :content, "内容" %><br>
+    <%= f.label :content, t("activerecord.attributes.post.content") %><br>
     <%= f.text_area :content %>
   </div>
 
-  <%= f.submit "投稿する", class: "btn btn-primary" %>
+  <%= f.submit t("buttons.post"), class: "btn btn-primary" %>
 <% end %>

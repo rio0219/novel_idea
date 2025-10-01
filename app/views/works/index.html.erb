@@ -1,7 +1,7 @@
-<h2>マイアイデア一覧</h2>
+<h2><%= t("titles.work_list") %></h2>
 
 <div class="actions mb-4">
-  <%= link_to "新規作成", new_work_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+  <%= link_to t("buttons.new"), new_work_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
 </div>
 
 <% if @works.any? %>
@@ -12,8 +12,8 @@
 
       <!-- 右側：ボタン -->
       <div class="flex space-x-2">          
-        <%= link_to "編集", edit_work_path(work), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mr-2" %>
-        <%= link_to "削除", work_path(work), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+        <%= link_to t("buttons.edit"), edit_work_path(work), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 mr-2" %>
+        <%= link_to t("buttons.destroy"), work_path(work), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
       </div>
     </div>
   <% end %>
@@ -22,6 +22,6 @@
 <% end %>
 
 <div class="mt-4">
-  <%= link_to "みんなのアイデアを見に行く", posts_path,
+  <%= link_to t("buttons.to_post"), posts_path,
               class: "inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
 </div>

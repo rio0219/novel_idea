@@ -21,19 +21,19 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to posts_path, notice: "投稿を作成しました"
+      redirect_to posts_path, notice: t("notices.created", resource: Post.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    redirect_to posts_path, alert: "権限がありません" unless @post.user == current_user
+    redirect_to posts_path, alert: t("alerts.unauthorized") unless @post.user == current_user
   end
 
   def update
     if @post.user == current_user && @post.update(post_params)
-      redirect_to posts_path, notice: "投稿を更新しました"
+      redirect_to posts_path, notice: t("notices.updated", resource: Post.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -42,9 +42,9 @@ class PostsController < ApplicationController
   def destroy
     if @post.user == current_user
       @post.destroy
-      redirect_to posts_path, notice: "投稿を削除しました"
+      redirect_to posts_path, notice: t("notices.destroyed", resource: Post.model_name.human)
     else
-      redirect_to posts_path, alert: "権限がありません"
+      redirect_to posts_path, alert: t("alerts.unauthorized")
     end
   end
 

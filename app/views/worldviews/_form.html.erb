@@ -1,3 +1,4 @@
+<%= render "shared/error_messages", object: @worldview %>
 <%= form_with(model: @worldview, url: @worldview.new_record? ? work_worldview_path(@work) : work_worldview_path(@work), local: true) do |f| %>
   <div>
     <%= f.label :country, t("activerecord.attributes.worldview.country") %><br>
