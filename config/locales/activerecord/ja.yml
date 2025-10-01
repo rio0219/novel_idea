@@ -7,6 +7,9 @@ ja:
       character: キャラクター
       worldview: 世界観
       plot: プロット
+      ai_consultation: AI相談
+      post: 投稿
+      user: プロフィール
     attributes:
       user:
         email: メールアドレス
@@ -38,11 +41,21 @@ ja:
         chapter_title: 章タイトル
         purpose: 展開・目的
         event: イベント
+      post:
+        genre: ジャンル
+        content: 本文
+      ai:
+        content: 相談内容
+      user:
+            name: 名前
+            bio: 自己紹介
+
   notices:
     created: "%{resource}を作成しました"
     updated: "%{resource}を更新しました"
     destroyed: "%{resource}を削除しました"
-        
+  alerts:
+    unauthorized: "権限がありません"    
 
   works:
     create:
@@ -51,26 +64,31 @@ ja:
       success: "作品を更新しました"
     destroy:
       success: "作品を削除しました"
-  worldviews:
-      new:
-        title: 世界観新規
-      edit:
-        title: 世界観編集
-  plots:
-      index:
-        title: プロット一覧
-      new:
-        title: プロットを登録する
-      edit:
-        title: プロットを編集する
-  helpers:
-    submit:
-      create: "作成"
-      update: "更新"
-      submit: 保存
   buttons:
     new: "新規作成"
     edit: "編集"
     update: "更新"
     destroy: "削除"
     back: "戻る"
+    consultation: "相談する"
+    mypage: "マイページ"
+    new_notlogin: "新規作成 (要ログイン)"
+    idea_list: "みんなのアイデア一覧"
+    post: "投稿する"
+    plofile_edit: "プロフィール編集"
+    to_post: "みんなのアイデアを見に行く"
+  titles:
+    ai_consultation: AI相談
+    previous_consultation: 過去の相談
+    character: キャラクター設定
+    character_list: キャラクター一覧
+    post_idea_list: みんなのアイデア一覧
+    post_idea_new: マイアイデア新規作成
+    post_idea_edit: マイアイデア編集
+    plofile: プロフィール
+    my_post_idea: 投稿したアイデア
+    work: 基本設定
+    work_list: マイアイデア一覧
+    worldview: 世界観設定
+    plot_list: プロット一覧
+    plot: プロット設定

@@ -16,7 +16,7 @@ class WorksController < ApplicationController
   def create
     @work = current_user.works.build(work_params)
     if @work.save
-      redirect_to edit_work_path(@work), notice: t("works.create.success")
+      redirect_to edit_work_path(@work), notice: t("notices.created", resource: Work.model_name.human)
     else
       @genres = Genre.all
       render :new, status: :unprocessable_entity
@@ -29,7 +29,7 @@ class WorksController < ApplicationController
 
   def update
     if @work.update(work_params)
-      redirect_to root_path, notice: t("works.update.success")
+      redirect_to root_path, notice: t("notices.updated", resource: Work.model_name.human)
     else
       @genres = Genre.all
       render :edit, status: :unprocessable_entity
@@ -39,7 +39,7 @@ class WorksController < ApplicationController
   def destroy
     @work = current_user.works.find(params[:id])
     @work.destroy
-    redirect_to root_path, notice: t("works.destroy.success")
+    redirect_to root_path, notice: t("notices.destroyed", resource: Work.model_name.human)
   end
 
   private

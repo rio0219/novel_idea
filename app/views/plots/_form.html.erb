@@ -1,3 +1,4 @@
+<%= render "shared/error_messages", object: @plot %>
 <%= form_with(model: [@work, @plot]) do |f| %>
   <div>
     <%= f.label :chapter_title, t("activerecord.attributes.plot.chapter_title") %><br>

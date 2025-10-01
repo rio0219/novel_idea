@@ -16,9 +16,9 @@ class CharactersController < ApplicationController
   def create
     @character = @work.characters.build(character_params)
     if @character.save
-      redirect_to work_characters_path(@work), notice: "キャラクターを作成しました"
+      redirect_to work_characters_path(@work), notice: t("notices.created", resource: Character.model_name.human)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -27,15 +27,15 @@ class CharactersController < ApplicationController
 
   def update
     if @character.update(character_params)
-      redirect_to work_characters_path(@work), notice: "キャラクターを更新しました"
+      redirect_to work_characters_path(@work), notice: t("notices.updated", resource: Character.model_name.human)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @character.destroy
-    redirect_to work_characters_path(@work), notice: "キャラクターを削除しました"
+    redirect_to work_characters_path(@work), notice: t("notices.destroyed", resource: Character.model_name.human)
   end
 
   private
