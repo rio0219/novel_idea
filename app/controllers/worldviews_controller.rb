@@ -35,7 +35,7 @@ class WorldviewsController < ApplicationController
 
   def destroy
     @worldview.destroy
-    redirect_to works_path, notice: t("notices.destroyed", model: Worldview.model_name.human)
+    redirect_to works_path, notice: t("notices.destroyed", resource: Worldview.model_name.human)
   end
 
   def show
