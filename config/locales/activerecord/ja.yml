@@ -2,7 +2,7 @@ ja:
   activerecord:
     models:
       user: ユーザー
-      work: 作品
+      work: ノベルアイデア作成
       genre: ジャンル
       character: キャラクター
       worldview: 世界観
@@ -45,7 +45,7 @@ ja:
         genre: ジャンル
         content: 本文
       ai:
-        content: 相談内容
+        content: 悩んでいること・困っていることを相談しよう
       user:
             name: 名前
             bio: 自己紹介
@@ -70,6 +70,7 @@ ja:
     update: "更新"
     destroy: "削除"
     back: "戻る"
+    ai_back: "編集中の画面に戻る"
     consultation: "相談する"
     mypage: "マイページ"
     new_notlogin: "新規作成 (要ログイン)"

@@ -1,26 +1,26 @@
 <%= render "shared/error_messages", object: @worldview %>
 <%= form_with(model: @worldview, url: @worldview.new_record? ? work_worldview_path(@work) : work_worldview_path(@work), local: true) do |f| %>
-  <div>
-    <%= f.label :country, t("activerecord.attributes.worldview.country") %><br>
-    <%= f.text_field :country %>
+  <div class="mb-4">
+    <%= f.label :country, t("activerecord.attributes.worldview.country"), class: "block font-semibold mb-1" %>
+    <%= f.text_field :country , class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
-    <%= f.label :culture, t("activerecord.attributes.worldview.culture") %><br>
-    <%= f.text_area :culture %>
+  <div class="mb-4">
+    <%= f.label :culture, t("activerecord.attributes.worldview.culture"), class: "block font-semibold mb-1" %>
+    <%= f.text_area :culture, class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
-    <%= f.label :technology, t("activerecord.attributes.worldview.technology") %><br>
-    <%= f.text_area :technology %>
+  <div class="mb-4">
+    <%= f.label :technology, t("activerecord.attributes.worldview.technology"), class: "block font-semibold mb-1" %>
+    <%= f.text_area :technology , class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
-    <%= f.label :faction, t("activerecord.attributes.worldview.faction") %><br>
-    <%= f.text_area :faction %>
+  <div class="mb-4">
+    <%= f.label :faction, t("activerecord.attributes.worldview.faction"), class: "block font-semibold mb-1" %>
+    <%= f.text_area :faction, class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
+  <div class="mb-4">
     <%= f.submit(@worldview.new_record? ? t("buttons.new") : t("buttons.update"),
                  class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700") %>
   </div>

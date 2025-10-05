@@ -7,11 +7,11 @@
     <%= csp_meta_tag %>
 
     <!-- Tailwind CSS を読み込み -->
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-100 text-gray-800">
+  <body class="bg-softOrange text-deepNavy font-sans">
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
       <nav class="container mx-auto flex justify-between items-center">
@@ -22,7 +22,7 @@
 
         <!-- ナビゲーションリンク -->
         <ul class="flex space-x-4">
-          <li><%= link_to "TOP", root_path, class: "hover:text-blue-500" %></li>
+          <li><%= link_to "home", works_path, class: "hover:text-blue-500" %></li>
 
           <% if user_signed_in? %>
             <li class="text-gray-600">ログイン中: <%= current_user.email %></li>

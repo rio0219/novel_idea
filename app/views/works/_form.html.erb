@@ -1,24 +1,24 @@
 <%= form_with(model: @work, local: true) do |f| %>
 <%= render "shared/error_messages", object: @work %>
 
-  <div>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="mb-4">
+    <%= f.label :title, class: "block font-semibold mb-1" %>
+    <%= f.text_field :title, class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
-   <%= f.label :genre %><br>
-   <%= f.collection_select :genre_id, @genres, :id, :name %>
+  <div class="mb-4">
+    <%= f.label :genre, class: "block font-semibold mb-1" %>
+    <%= f.collection_select :genre_id, @genres, :id, :name, {}, 
+        { class: "w-full border border-gray-300 rounded p-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" } %>  
   </div>
 
-  <div>
-    <%= f.label :theme %><br>
-    <%= f.text_field :theme %>
-  </div>
+  <div class="mb-4">
+    <%= f.label :theme, class: "block font-semibold mb-1" %>
+    <%= f.text_field :theme , class: "w-full border rounded p-2" %>
 
-  <div>
-    <%= f.label :synopsis %><br>
-    <%= f.text_area :synopsis %>
+  <div class="mb-4">
+    <%= f.label :synopsis, class: "block font-semibold mb-1" %>
+    <%= f.text_area :synopsis , class: "w-full border rounded p-2" %>
   </div>
 
   <div class="mt-4">

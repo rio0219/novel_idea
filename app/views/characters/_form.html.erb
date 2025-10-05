@@ -2,49 +2,55 @@
 <%= render "shared/error_messages", object: @character %>
 <%= form_with model: [@work, @character], local: true do |f| %>
 
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <!-- 名前 -->
+  <div class="mb-4">
+    <%= f.label :name, class: "block font-semibold mb-1" %>
+    <%= f.text_field :name, class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
-    <%= f.label :age %>
-    <%= f.number_field :age %>
+  <!-- 年齢・性別 横並び -->
+  <div class="grid grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= f.label :age, class: "block font-semibold mb-1" %>
+      <%= f.number_field :age, class: "w-full border rounded p-2" %>
+    </div>
+    <div>
+      <%= f.label :gender, class: "block font-semibold mb-1" %>
+      <%= f.text_field :gender, class: "w-full border rounded p-2" %>
+    </div>
   </div>
 
-  <div>
-    <%= f.label :gender %>
-    <%= f.text_field :gender %>
+  <!-- 外見（髪色・目の色・体格・その他）4分割 -->
+  <h3 class="text-lg font-bold mb-2">外見</h3>
+  <div class="grid grid-cols-4 gap-4 mb-4">
+    <div>
+      <%= f.label :hair_color, class: "block font-semibold mb-1" %>
+      <%= f.text_field :hair_color, class: "w-full border rounded p-2" %>
+    </div>
+    <div>
+      <%= f.label :eye_color, class: "block font-semibold mb-1" %>
+      <%= f.text_field :eye_color, class: "w-full border rounded p-2" %>
+    </div>
+    <div>
+      <%= f.label :physique, class: "block font-semibold mb-1" %>
+      <%= f.text_field :physique, class: "w-full border rounded p-2" %>
+    </div>
+    <div>
+      <%= f.label :other, class: "block font-semibold mb-1" %>
+      <%= f.text_area :other, rows: 2, class: "w-full border rounded p-2" %>
+    </div>
   </div>
 
-  <div>
-    <%= f.label :hair_color %>
-    <%= f.text_field :hair_color %>
+  <!-- 性格 -->
+  <div class="mb-4">
+    <%= f.label :personality, class: "block font-semibold mb-1" %>
+    <%= f.text_area :personality, rows: 3, class: "w-full border rounded p-2" %>
   </div>
 
-  <div>
-    <%= f.label :eye_color %>
-    <%= f.text_field :eye_color %>
-  </div>
-
-  <div>
-    <%= f.label :physique %>
-    <%= f.text_field :physique %>
-  </div>
-
-  <div>
-    <%= f.label :other %>
-    <%= f.text_area :other %>
-  </div>
-
-  <div>
-    <%= f.label :personality %>
-    <%= f.text_area :personality %>
-  </div>
-
-  <div>
-    <%= f.label :background %>
-    <%= f.text_area :background %>
+  <!-- 背景 -->
+  <div class="mb-4">
+    <%= f.label :background, "背景（過去の出来事・他キャラとの関係性）", class: "block font-semibold mb-1" %>
+    <%= f.text_area :background, rows: 4, class: "w-full border rounded p-2" %>
   </div>
 
   <div class="mt-4">
