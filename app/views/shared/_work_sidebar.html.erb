@@ -4,7 +4,7 @@
   <ul class="space-y-2">
     <!-- 基本設定 -->
     <li>
-      <%= link_to t("activerecord.models.work"),
+      <%= link_to t("titles.work"),
                   @work&.persisted? ? edit_work_path(@work) : new_work_path,
                   class: "block px-3 py-2 rounded hover:bg-gray-200" %>
     </li>

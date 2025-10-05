@@ -5,12 +5,16 @@ module.exports = {
     './public/*.html',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}'
+    './app/views/**/*.{html.erb,erb,haml,slim}'
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        softOrange: '#FFF7DF', // 背景色
+        deepNavy: '#1A237E',   // 文字色
       },
     },
   },

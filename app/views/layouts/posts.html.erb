@@ -1,44 +1,81 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TSUMUGIBA</title>
+    <title><%= content_for(:title) || "TSUMUGIBA" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <!-- Tailwind CSS を読み込み -->
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="flex bg-beige-50">
-    <!-- サイドバー -->
-    <aside class="w-64 h-screen bg-white shadow-lg p-4 flex flex-col">
-      <h2 class="text-xl font-bold mb-6">TSUMUGIBA</h2>
+  <body class="bg-softOrange text-deepNavy font-sans">
+    <!-- ヘッダー -->
+    <header class="bg-white shadow p-4">
+      <nav class="container mx-auto flex justify-between items-center">
+        <!-- ロゴ / サイト名 -->
+        <h1 class="text-xl font-bold">
+          <%= link_to "TSUMUGIBA", root_path, class: "hover:text-blue-500" %>
+        </h1>
 
-      <nav class="space-y-4">
-        <!-- マイページ -->
-        <% if user_signed_in? %>
-          <%= link_to t("buttons.mypage"), user_path(current_user),
-                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
-        <% end %>
+        <!-- ナビゲーションリンク -->
+        <ul class="flex space-x-4">
+          <li><%= link_to "home", works_path, class: "hover:text-blue-500" %></li>
 
-        <!-- 新規投稿 -->
-        <% if user_signed_in? %>
-          <%= link_to t("buttons.new"), new_post_path,
-                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
-        <% else %>
-          <%= link_to t("buttons.new_notlogin"), new_user_session_path,
-                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
-        <% end %>
 
-        <!-- 一覧 -->
-        <%= link_to t("buttons.idea_list"), posts_path,
-                    class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+          <% if user_signed_in? %>
+            <li class="text-gray-600">ログイン中: <%= current_user.email %></li>
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500" %>
+          <% else %>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500" %></li>
+          <% end %>
+        </ul>
       </nav>
-    </aside>
+    </header>
 
-    <!-- メインコンテンツ -->
-    <main class="flex-1 p-8">
-      <%= yield %>
-    </main>
+    <div class="flex">
+      <!-- ナビゲーションリンク -->
+      <aside class="w-64 h-screen bg-white shadow-lg p-4 flex flex-col">
+        <h2 class="text-xl font-bold mb-6">TSUMUGIBA</h2>
+
+        <nav class="space-y-4">
+          <% if user_signed_in? %>
+            <%= link_to t("buttons.mypage"), user_path(current_user),
+                        class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+          <% end %>
+
+          <% if user_signed_in? %>
+            <%= link_to t("buttons.new"), new_post_path,
+                        class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+          <% else %>
+            <%= link_to t("buttons.new_notlogin"), new_user_session_path,
+                        class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+          <% end %>
+
+          <%= link_to t("buttons.idea_list"), posts_path,
+                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+        </nav>
+      </aside>
+
+      <!-- メインコンテンツ -->
+      <main class="flex-1 container mx-auto p-4">
+        <% if notice %>
+          <p class="bg-green-100 text-green-800 p-2 rounded mb-2"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="bg-red-100 text-red-800 p-2 rounded mb-2"><%= alert %></p>
+        <% end %>
+
+        <%= yield %>
+      </main>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-white shadow p-4 mt-10 text-center text-gray-500">
+      &copy; 2025 TSUMUGIBA
+    </footer>
   </body>
 </html>

@@ -1,26 +1,43 @@
-<h1><%= t("titles.ai_consultation") %></h1>
+<h1 class="text-2xl font-bold mb-6"><%= t("titles.ai_consultation") %></h1>
+
 <%= render "shared/error_messages", object: @ai_consultation %>
-<%= form_with(model: @ai_consultation, url: ai_consultations_path, local: true) do |f| %>
+
+<%= form_with(model: @ai_consultation, url: ai_consultations_path, local: true, class: "space-y-4") do |f| %>
+  <!-- 入力エリア -->
   <div>
-    <%= f.label :content, t("activerecord.attributes.ai.content") %><br>
-    <%= f.text_area :content, rows: 4 %>
+    <%= f.label :content, t("activerecord.attributes.ai.content"), class: "block mb-2 font-semibold" %>
+    <%= f.text_area :content,
+          rows: 4,
+          class: "w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none" %>
   </div>
-  <div>
-    <%= f.submit t("buttons.consultation"), class: "btn btn-primary" %>
+
+  <!-- ボタン配置 -->
+  <div class="flex justify-between items-center mt-4">
+    <% if session[:return_to].present? %>
+      <!-- 左寄せ：戻る -->
+      <%= link_to t("buttons.ai_back"), session[:return_to],
+        class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>
+    <% end %>
+  
+    <!-- 中央寄せ用のラッパー -->
+    <div class="flex-1 flex justify-center">
+      <%= f.submit t("buttons.consultation"),
+        class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>
+    </div>
   </div>
 <% end %>
 
-<% if session[:return_to].present? %>
-  <%= link_to t("buttons.back"), session[:return_to], class: "btn btn-secondary" %>
-<% end %>
+<hr class="my-8">
 
-<hr>
+<h2 class="text-xl font-semibold mb-4"><%= t("titles.previous_consultation") %></h2>
 
-<h2><%= t("titles.previous_consultation") %></h2>
-<% @consultations.each do |consultation| %>
-  <div class="mb-4 p-2 border rounded">
-    <p><strong>あなた:</strong> <%= consultation.content %></p>
-    <p><strong>AI:</strong> <%= consultation.response.presence || "回答待ち..." %></p>
-  </div>
-<% end %>
+<!-- 過去相談一覧 -->
+<div class="space-y-4">
+  <% @consultations.each do |consultation| %>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <p class="mb-2"><span class="font-bold text-gray-700">あなた:</span> <%= consultation.content %></p>
+      <p><span class="font-bold text-gray-700">AI:</span> <%= consultation.response.presence || "回答待ち..." %></p>
+    </div>
+  <% end %>
+</div>
 

@@ -1,18 +1,18 @@
 <%= render "shared/error_messages", object: @plot %>
 <%= form_with(model: [@work, @plot]) do |f| %>
-  <div>
-    <%= f.label :chapter_title, t("activerecord.attributes.plot.chapter_title") %><br>
-    <%= f.text_field :chapter_title %>
+  <div class="mb-4">
+    <%= f.label :chapter_title, t("activerecord.attributes.plot.chapter_title"), class: "block font-semibold mb-1" %>
+    <%= f.text_field :chapter_title, class: "w-full border rounded p-2" %>
   </div>
-  <div>
-    <%= f.label :purpose, t("activerecord.attributes.plot.purpose") %><br>
-    <%= f.text_area :purpose %>
+  <div class="mb-4">
+    <%= f.label :purpose, t("activerecord.attributes.plot.purpose") , class: "block font-semibold mb-1" %>
+    <%= f.text_area :purpose, class: "w-full border rounded p-2" %>
   </div>
-  <div>
-    <%= f.label :event, t("activerecord.attributes.plot.event") %><br>
-    <%= f.text_area :event %>
+  <div class="mb-4">
+    <%= f.label :event, t("activerecord.attributes.plot.event"), class: "block font-semibold mb-1" %>
+    <%= f.text_area :event, class: "w-full border rounded p-2" %>
   </div>
-  <div>
+  <div class="mb-4">
     <%= f.submit(
         @plot.new_record? ? t("buttons.new") : t("buttons.update"),
         class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
