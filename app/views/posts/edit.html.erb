@@ -1,16 +1,21 @@
-<h1><%= t("titles.post_idea_edit") %></h1>
+<h2 class="text-2xl font-bold mb-6"><%= t("titles.post_idea_edit") %></h2>
 <%= render "shared/error_messages", object: @post %>
 
 <%= form_with model: @post, local: true do |f| %>
-  <div>
-    <%= f.label :genre_id, t("activerecord.attributes.post.genre") %><br>
-    <%= f.collection_select :genre_id, Genre.all, :id, :name, prompt: "選択してください" %>
+  <%= hidden_field_tag :from, params[:from] %>
+
+  <div class="mb-4">
+    <%= f.label :genre_id, t("activerecord.attributes.post.genre"), class: "block font-semibold mb-1" %>
+    <%= f.collection_select :genre_id, @genres, :id, :name, { prompt: "選択してください" },
+        { class: "w-full border border-gray-300 rounded p-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" } %>
   </div>
 
-  <div>
-    <%= f.label :content, t("activerecord.attributes.post.content") %><br>
-    <%= f.text_area :content %>
+  <div class="mb-4">
+    <%= f.label :content, t("activerecord.attributes.post.content"), class: "block font-semibold mb-1" %>
+    <%= f.text_area :content, class: "w-full border rounded p-2" %>
   </div>
 
-  <%= f.submit t("buttons.update"), class: "btn btn-primary" %>
+  <div class="mb-4">
+    <%= f.submit t("buttons.update"),class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+  </div>
 <% end %>

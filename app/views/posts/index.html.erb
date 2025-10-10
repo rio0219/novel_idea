@@ -12,17 +12,17 @@
 
       <!-- ユーザー名とジャンル -->
       <div>
-        <%= link_to post.user.name, user_path(post.user), class: "font-semibold text-blue-600 hover:underline" %>
+        <%= link_to post.user.display_name, user_path(post.user), class: "font-semibold text-blue-600 hover:underline" %>
         (<%= post.genre.name %>) : <%= post.content %>
       </div>
 
       <!-- 編集・削除ボタン -->
       <% if user_signed_in? && post.user == current_user %>
         <div class="ml-auto flex gap-1">
-          <%= link_to t("buttons.edit"), edit_post_path(post), class: "btn btn-sm btn-warning" %>
+          <%= link_to t("buttons.edit"), edit_post_path(post, from: request.path), class: "px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm" %>
           <%= link_to t("buttons.destroy"), post_path(post),
                 data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-                class: "btn btn-sm btn-danger" %>
+                class: "px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm" %>
         </div>
       <% end %>
     </li>
