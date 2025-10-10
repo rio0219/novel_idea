@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  layout "posts"
+  # layout :select_layout
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :set_post, only: [ :show, :edit, :update, :destroy ]
 
@@ -16,6 +16,7 @@ class PostsController < ApplicationController
 
   def new
     @post = current_user.posts.build
+    @genres = Genre.all
   end
 
   def create
@@ -28,12 +29,14 @@ class PostsController < ApplicationController
   end
 
   def edit
-    redirect_to posts_path, alert: t("alerts.unauthorized") unless @post.user == current_user
+    redirect_back fallback_location: posts_path, alert: t("alerts.unauthorized") unless @post.user == current_user
+    @genres = Genre.all
   end
 
   def update
     if @post.user == current_user && @post.update(post_params)
-      redirect_to posts_path, notice: t("notices.updated", resource: Post.model_name.human)
+      redirect_path = params[:from].presence ? CGI.unescape(params[:from]) : posts_path
+      redirect_to redirect_path, notice: t("notices.updated", resource: Post.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -42,9 +45,9 @@ class PostsController < ApplicationController
   def destroy
     if @post.user == current_user
       @post.destroy
-      redirect_to posts_path, notice: t("notices.destroyed", resource: Post.model_name.human)
+      redirect_back fallback_location: posts_path, notice: t("notices.destroyed", resource: Post.model_name.human)
     else
-      redirect_to posts_path, alert: t("alerts.unauthorized")
+      redirect_back fallback_location: posts_path, alert: t("alerts.unauthorized")
     end
   end
 
