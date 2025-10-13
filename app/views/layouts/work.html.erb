@@ -22,7 +22,11 @@
 
         <!-- ナビゲーションリンク -->
         <ul class="flex space-x-4">
-          <li><%= link_to "home", works_path, class: "hover:text-blue-500" %></li>
+          <li>
+            <%= link_to works_path do %>
+              <%= image_tag "home.PNG", alt: "Home", class: "w-7 h-7 hover:opacity-70" %>
+            <% end %>
+          </li>
 
           <% if user_signed_in? %>
             <li class="text-gray-600">ログイン中: <%= current_user.email %></li>

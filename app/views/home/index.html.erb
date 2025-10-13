@@ -1,13 +1,18 @@
 <div class="max-w-3xl mx-auto mt-12 p-6 bg-cream-50 rounded-lg shadow text-center">
   <!-- ロゴ・タイトル -->
-  <div class="mb-6">
-    <img src="https://via.placeholder.com/100" alt="ロゴ" class="mx-auto mb-4">
-    <h1 class="text-3xl font-bold mb-2">TSUMUGIBA</h1>
-    <p class="text-lg text-gray-600">― Novel Idea Studio ―</p>
+  <div class="flex items-center justify-center gap-6 mb-8">
+    <!-- ロゴ -->
+    <%= image_tag "logo.PNG", alt: "ロゴ", class: "w-29 h-29 object-contain" %>
+
+    <!-- タイトル部分 -->
+    <div class="flex flex-col items-start">
+      <h1 class="text-4xl font-bold text-blue-900">TSUMUGIBA</h1>
+      <p class="text-gray-600 text-lg mt-1">— Novel Idea Studio —</p>
+    </div>
   </div>
 
   <!-- メインボタン -->
-  <div class="mb-8">
+  <div class="mb-6 -mt-4">
     <% if user_signed_in? %>
       <%= link_to "アイデアを紡ぐ", works_path,
           class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
@@ -15,21 +20,21 @@
       <%= link_to "アイデアを紡ぐ", new_user_session_path,
           class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
     <% end %>
-    <p class="mt-3 text-gray-700">ネット小説執筆中時のアイデアを整理しよう</p>
+    <p class="mt-4 text-gray-700">ネット小説執筆中時のアイデアを整理しよう</p>
   </div>
 
   <!-- 説明ブロック -->
   <div class="space-y-4 mb-8 text-left">
     <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
-      <img src="https://via.placeholder.com/60" alt="アイコン1" class="mr-4">
+      <%= image_tag "template.PNG", alt: "テンプレート画像", class: "w-16 h-16 mr-4 object-cover rounded" %>
       <p>「キャラ」「世界観」「章構成」ごとにアイデアをまとめやすくするテンプレートをご用意してます。</p>
     </div>
     <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
-      <img src="https://via.placeholder.com/60" alt="アイコン2" class="mr-4">
+      <%= image_tag "ai_support.PNG", alt: "AIサポート画像", class: "w-16 h-16 mr-4 object-cover rounded" %>
       <p>AI相談で貴方のアイデアの悩みをサポート。</p>
     </div>
     <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
-      <img src="https://via.placeholder.com/60" alt="アイコン3" class="mr-4">
+      <%= image_tag "community.PNG", alt: "コミュニティ画像", class: "w-16 h-16 mr-4 object-cover rounded" %>
       <p>ネット小説家仲間と繋がりアイデアを共有しよう。</p>
     </div>
   </div>
@@ -39,8 +44,4 @@
     <%= link_to "みんなのアイデアを見にいく", posts_path,
         class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
   </div>
-
-  <footer class="mt-10 text-sm text-gray-500">
-    ©TSUMUGIBA
-  </footer>
 </div>
