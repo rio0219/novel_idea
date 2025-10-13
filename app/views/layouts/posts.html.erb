@@ -22,7 +22,11 @@
 
         <!-- ナビゲーションリンク -->
         <ul class="flex space-x-4">
-          <li><%= link_to "home", works_path, class: "hover:text-blue-500" %></li>
+          <li>
+            <%= link_to works_path do %>
+              <%= image_tag "home.PNG", alt: "Home", class: "w-7 h-7 hover:opacity-70" %>
+            <% end %>
+          </li>
 
 
           <% if user_signed_in? %>
@@ -37,28 +41,40 @@
     </header>
 
     <div class="flex">
-      <!-- ナビゲーションリンク -->
-      <aside class="w-64 h-screen bg-white shadow-lg p-4 flex flex-col">
-        <h2 class="text-xl font-bold mb-6">みんなのアイデア投稿</h2>
-
-        <nav class="space-y-4">
-          <% if user_signed_in? %>
-            <%= link_to t("buttons.mypage"), user_path(current_user),
-                        class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+    <!-- ナビゲーションリンク -->
+    <aside class="w-64 h-screen bg-white shadow-lg p-4 flex flex-col items-center">
+      <h2 class="text-xl font-bold mb-6 text-blue-900">みんなのアイデア投稿</h2>
+    
+      <nav class="space-y-8 text-center">
+        <% if user_signed_in? %>
+          <!-- マイページ -->
+          <%= link_to user_path(current_user), class: "block hover:opacity-80 transition" do %>
+            <%= image_tag "mypage_icon.PNG", alt: "マイページ", class: "mx-auto w-[90px] h-[90px] mb-2" %>
+            <p class="text-blue-900"><%= t("buttons.mypage") %></p>
           <% end %>
-
-          <% if user_signed_in? %>
-            <%= link_to t("buttons.new"), new_post_path,
-                        class: "block py-2 px-3 rounded hover:bg-beige-100" %>
-          <% else %>
-            <%= link_to t("buttons.new_notlogin"), new_user_session_path,
-                        class: "block py-2 px-3 rounded hover:bg-beige-100" %>
+        <% end %>
+    
+        <% if user_signed_in? %>
+          <!-- 新規投稿 -->
+          <%= link_to new_post_path, class: "block hover:opacity-80 transition" do %>
+            <%= image_tag "newpost_icon.PNG", alt: "新規投稿", class: "mx-auto w-[90px] h-[90px] mb-2" %>
+            <p class="text-blue-900"><%= t("buttons.new") %></p>
           <% end %>
-
-          <%= link_to t("buttons.idea_list"), posts_path,
-                      class: "block py-2 px-3 rounded hover:bg-beige-100" %>
-        </nav>
-      </aside>
+        <% else %>
+          <!-- ログインしていない場合 -->
+          <%= link_to new_user_session_path, class: "block hover:opacity-80 transition" do %>
+            <%= image_tag "newpost_icon.PNG", alt: "新規投稿（未ログイン）", class: "mx-auto w-[90px] h-[90px] mb-2 opacity-50" %>
+            <p class="text-gray-400"><%= t("buttons.new_notlogin") %></p>
+          <% end %>
+        <% end %>
+    
+        <!-- 投稿一覧 -->
+        <%= link_to posts_path, class: "block hover:opacity-80 transition" do %>
+          <%= image_tag "list_icon.PNG", alt: "投稿一覧", class: "mx-auto w-[90px] h-[90px] mb-2" %>
+          <p class="text-blue-900"><%= t("buttons.idea_list") %></p>
+        <% end %>
+      </nav>
+    </aside>
 
       <!-- メインコンテンツ -->
       <main class="flex-1 container mx-auto p-4">

@@ -1,27 +1,46 @@
-<h2><%= t("devise.registrations.new.sign_up") %></h2>
+<div class="min-h-screen flex items-center justify-center bg-cream-50">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-300">
+    <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center">
+      <%= t("devise.registrations.new.sign_up") %>
+    </h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <div>
-    <%= f.label :email, t("devise.registrations.new.email") %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-5" }) do |f| %>
+      <!-- メールアドレス -->
+      <div>
+        <%= f.label :email, t("devise.registrations.new.email"), class: "block text-gray-700 font-medium mb-1" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+              class: "w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+      </div>
+
+      <!-- パスワード -->
+      <div>
+        <%= f.label :password, t("devise.registrations.new.password"), class: "block text-gray-700 font-medium mb-1" %>
+        <% if @minimum_password_length %>
+          <p class="text-sm text-gray-500 mb-1">
+            (<%= t("devise.registrations.new.minimum_characters", count: @minimum_password_length) %>)
+          </p>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password",
+              class: "w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+      </div>
+
+      <!-- パスワード確認 -->
+      <div>
+        <%= f.label :password_confirmation, t("devise.registrations.new.password_confirmation"), class: "block text-gray-700 font-medium mb-1" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password",
+              class: "w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+      </div>
+
+      <!-- 登録ボタン -->
+      <div class="text-center">
+        <%= f.submit t("devise.registrations.new.sign_up"),
+              class: "bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-6 rounded-full shadow transition duration-200" %>
+      </div>
+    <% end %>
+
+    <!-- 下部リンク -->
+    <div class="mt-4 text-center">
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
-
-  <div>
-    <%= f.label :password, t("devise.registrations.new.password") %>
-    <% if @minimum_password_length %>
-      (<%= t("devise.registrations.new.minimum_characters", count: @minimum_password_length) %>)
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= f.label :password_confirmation, t("devise.registrations.new.password_confirmation") %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= f.submit t("devise.registrations.new.sign_up") %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
