@@ -58,7 +58,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "tailwindcss-rails", "~> 3.3.1"
+gem "tailwindcss-rails", "~> 4.3.0"
 gem "devise"
 
 gem "devise-i18n", "~> 1.15"
