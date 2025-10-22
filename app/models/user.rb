@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :works, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :ai_consultations, dependent: :destroy
+  has_one_attached :image
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -11,8 +12,12 @@ class User < ApplicationRecord
     name.present? ? name : "名無しさん"
   end
 
-  # イニシャルアイコン用
-  def initial_icon
-    display_name[0].upcase
+  # 表示用画像（ActiveStorage or assetファイル）
+  def display_image(size: [ 120, 120 ])
+    if image.attached? && image.variable?
+      image.variant(resize_to_fill: size)
+    else
+      ActionController::Base.helpers.asset_path("default_user.png")
+    end
   end
 end
