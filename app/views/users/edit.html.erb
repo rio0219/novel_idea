@@ -1,7 +1,7 @@
 <h2 class="text-lg font-bold"><%= t("titles.plofile") %></h2>
 <%= render "shared/error_messages", object: @user %>
 
-<%= form_with model: @user, local: true do |f| %>
+<%= form_with model: @user, local: true, html: { multipart: true } do |f| %>
   <div class="mt-4">
     <%= f.label :name, t("activerecord.attributes.user.name") %>
     <%= f.text_field :name, class: "w-full p-2 border rounded" %>
@@ -12,7 +12,51 @@
     <%= f.text_area :bio, rows: 3, class: "w-full p-2 border rounded" %>
   </div>
 
+  <!-- プロフィール画像アップロード欄 -->
   <div class="mt-6">
-    <%= f.submit t("buttons.update"), class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+    <%= f.label :image, "プロフィール画像", class: "block font-semibold mb-2" %>
+
+    <!-- プレビュー表示 -->
+    <div class="mb-4">
+      <%= image_tag(
+          @user.display_image.is_a?(String) ?
+            asset_path(@user.display_image) :
+            @user.display_image,
+          id: "preview-image",
+          class: "rounded-full w-24 h-24 object-cover border"
+        ) %>
+    </div>
+
+    <!-- ファイル選択 -->
+    <%= f.file_field :image, accept: "image/*",
+        id: "user-image-input",
+        class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+               file:rounded-full file:border-0 file:text-sm file:font-semibold
+               file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+  </div>
+
+  <!-- プレビュー用スクリプト -->
+  <script>
+    document.addEventListener("turbo:load", () => {
+      const input = document.getElementById("user-image-input");
+      const preview = document.getElementById("preview-image");
+
+      if (input && preview) {
+        input.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+    });
+  </script>
+
+  <div class="mt-6">
+    <%= f.submit t("buttons.update"), class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
   </div>
 <% end %>

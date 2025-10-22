@@ -5,14 +5,13 @@
   <!-- プロフィールエリア -->
   <div class="flex items-start space-x-6 mb-6">
 
-    <!-- アイコン -->
-    <div>
-      <%= link_to user_path(@user) do %>
-        <div class="w-16 h-16 flex items-center justify-center rounded-full bg-orange-700 text-white text-xl font-bold shadow-lg border-2 border-white">
-          <%= @user.initial_icon %>
-        </div>
-      <% end %>
-    </div>
+    <!-- ユーザーアイコン -->
+    <%= image_tag(
+      @user.display_image.is_a?(String) ?
+        asset_path(@user.display_image) :
+        @user.display_image,
+      class: "rounded-full w-10 h-10 object-cover border shadow-md"
+    ) %>
 
     <!-- 名前と自己紹介 -->
     <div class="flex-1">
