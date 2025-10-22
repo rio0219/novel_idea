@@ -17,7 +17,7 @@ class User < ApplicationRecord
     if image.attached? && image.variable?
       image.variant(resize_to_fill: size)
     else
-      ActionController::Base.helpers.asset_path("default_user.png")
+      ActionController::Base.helpers.asset_path("default_user.PNG")
     end
   end
 end
