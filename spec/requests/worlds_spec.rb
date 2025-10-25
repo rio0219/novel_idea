@@ -21,7 +21,8 @@ RSpec.describe "Worldviews", type: :request do
     context "有効なパラメータの場合" do
       it "Worldviewが作成されること" do
         expect {
-          post work_worldview_path(work), params: { worldview: { country: "Fantasy World", culture: "Magic and myths" } }, headers: @headers
+          post work_worldview_path(work),
+               params: { worldview: { country: "Fantasy World", culture: "Magic and myths" } }, headers: @headers
         }.to change(Worldview, :count).by(1)
       end
     end
@@ -49,7 +50,8 @@ RSpec.describe "Worldviews", type: :request do
 
     context "有効なパラメータの場合" do
       it "Worldviewが更新されること" do
-        patch work_worldview_path(work), params: { worldview: { country: "New country", culture: "New culture" } }, headers: @headers
+        patch work_worldview_path(work), params: { worldview: { country: "New country", culture: "New culture" } },
+                                         headers: @headers
         expect(worldview.reload.country).to eq("New country")
         expect(worldview.reload.culture).to eq("New culture")
       end

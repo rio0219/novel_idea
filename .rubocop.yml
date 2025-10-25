@@ -1,8 +1,94 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+# ================================
+# RuboCop 設定ファイル
+# ================================
+# コーディング規約のチェックを自動で行うツール
+# Railsプロジェクト全体のスタイルを統一する目的で利用します
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# --------------------------------
+# 共通設定
+# --------------------------------
+inherit_from:
+  - .rubocop_todo.yml # 自動生成された例外ルールを読み込み
+
+AllCops:
+  # Rubyのバージョンを指定（DockerfileやGemfile.lockと揃える）
+  TargetRubyVersion: 3.2
+
+  # 新しいCop（ルール）はデフォルトで有効化
+  NewCops: enable
+
+  # RuboCopが検査しないフォルダを指定
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+  # rubocop-rails などの拡張Gemの警告を抑制
+  # （Rubocopが自動で「おすすめ拡張があります」と出す警告を止める）
+  SuggestExtensions: false
+
+# --------------------------------
+# コメント・文字列リテラル
+# --------------------------------
+Style/FrozenStringLiteralComment:
+  Enabled: false # "frozen_string_literal: true" のコメントを必須にしない
+
+# --------------------------------
+# レイアウト・整形ルール
+# --------------------------------
+# devise.rbのコメント行でLineLength警告が出るため除外
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'config/initializers/devise.rb'
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true # クラス定義内の空行を自動整形
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true # モジュール定義内の空行を自動整形
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true # ブロック（do...endなど）の内側に空行を許容
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable # endの位置を変数定義に合わせる
+
+# --------------------------------
+# コードスタイル関連
+# --------------------------------
+Style/StringLiterals:
+  EnforcedStyle: double_quotes # 文字列はダブルクォートを使用（"example"）
+
+Style/Documentation:
+  Enabled: false # クラスやモジュールにYARDコメントを強制しない
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested # クラスやモジュールのネストは "A::B" ではなく
+                        # "module A; class B; end; end" 形式に統一
+
+# --------------------------------
+# 命名規則
+# --------------------------------
+Naming/VariableName:
+  EnforcedStyle: snake_case # 変数名はスネークケース（例: user_name）
+
+# ✅ 警告対応箇所（リネーム対応済み）
+# 「Naming/PredicateName」は非推奨 → 「Naming/PredicatePrefix」に変更
+Naming/PredicatePrefix:
+  Enabled: true # 「is_」「has_」などのプレフィックス付きメソッド名を許容
+
+# --------------------------------
+# 冗長な記述の扱い
+# --------------------------------
+Style/RedundantSelf:
+  Enabled: true # 不要なselfを指摘（例: self.name → name）
+
+Style/RedundantReturn:
+  Enabled: true # 不要なreturnを指摘（例: return value → value）
+
+# --------------------------------
+# メトリクス関連（メソッドの長さなど）
+# --------------------------------
+Metrics/MethodLength:
+  Max: 35 # 長すぎるメソッドを警告（ただし初期設定より少し緩め）
