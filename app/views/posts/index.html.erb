@@ -6,11 +6,12 @@
     <li class="mb-4 p-2 border rounded flex items-center gap-2">
       <!-- ユーザーアイコン -->
       <%= image_tag post.user.display_image, class: "rounded-full w-10 h-10 object-cover border shadow-md" %>
-
       <!-- ユーザー名とジャンル -->
       <div>
         <%= link_to post.user.display_name, user_path(post.user), class: "font-semibold text-blue-600 hover:underline" %>
-        (<%= post.genre.name %>) : <%= post.content %>
+        (<%= post.genre.name %>) :
+        <!-- 投稿内容を詳細ページへのリンクに -->
+        <%= link_to post.content, post_path(post), style: "color: black; display: block;" %>
       </div>
 
       <!-- 編集・削除ボタン -->

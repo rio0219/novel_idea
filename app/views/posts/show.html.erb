@@ -1,0 +1,15 @@
+<div class="post-detail p-4">
+  <h2 class="text-xl font-bold mb-4"><%= @post.content %></h2>
+
+  <h3 class="text-lg font-semibold mb-2">コメント一覧</h3>
+  <div id="comments" data-post-id="<%= @post.id %>">
+    <%= render @comments %>
+  </div>
+
+  <%= form_with model: [@post, @comment], data: { turbo_stream: true }, class: "mt-4" do |f| %>
+    <div class="flex gap-2">
+      <%= f.text_field :content, placeholder: "コメントを入力", class: "flex-1 border rounded p-2" %>
+      <%= f.submit "投稿", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+    </div>
+  <% end %>
+</div>
