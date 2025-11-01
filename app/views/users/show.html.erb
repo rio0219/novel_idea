@@ -30,19 +30,31 @@
   </div>
 
   <!-- 投稿一覧 -->
-  <h3 class="mt-4 mb-2 text-lg font-semibold border-b pb-1"><%= t("titles.my_post_idea") %></h3>
-  
+<h3 class="mt-4 mb-2 text-lg font-semibold border-b pb-1">
+  <%= t("titles.my_post_idea") %>
+</h3>
+
   <ul class="space-y-3">
     <% @posts.each do |post| %>
-      <li class="p-4 border rounded-xl bg-white shadow-sm flex justify-between items-center">
-        <div>
+      <li class="p-4 border rounded-xl bg-white shadow-sm flex items-center">
+        <!-- 左側：投稿内容 -->
+        <div class="flex-1">
           <%= link_to truncate(post.content, length: 40), post_path(post), class: "text-gray-800 hover:underline" %>
         </div>
-        <div class="flex space-x-2">
-          <%= link_to t("buttons.edit"), edit_post_path(post, from: user_path(@user)), class: "px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm" %>
+
+        <!-- 右側：編集・削除・いいね -->
+        <div class="flex items-center gap-2 ml-auto">
+          <%= link_to t("buttons.edit"), edit_post_path(post, from: user_path(@user)),
+              class: "px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm" %>
+
           <%= link_to t("buttons.destroy"), post_path(post),
               data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
               class: "px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm" %>
+
+          <!-- ❤️ いいねボタン -->
+          <div id="like-button-<%= post.id %>">
+            <%= render "likes/like", post: post %>
+          </div>
         </div>
       </li>
     <% end %>
