@@ -13,6 +13,23 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comments = @post.comments.includes(:user).order(created_at: :desc)
     @comment = Comment.new
+
+    set_meta_tags(
+      title: "#{@post.user.display_name}のアイデア - #{@post.genre.name}",
+      description: @post.content.truncate(60),
+      og: {
+        title: "#{@post.user.display_name}のアイデア - #{@post.genre.name}",
+        description: @post.content.truncate(80),
+        type: "article",
+        url: post_url(@post),
+        image: view_context.image_url("ogp.png")
+      },
+      twitter: {
+        card: "summary_large_image",
+        site: "@your_twitter_id", # 任意でOK
+        image: view_context.image_url("ogp.png")
+      }
+    )
   end
 
   def new

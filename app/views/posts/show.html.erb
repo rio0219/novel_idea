@@ -1,15 +1,55 @@
-<div class="post-detail p-4">
-  <h2 class="text-xl font-bold mb-4"><%= @post.content %></h2>
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md">
+  <!-- 投稿ヘッダー -->
+  <div class="flex items-center mb-4">
+    <%= image_tag @post.user.display_image, class: "w-12 h-12 rounded-full object-cover border shadow" %>
+    <div class="ml-3">
+      <p class="font-semibold text-lg text-gray-800"><%= @post.user.display_name %></p>
+      <p class="text-sm text-gray-500">ジャンル：<%= @post.genre.name %></p>
+    </div>
+  </div>
 
-  <h3 class="text-lg font-semibold mb-2">コメント一覧</h3>
-  <div id="comments" data-post-id="<%= @post.id %>">
+  <!-- 投稿内容 -->
+  <div class="border-t border-gray-200 pt-4 mb-6">
+    <p class="text-lg leading-relaxed text-gray-700 whitespace-pre-wrap"><%= @post.content %></p>
+  </div>
+
+  <!-- いいね（仮） -->
+  <div class="flex items-center gap-2 mb-8">
+    ❤️ <span class="text-gray-600 text-sm">(いいね機能追加予定)</span>
+  </div>
+
+  <!-- Xシェアボタン -->
+  <div class="mt-6">
+    <% share_url = "https://twitter.com/intent/tweet?" \
+      "url=#{CGI.escape(post_url(@post))}" \
+      "&text=#{CGI.escape("#{@post.content} - #{@post.genre.name} | TSUMUGIBA")}" \
+      "&hashtags=#{CGI.escape('TSUMUGIBA,創作アイデア')}" %>
+  
+    <%= link_to share_url,
+                target: "_blank",
+                rel: "noopener noreferrer",
+                class: "inline-flex items-center gap-2 bg-black hover:bg-gray-900 text-white font-semibold px-4 py-2 rounded-full shadow transition transform hover:-translate-y-0.5" do %>
+  
+      <!-- Xアイコン（SVG） -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" fill="currentColor" class="w-5 h-5">
+        <path d="M714 519L1160 0H1051L660 450L408 0H0L468 802L0 1227H109L527 748L802 1227H1200L714 519ZM587 682L533 595L145 80H367L660 562L713 649L1077 1147H860L587 682Z"/>
+      </svg>
+  
+      <span>Xでシェア</span>
+    <% end %>
+  </div>
+
+  <!-- コメント一覧 -->
+  <h3 class="text-lg font-semibold mb-3">コメント一覧</h3>
+  <div id="comments" data-post-id="<%= @post.id %>" class="space-y-3">
     <%= render @comments %>
   </div>
 
-  <%= form_with model: [@post, @comment], data: { turbo_stream: true }, class: "mt-4" do |f| %>
+  <!-- コメント投稿フォーム -->
+  <%= form_with model: [@post, @comment], data: { turbo_stream: true }, class: "mt-6" do |f| %>
     <div class="flex gap-2">
-      <%= f.text_field :content, placeholder: "コメントを入力", class: "flex-1 border rounded p-2" %>
-      <%= f.submit "投稿", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+      <%= f.text_area :content, rows: 2, class: "flex-1 border rounded-lg p-2 text-sm focus:ring focus:ring-blue-100", placeholder: "コメントを入力..." %>
+      <%= f.submit "投稿", class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
     </div>
   <% end %>
 </div>
