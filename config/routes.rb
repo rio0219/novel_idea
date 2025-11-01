@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "likes/create"
+  get "likes/destroy"
   get "ai_consultations/index"
   get "ai_consultations/create"
   devise_for :users
