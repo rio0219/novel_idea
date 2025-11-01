@@ -24,6 +24,25 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment = @post.comments.find(params[:id])
+    if @comment.user == current_user
+      @comment.destroy
+      respond_to do |format|
+        format.turbo_stream do
+          @comments = @post.comments.includes(:user).order(created_at: :desc)
+          render turbo_stream: turbo_stream.replace(
+            "comments",
+            partial: "comments/comment",
+            collection: @comments
+          )
+        end
+      end
+    else
+      head :forbidden
+    end
+  end
+
   private
 
   def set_post

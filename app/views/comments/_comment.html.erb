@@ -1,4 +1,13 @@
-<div class="comment-item p-3 mb-2 bg-yellow-50 rounded-xl shadow-sm">
-  <p class="font-bold"><%= comment.user.display_name %></p>
-  <p><%= comment.content %></p>
+<div class="comment-item p-3 mb-2 bg-yellow-50 rounded-xl shadow-sm flex justify-between items-start">
+  <div>
+    <p class="font-bold"><%= comment.user.display_name %></p>
+    <p><%= comment.content %></p>
+  </div>
+
+  <% if comment.user == current_user %>
+    <%= button_to "🗑", post_comment_path(comment.post, comment),
+        method: :delete,
+        data: { turbo_stream: true, confirm: "削除してもよろしいですか？" },
+        class: "text-red-500 hover:text-red-700 font-bold" %>
+  <% end %>
 </div>
