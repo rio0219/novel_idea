@@ -10,7 +10,7 @@ class PostsController < ApplicationController
 
   # コメント一覧兼詳細
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by!(uuid: params[:id])
     @comments = @post.comments.includes(:user).order(created_at: :desc)
     @comment = Comment.new
 
@@ -72,7 +72,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by!(uuid: params[:id])
   end
 
   def post_params

@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_01_133104) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_02_084927) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -109,8 +110,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_01_133104) do
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["genre_id"], name: "index_posts_on_genre_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["uuid"], name: "index_posts_on_uuid", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -123,8 +126,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_01_133104) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.text "bio"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
   create_table "works", force: :cascade do |t|
@@ -135,8 +140,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_01_133104) do
     t.text "synopsis"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["genre_id"], name: "index_works_on_genre_id"
     t.index ["user_id"], name: "index_works_on_user_id"
+    t.index ["uuid"], name: "index_works_on_uuid", unique: true
   end
 
   create_table "worldviews", force: :cascade do |t|

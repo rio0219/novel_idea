@@ -5,6 +5,7 @@ class PlotsController < ApplicationController
   layout "work"
 
   def index
+    @work = Work.find_by!(uuid: params[:work_id])
     @plots = @work.plots
   end
 
@@ -39,7 +40,7 @@ class PlotsController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:work_id])
+    @work = Work.find_by!(uuid: params[:work_id])
   end
 
   def set_plot

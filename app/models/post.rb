@@ -8,6 +8,11 @@ class Post < ApplicationRecord
   validates :content, presence: true, length: { maximum: 1000 }
   validates :genre_id, presence: true
 
+  # URLでidの代わりにuuidを使う
+  def to_param
+    uuid
+  end
+
   def liked_by?(user)
     likes.exists?(user_id: user.id)
   end

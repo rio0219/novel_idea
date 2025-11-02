@@ -45,7 +45,7 @@ class WorksController < ApplicationController
   private
 
   def set_work
-    @work = current_user.works.find(params[:id])
+    @work = Work.find_by!(uuid: params[:id])
   end
 
   def work_params

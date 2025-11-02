@@ -8,4 +8,9 @@ class Work < ApplicationRecord
   validates :title, presence: true, length: { maximum: 100 }
   validates :theme, length: { maximum: 50 }, allow_blank: true
   validates :synopsis, length: { maximum: 1000 }, allow_blank: true
+
+  # URLにUUIDを使用
+  def to_param
+    uuid
+  end
 end

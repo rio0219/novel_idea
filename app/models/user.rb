@@ -14,6 +14,11 @@ class User < ApplicationRecord
     name.present? ? name : "名無しさん"
   end
 
+  # URLなどでidの代わりにuuidを使う
+  def to_param
+    uuid
+  end
+
   # 表示用画像（ActiveStorage or assetファイル）
   def display_image(size: [ 120, 120 ])
     if image.attached? && image.variable?

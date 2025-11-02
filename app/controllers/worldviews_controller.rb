@@ -12,7 +12,7 @@ class WorldviewsController < ApplicationController
     Rails.logger.debug "=== params start ==="
     Rails.logger.debug params.inspect
     Rails.logger.debug "=== params end ==="
-    @work = Work.find(params[:work_id])
+    @work = Work.find_by!(uuid: params[:work_id])
     @worldview = @work.build_worldview(worldview_params)
     if @worldview.save
       redirect_to works_path, notice: t("notices.created", resource: Worldview.model_name.human)
@@ -45,7 +45,7 @@ class WorldviewsController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:work_id])
+    @work = Work.find_by!(uuid: params[:work_id])
   end
 
   def set_worldview
