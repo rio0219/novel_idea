@@ -5,7 +5,7 @@ class CharactersController < ApplicationController
   layout "work"
 
   def index
-    @work = Work.find(params[:work_id])
+    @work = Work.find_by!(uuid: params[:work_id])
     @characters = @work.characters
   end
 
@@ -41,7 +41,7 @@ class CharactersController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:work_id])
+    @work = Work.find_by!(uuid: params[:work_id])
   end
 
   def set_character
