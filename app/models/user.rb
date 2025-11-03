@@ -27,4 +27,13 @@ class User < ApplicationRecord
       ActionController::Base.helpers.asset_path("default_user.PNG")
     end
   end
+
+  #  Ransack 検索許可
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[name created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    ["posts"]
+  end
 end

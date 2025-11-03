@@ -14,6 +14,17 @@ class Post < ApplicationRecord
   end
 
   def liked_by?(user)
+    return false if user.nil?
+
     likes.exists?(user_id: user.id)
+  end
+
+  # Ransack 検索許可
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[content genre_id created_at updated_at user_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[user genre]
   end
 end
