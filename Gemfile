@@ -68,3 +68,4 @@ gem "letter_opener_web", "~> 3.0", group: :development
 gem "dotenv-rails", groups: [ :development, :test ]
 gem "ruby-openai"
 gem "meta-tags"
+gem "ransack"

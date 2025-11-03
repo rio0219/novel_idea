@@ -1,0 +1,35 @@
+<h2 class="text-2xl font-bold mb-6 text-blue-900">投稿検索</h2>
+
+<%= search_form_for @q, url: search_posts_path, method: :get, html: { class: "space-y-4" } do |f| %>
+  <div>
+    <%= f.label :content_or_user_name_cont, "キーワード検索", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.search_field :content_or_user_name_cont,
+          placeholder: "投稿内容 or ユーザー名",
+          class: "w-full border rounded px-3 py-2 text-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :genre_id_eq, "ジャンルで絞り込み", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.collection_select :genre_id_eq, Genre.all, :id, :name,
+          { include_blank: "すべて" },
+          class: "w-full border rounded px-3 py-2 text-sm" %>
+  </div>
+
+  <%= f.submit "検索", class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-sm" %>
+<% end %>
+
+<hr class="my-6">
+
+<% if @posts.any? %>
+  <ul class="space-y-4">
+    <% @posts.each do |post| %>
+      <li class="p-4 border rounded bg-white shadow-sm">
+        <p class="font-semibold"><%= link_to post.user.display_name, user_path(post.user) %></p>
+        <p class="text-gray-700"><%= truncate(post.content, length: 60) %></p>
+        <p class="text-sm text-gray-500">ジャンル: <%= post.genre.name %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-gray-500 mt-4">該当する投稿はありません。</p>
+<% end %>

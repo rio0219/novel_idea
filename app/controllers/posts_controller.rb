@@ -1,11 +1,13 @@
 class PostsController < ApplicationController
   # layout :select_layout
-  before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :set_post, only: [ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # みんなのアイデア一覧
   def index
     @posts = Post.includes(:user, :genre).order(created_at: :desc)
+    @q = Post.ransack(params[:q])
+    @posts = @q.result(distinct: true).includes(:user, :genre)
   end
 
   # コメント一覧兼詳細
@@ -67,6 +69,11 @@ class PostsController < ApplicationController
     else
       redirect_back fallback_location: posts_path, alert: t("alerts.unauthorized")
     end
+  end
+
+  def search
+    @q = Post.ransack(params[:q])
+    @posts = @q.result.includes(:user, :genre)
   end
 
   private

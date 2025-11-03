@@ -77,8 +77,14 @@
           <%= image_tag "list_icon.PNG", alt: "投稿一覧", class: "mx-auto w-[90px] h-[90px] mb-2" %>
           <p class="text-blue-900"><%= t("buttons.idea_list") %></p>
         <% end %>
+    
+        <!-- 投稿検索 -->
+        <%= link_to search_posts_path, class: "block hover:opacity-80 transition" do %>
+          <%= image_tag "search_icon.PNG", alt: "検索", class: "mx-auto w-[90px] h-[90px] mb-2" %>
+          <p class="text-blue-900">検索</p>
+        <% end %>
       </nav>
-    </aside>
+    </aside> 
 
       <!-- メインコンテンツ -->
       <main class="flex-1 container mx-auto p-4">
