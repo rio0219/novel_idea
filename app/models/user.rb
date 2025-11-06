@@ -8,7 +8,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
   # 名前が未設定の場合のデフォルト
   def display_name
     name.present? ? name : "名無しさん"
@@ -35,5 +36,22 @@ class User < ApplicationRecord
 
   def self.ransackable_associations(_auth_object = nil)
     ["posts"]
+  end
+
+  # Google OAuthから情報を受け取り
+  def self.from_omniauth(auth)
+    # 既にユーザーが存在する場合はそれを返す
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+
+    # 存在しない場合は新規作成
+    user ||= User.create(
+      provider: auth.provider,
+      uid: auth.uid,
+      email: auth.info.email,
+      password: Devise.friendly_token[0, 20],
+      name: auth.info.name
+    )
+
+    user # Userインスタンスを返す
   end
 end

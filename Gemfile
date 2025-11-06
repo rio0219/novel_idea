@@ -69,3 +69,6 @@ gem "dotenv-rails", groups: [ :development, :test ]
 gem "ruby-openai"
 gem "meta-tags"
 gem "ransack"
+gem "omniauth"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-google-oauth2"
