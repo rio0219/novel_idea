@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   get "likes/destroy"
   get "ai_consultations/index"
   get "ai_consultations/create"
-  devise_for :users
+  devise_for :users, controllers: {
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
   root "home#index"
 
   get "home/index"

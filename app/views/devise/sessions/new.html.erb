@@ -26,6 +26,16 @@
         <%= f.submit t('devise.sessions.new.sign_in_button'),
               class: "w-full bg-[#002776] text-white py-2 rounded-lg font-semibold hover:bg-[#1a3b8a] transition" %>
       </div>
+
+      <div class="text-center mt-4">
+        <%= link_to user_google_oauth2_omniauth_authorize_path,
+                  class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center" do %>
+          <%= image_tag "google_icon.png", alt: "Google", class: "w-5 h-5 mr-2" %>
+          Googleでログイン
+        <% end %>
+      </div>
+    
+
     <% end %>
 
     <div class="mt-6 flex justify-between text-sm text-[#002776]">
