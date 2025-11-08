@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "ai_consultations/index"
   get "ai_consultations/create"
   devise_for :users, controllers: {
+    registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   root "home#index"
