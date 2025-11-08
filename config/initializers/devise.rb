@@ -303,6 +303,12 @@ Devise.setup do |config|
                     prompt: "select_account",
                     skip_jwt: true
                   }
+  config.omniauth :line,
+                  ENV.fetch("LINE_CHANNEL_ID", nil),
+                  ENV.fetch("LINE_CHANNEL_SECRET", nil),
+                  {
+                    scope: "profile openid email"
+                  }
   # ==> Hotwire/Turbo configuration
   # When using Devise with Hotwire/Turbo, the http status for error responses
   # and some redirects must match the following. The default in Devise for existing

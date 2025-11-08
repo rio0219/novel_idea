@@ -9,7 +9,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: %i[google_oauth2 line]
   # 名前が未設定の場合のデフォルト
   def display_name
     name.present? ? name : "名無しさん"
