@@ -1,11 +1,22 @@
 <h2 class="text-2xl font-bold mb-6 text-blue-900">投稿検索</h2>
 
 <%= search_form_for @q, url: search_posts_path, method: :get, html: { class: "space-y-4" } do |f| %>
-  <div>
+  <div
+    data-controller="autocomplete"
+    data-autocomplete-url-value="<%= autocomplete_posts_path %>"
+  >
     <%= f.label :content_or_user_name_cont, "キーワード検索", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+
+    <!-- Stimulusのターゲット指定 -->
     <%= f.search_field :content_or_user_name_cont,
           placeholder: "投稿内容 or ユーザー名",
-          class: "w-full border rounded px-3 py-2 text-sm" %>
+          class: "w-full border rounded px-3 py-2 text-sm",
+          data: { autocomplete_target: "input", action: "input->autocomplete#search" } %>
+
+    <!-- 候補表示用 -->
+    <ul data-autocomplete-target="results"
+      class="border border-gray-300 bg-white mt-1 rounded shadow-md absolute z-10 w-full">
+    </ul>
   </div>
 
   <div>

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :likes, only: [ :create, :destroy ]
     collection do
       get :search
+      get :autocomplete
     end
   end
 

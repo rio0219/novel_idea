@@ -28,10 +28,34 @@ class PostsController < ApplicationController
       },
       twitter: {
         card: "summary_large_image",
-        site: "@your_twitter_id", # 任意でOK
+        site: "@your_twitter_id",
         image: view_context.image_url("ogp.png")
       }
     )
+  end
+
+  # オートコンプリート
+  def autocomplete
+    query = params[:q]
+    results = []
+
+    # 投稿内容にマッチする候補
+    post_matches = Post.joins(:user, :genre)
+                       .where("posts.content ILIKE ?", "%#{query}%")
+                       .limit(5)
+                       .pluck(:content)
+    results += post_matches
+
+    # ユーザー名にマッチする候補
+    user_matches = User.where("name ILIKE ?", "%#{query}%")
+                       .limit(5)
+                       .pluck(:name)
+    results += user_matches
+
+    # 重複削除
+    # results.uniq!
+
+    render json: results
   end
 
   def new
