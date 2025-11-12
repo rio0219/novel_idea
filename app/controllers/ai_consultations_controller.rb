@@ -17,13 +17,35 @@ class AiConsultationsController < ApplicationController
     if @ai_consultation.save
       response_text = call_ai_api(@ai_consultation.content)
       @ai_consultation.update(response: response_text)
-      redirect_to(params[:return_to].presence || ai_consultations_path, notice: "相談を送信しました。")
+
+      respond_to do |format|
+        format.json do
+          # ✅ JSON要求でもHTML部分テンプレートを返す（content_typeも強制指定）
+          html = render_to_string(
+            partial: "ai_consultations/ai_consultation",
+            locals: { consultation: @ai_consultation },
+            formats: [:html]
+          )
+          render html: html.html_safe, content_type: "text/html", status: :ok
+        end
+
+        format.html do
+          redirect_to ai_consultations_path, notice: "相談を送信しました。"
+        end
+      end
+
     else
-      @consultations = current_user.ai_consultations.order(created_at: :desc) # これが大事！
-      render :index, status: :unprocessable_entity
+      respond_to do |format|
+        format.json do
+          render plain: "保存に失敗しました", status: :unprocessable_entity
+        end
+        format.html do
+          @consultations = current_user.ai_consultations.order(created_at: :desc)
+          render :index, status: :unprocessable_entity
+        end
+      end
     end
   end
-
 
   private
 
