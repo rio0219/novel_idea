@@ -1,73 +1,75 @@
-<div class="w-64 bg-gray-100 min-h-screen p-4">
-  <h3 class="text-lg font-semibold mb-4"><%= t("activerecord.models.work") %></h3>
+<div class="bg-gray-100 p-3 lg:w-64 lg:min-h-screen lg:p-4 shadow-sm">
+  <h3 class="text-base sm:text-lg font-semibold mb-3 text-center lg:text-left">
+    <%= t("activerecord.models.work") %>
+  </h3>
 
-  <ul class="space-y-2">
+  <ul class="flex flex-wrap justify-center gap-3 lg:block lg:space-y-2">
     <!-- 基本設定 -->
-    <li class="text-center">
+    <li class="text-center w-1/3 sm:w-1/4 lg:w-auto">
       <%= link_to (@work&.persisted? ? edit_work_path(@work) : new_work_path),
-                class: "block px-3 py-2 rounded hover:bg-gray-200" do %>
-        <%= image_tag "kihon_icon.PNG", alt: "基本設定アイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-        <span><%= t("titles.work") %></span>
+                  class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+        <%= image_tag "kihon_icon.PNG", alt: "基本設定アイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+        <span class="text-xs sm:text-sm"><%= t("titles.work") %></span>
       <% end %>
     </li>
 
     <!-- キャラクター -->
-    <li class="text-center">
+    <li class="text-center w-1/3 sm:w-1/4 lg:w-auto">
       <% if @work&.persisted? %>
-        <%= link_to work_characters_path(@work), class: "block px-3 py-2 rounded hover:bg-gray-200" do %>
-          <%= image_tag "character_icon.PNG", alt: "キャラクターアイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-          <span><%= t("activerecord.models.character") %></span>
+        <%= link_to work_characters_path(@work), class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+          <%= image_tag "character_icon.PNG", alt: "キャラクターアイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+          <span class="text-xs sm:text-sm"><%= t("activerecord.models.character") %></span>
         <% end %>
       <% else %>
-        <div class="block px-3 py-2 text-gray-400 cursor-not-allowed text-center">
-          <%= image_tag "character_icon.PNG", alt: "キャラクターアイコン（無効）", class: "mx-auto w-[90px] h-[90px] mb-1 opacity-50" %>
-          <span><%= t("activerecord.models.character") %></span>
+        <div class="opacity-50 cursor-not-allowed">
+          <%= image_tag "character_icon.PNG", alt: "キャラクターアイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+          <span class="text-xs sm:text-sm"><%= t("activerecord.models.character") %></span>
         </div>
       <% end %>
     </li>
 
     <!-- 世界観 -->
-    <li class="text-center">
+    <li class="text-center w-1/3 sm:w-1/4 lg:w-auto">
       <% if @work&.persisted? %>
         <% if @work.worldview.present? %>
-          <%= link_to edit_work_worldview_path(@work), class: "block px-3 py-2 rounded hover:bg-gray-200" do %>
-            <%= image_tag "world_icon.PNG", alt: "世界観アイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-            <span><%= t("activerecord.models.worldview") %></span>
+          <%= link_to edit_work_worldview_path(@work), class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+            <%= image_tag "world_icon.PNG", alt: "世界観アイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+            <span class="text-xs sm:text-sm"><%= t("activerecord.models.worldview") %></span>
           <% end %>
         <% else %>
-          <%= link_to new_work_worldview_path(@work), class: "block hover:bg-gray-100 rounded-lg p-2" do %>
-            <%= image_tag "world_icon.PNG", alt: "世界観アイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-            <span><%= t("activerecord.models.worldview") %></span>
+          <%= link_to new_work_worldview_path(@work), class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+            <%= image_tag "world_icon.PNG", alt: "世界観アイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+            <span class="text-xs sm:text-sm"><%= t("activerecord.models.worldview") %></span>
           <% end %>
         <% end %>
       <% else %>
         <div class="opacity-50 cursor-not-allowed">
-          <%= image_tag "world_icon.PNG", alt: "世界観アイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-          <span><%= t("activerecord.models.worldview") %></span>
+          <%= image_tag "world_icon.PNG", alt: "世界観アイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+          <span class="text-xs sm:text-sm"><%= t("activerecord.models.worldview") %></span>
         </div>
       <% end %>
     </li>
-  
+
     <!-- プロット -->
-    <li class="text-center">
+    <li class="text-center w-1/3 sm:w-1/4 lg:w-auto">
       <% if @work&.persisted? %>
-        <%= link_to work_plots_path(@work), class: "block hover:bg-gray-100 rounded-lg p-2" do %>
-          <%= image_tag "plot_icon.PNG", alt: "プロットアイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-          <span><%= t("activerecord.models.plot") %></span>
+        <%= link_to work_plots_path(@work), class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+          <%= image_tag "plot_icon.PNG", alt: "プロットアイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+          <span class="text-xs sm:text-sm"><%= t("activerecord.models.plot") %></span>
         <% end %>
       <% else %>
         <div class="opacity-50 cursor-not-allowed">
-          <%= image_tag "plot_icon.PNG", alt: "プロットアイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-          <span><%= t("activerecord.models.plot") %></span>
+          <%= image_tag "plot_icon.PNG", alt: "プロットアイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+          <span class="text-xs sm:text-sm"><%= t("activerecord.models.plot") %></span>
         </div>
       <% end %>
     </li>
-  
+
     <!-- AI相談 -->
-    <li class="text-center">
-      <%= link_to ai_consultations_path(return_to: request.fullpath), class: "block hover:bg-gray-100 rounded-lg p-2" do %>
-        <%= image_tag "ai_icon.PNG", alt: "AI相談アイコン", class: "mx-auto w-[90px] h-[90px] mb-1" %>
-        <span><%= t("activerecord.models.ai_consultation") %></span>
+    <li class="text-center w-1/3 sm:w-1/4 lg:w-auto">
+      <%= link_to ai_consultations_path(return_to: request.fullpath), class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+        <%= image_tag "ai_icon.PNG", alt: "AI相談アイコン", class: "mx-auto w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] mb-1" %>
+        <span class="text-xs sm:text-sm"><%= t("activerecord.models.ai_consultation") %></span>
       <% end %>
     </li>
   </ul>
