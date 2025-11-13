@@ -18,26 +18,30 @@
   <body class="bg-softOrange text-deepNavy font-sans">
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
-      <nav class="container mx-auto flex justify-between items-center">
+      <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
         <!-- ロゴ / サイト名 -->
-        <h1 class="text-xl font-bold">
+        <h1 class="text-lg sm:text-xl font-bold">
           <%= link_to "TSUMUGIBA", root_path, class: "hover:text-blue-500" %>
         </h1>
-
+  
         <!-- ナビゲーションリンク -->
-        <ul class="flex space-x-4">
+        <ul class="flex flex-wrap justify-center sm:justify-end items-center space-x-3 sm:space-x-4 text-sm sm:text-base">
           <li>
             <%= link_to works_path do %>
-              <%= image_tag "home.PNG", alt: "Home", class: "w-7 h-7 hover:opacity-70" %>
+              <%= image_tag "home.PNG", alt: "Home", class: "w-5 h-5 sm:w-7 sm:h-7 hover:opacity-70" %>
             <% end %>
           </li>
-
+  
           <% if user_signed_in? %>
-            <li class="text-gray-600">ログイン中: <%= current_user.email %></li>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500" %>
+            <li class="text-gray-600 text-xs sm:text-sm break-all">
+              ログイン中: <%= current_user.email %>
+            </li>
+            <li>
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500 text-xs sm:text-sm" %>
+            </li>
           <% else %>
-            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500" %></li>
-            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500" %></li>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
           <% end %>
         </ul>
       </nav>
