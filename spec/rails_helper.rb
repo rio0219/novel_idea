@@ -73,4 +73,12 @@ RSpec.configure do |config|
   # config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers
   config.after(:each) { Warden.test_reset! }
+  config.include FactoryBot::Syntax::Methods
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end

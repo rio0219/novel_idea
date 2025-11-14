@@ -16,4 +16,8 @@ RSpec.describe Plot, type: :model do
       expect(plot).not_to be_valid
     end
   end
+
+  describe "アソシエーション" do
+    it { should belong_to(:work) }
+  end
 end

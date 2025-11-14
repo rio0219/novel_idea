@@ -56,6 +56,9 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "shoulda-matchers", "~> 5.0"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 gem "tailwindcss-rails", "~> 3.3.1"

@@ -15,4 +15,18 @@ RSpec.describe User, type: :model do
       expect(user.display_name).to eq("名無しさん")
     end
   end
+
+  describe "アソシエーション" do
+    it { should have_many(:works).dependent(:destroy) }
+    it { should have_many(:posts).dependent(:destroy) }
+    it { should have_many(:ai_consultations).dependent(:destroy) }
+    it { should have_many(:likes).dependent(:destroy) }
+  end
+
+  describe "#to_param" do
+    it "uuid を返す" do
+      user = User.create!(email: "test2@example.com", password: "password")
+      expect(user.to_param).to eq(user.uuid)
+    end
+  end
 end

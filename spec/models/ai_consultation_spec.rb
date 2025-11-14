@@ -14,4 +14,8 @@ RSpec.describe AiConsultation, type: :model do
       expect(consultation).not_to be_valid
     end
   end
+
+  describe "アソシエーション" do
+    it { should belong_to(:user) }
+  end
 end
