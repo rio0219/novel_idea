@@ -61,7 +61,7 @@ group :test do
   gem "faker"
 end
 
-gem "tailwindcss-rails", "~> 3.3.1"
+gem "tailwindcss-rails", "~> 4.4.0"
 gem "devise"
 
 gem "devise-i18n", "~> 1.15"
