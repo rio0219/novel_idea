@@ -17,4 +17,8 @@ RSpec.describe Character, type: :model do
       expect(character.errors[:name]).to include("を入力してください")
     end
   end
+
+  describe "アソシエーション" do
+    it { should belong_to(:work) }
+  end
 end
