@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "contacts/new"
+  get "contacts/create"
   get "likes/create"
   get "likes/destroy"
   get "ai_consultations/index"
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
 
   resources :ai_consultations, only: [ :index, :create ]
   resources :users, only: [ :show, :edit, :update ]
+  resources :contacts, only: [:new, :create]
 
   resources :works do
     resources :characters, except: :show
