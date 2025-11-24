@@ -1,0 +1,36 @@
+<div id="tutorial-overlay" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+
+  <div class="bg-white rounded-xl shadow-xl p-6 w-11/12 max-w-md relative">
+
+    <!-- スライド内容（JavaScriptで切り替え） -->
+    <div id="slide-1" class="tutorial-slide">
+      <h2 class="text-lg font-bold mb-4">ようこそ、TSUMUGIBAへ！</h2>
+      <p class="text-sm">
+        ここでは、小説のアイデアをまとめたり、AIで発想を広げたりできます。
+      </p>
+    </div>
+
+    <div id="slide-2" class="tutorial-slide hidden">
+      <h2 class="text-lg font-bold mb-4">Work（アイデア管理）</h2>
+      <p class="text-sm">
+        自分のアイデアをまとめ、整理し、ストックできます。  
+        タグ・カテゴリ機能で管理しやすくなっています。
+      </p>
+    </div>
+
+    <div id="slide-3" class="tutorial-slide hidden">
+      <h2 class="text-lg font-bold mb-4">Post（共有機能）</h2>
+      <p class="text-sm">
+        あなたのアイデアを投稿して、他の人の反応を見ることができます。
+      </p>
+    </div>
+
+    <!-- フッターナビ -->
+    <div class="flex justify-between mt-6">
+      <button id="slide-prev" class="px-4 py-2 bg-gray-200 rounded-lg hidden">戻る</button>
+      <button id="slide-next" class="px-4 py-2 bg-blue-500 text-white rounded-lg">次へ</button>
+      <button id="slide-finish" class="px-4 py-2 bg-green-500 text-white rounded-lg hidden">はじめる</button>
+    </div>
+
+  </div>
+</div>
