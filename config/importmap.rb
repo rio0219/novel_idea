@@ -8,3 +8,5 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@rails/ujs", to: "@rails--ujs.js" # @7.1.3
 pin "@rails/actioncable", to: "actioncable.esm.js"
 pin_all_from "app/javascript/channels", under: "channels"
+# 自作チュートリアルJSを読み込む
+pin "tutorial", to: "tutorial.js"
