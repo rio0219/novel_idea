@@ -40,6 +40,15 @@
         <!-- 左側：投稿内容 -->
         <div class="flex-1">
           <%= link_to truncate(post.content, length: 40), post_path(post), class: "text-gray-800 hover:underline" %>
+
+          <!-- タグ表示 -->
+          <div class="mt-1 flex flex-wrap gap-1">
+            <% post.tags.each do |tag| %>
+              <span class="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">
+                #<%= tag.name %>
+              </span>
+            <% end %>
+          </div>
         </div>
 
         <!-- 右側：編集・削除・いいね -->
