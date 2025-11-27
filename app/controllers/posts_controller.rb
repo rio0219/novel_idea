@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  # layout :select_layout
   before_action :authenticate_user!, except: [:index, :show, :search]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -39,21 +38,16 @@ class PostsController < ApplicationController
     query = params[:q]
     results = []
 
-    # 投稿内容にマッチする候補
     post_matches = Post.joins(:user, :genre)
                        .where("posts.content ILIKE ?", "%#{query}%")
                        .limit(5)
                        .pluck(:content)
     results += post_matches
 
-    # ユーザー名にマッチする候補
     user_matches = User.where("name ILIKE ?", "%#{query}%")
                        .limit(5)
                        .pluck(:name)
     results += user_matches
-
-    # 重複削除
-    # results.uniq!
 
     render json: results
   end
@@ -109,6 +103,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:content, :genre_id)
+    params.require(:post).permit(:content, :genre_id, :tag_names)
   end
 end

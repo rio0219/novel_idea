@@ -24,6 +24,20 @@
     <% end %>
   </div>
 
+  <!-- タグ一覧 -->
+  <% if @post.tags.any? %>
+    <div class="mt-6">
+      <p class="font-bold mb-1">タグ：</p>
+      <div class="flex flex-wrap gap-2">
+        <% @post.tags.each do |tag| %>
+          <%= link_to tag.name,
+            search_posts_path(q: { tags_name_eq: tag.name }),
+            class: "px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <!-- Xシェアボタン -->
   <div class="mt-6">
     <% share_url = "https://twitter.com/intent/tweet?" \
