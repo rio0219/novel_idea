@@ -27,7 +27,7 @@ class Post < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[user genre]
+    %w[user genre tags]
   end
 
   # 仮想属性（カンマ区切り入力用）
