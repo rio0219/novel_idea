@@ -4,9 +4,13 @@ class PostsController < ApplicationController
 
   # みんなのアイデア一覧
   def index
-    @posts = Post.includes(:user, :genre).order(created_at: :desc)
     @q = Post.ransack(params[:q])
-    @posts = @q.result(distinct: true).includes(:user, :genre)
+
+    @posts = if params[:tag_id].present?
+      Tag.find(params[:tag_id]).posts.includes(:user, :genre)
+    else
+      @q.result(distinct: true).includes(:user, :genre)
+    end
   end
 
   # コメント一覧兼詳細

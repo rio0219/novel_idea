@@ -17,9 +17,9 @@
         <!-- タグ表示 -->
         <div class="mt-1 flex flex-wrap gap-1">
           <% post.tags.each do |tag| %>
-            <span class="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">
+            <%= link_to posts_path(tag_id: tag.id), class: "px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300" do %>
               #<%= tag.name %>
-            </span>
+            <% end %>
           <% end %>
         </div>
       </div>

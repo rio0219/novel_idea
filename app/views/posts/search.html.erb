@@ -26,6 +26,13 @@
           class: "w-full border rounded px-3 py-2 text-sm" %>
   </div>
 
+  <div>
+    <%= f.label :tags_name_cont, "タグ名で検索", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+    <%= f.search_field :tags_name_cont,
+        placeholder: "例: タグ１",
+        class: "w-full border rounded px-3 py-2 text-sm" %>
+  </div>
+
   <%= f.submit "検索", class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-sm" %>
 <% end %>
 
@@ -38,6 +45,16 @@
         <p class="font-semibold"><%= link_to post.user.display_name, user_path(post.user) %></p>
         <p class="text-gray-700"><%= truncate(post.content, length: 60) %></p>
         <p class="text-sm text-gray-500">ジャンル: <%= post.genre.name %></p>
+
+        <!-- タグ表示 -->
+        <div class="mt-1 flex flex-wrap gap-1">
+          <% post.tags.each do |tag| %>
+            <%= link_to posts_path(tag_id: tag.id),
+              class: "px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300" do %>
+                #<%= tag.name %>
+            <% end %>
+          <% end %>
+        </div>
       </li>
     <% end %>
   </ul>
