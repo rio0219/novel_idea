@@ -47,8 +47,7 @@
 
     <div class="mt-6 flex justify-between text-sm text-[#002776]">
       <%= link_to t('devise.shared.links.sign_up'), new_registration_path(resource_name), class: "hover:underline" %>
-      <%# パスワードリセットは本リリース後に実装予定 %>
-      <%#= link_to t('devise.shared.links.forgot_your_password'), new_password_path(resource_name), class: "hover:underline" %>
+      <%= link_to t('devise.shared.links.forgot_your_password'), new_password_path(resource_name), class: "hover:underline" %>
     </div>
   </div>
 </div>
