@@ -37,8 +37,10 @@
               ログイン中: <%= current_user.email %>
             </li>
             <li>
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete,
-                  data: { turbo: false },
+              <%= button_to "ログアウト",
+                  destroy_user_session_path,
+                  method: :delete,
+                  form: { data: { turbo: false } },
                   class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-xs sm:text-sm" %>
             </li>
           <% else %>

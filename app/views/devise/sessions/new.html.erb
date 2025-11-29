@@ -35,13 +35,14 @@
           Googleでログイン
         <% end %>
 
-        <!-- LINEログインボタン -->
-        <%= link_to user_line_omniauth_authorize_path,
-              class: "bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center w-full justify-center" do %>
-          <%= image_tag "LINE_Brand_icon.png", alt: "LINE", class: "w-5 h-5 mr-2" %>
-          LINEでログイン
-        <% end %>
-      </div>    
+    <!--
+      <%= link_to user_line_omniauth_authorize_path,
+        class: "bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center w-full justify-center" do %>
+        <%= image_tag "LINE_Brand_icon.png", alt: "LINE", class: "w-5 h-5 mr-2" %>
+        LINEでログイン
+      <% end %>
+    -->
+      </div>
 
     <% end %>
 
