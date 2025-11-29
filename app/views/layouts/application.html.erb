@@ -15,7 +15,7 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-softOrange text-deepNavy font-sans" <%= yield :body_data %>>
+  <body data-turbo="false" class="bg-softOrange text-deepNavy font-sans">
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
       <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
@@ -37,11 +37,19 @@
               ログイン中: <%= current_user.email %>
             </li>
             <li>
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500 text-xs sm:text-sm" %>
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete,
+                  data: { turbo: false },
+                  class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-xs sm:text-sm" %>
             </li>
           <% else %>
-            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
-            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
+            <li>
+              <%= link_to "ログイン", new_user_session_path,
+                  class: "bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full text-xs sm:text-sm" %>
+            </li>
+            <li>
+              <%= link_to "新規登録", new_user_registration_path,
+                  class: "bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-xs sm:text-sm" %>
+            </li>
           <% end %>
 
           <li>
