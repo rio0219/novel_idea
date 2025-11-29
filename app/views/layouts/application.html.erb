@@ -15,7 +15,7 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body data-turbo="false" class="bg-softOrange text-deepNavy font-sans">
+  <body class="bg-softOrange text-deepNavy font-sans" <%= yield :body_data %>>
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
       <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
