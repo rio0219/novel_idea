@@ -1,47 +1,121 @@
-<div class="max-w-3xl mx-auto mt-12 p-6 bg-cream-50 rounded-lg shadow text-center">
-  <!-- ロゴ・タイトル -->
-  <div class="flex items-center justify-center gap-6 mb-8">
-    <!-- ロゴ -->
-    <%= image_tag "logo.PNG", alt: "ロゴ", class: "w-29 h-29 object-contain" %>
+<div class="max-w-3xl mx-auto mt-12 p-8 bg-cream-50 rounded-2xl shadow-md text-center">
 
-    <!-- タイトル部分 -->
+  <!-- ロゴ・タイトル -->
+  <div class="flex items-center justify-center gap-6 mb-10">
+    <%= image_tag "logo.PNG", alt: "ロゴ", class: "w-28 h-28 object-contain" %>
+
     <div class="flex flex-col items-start">
-      <h1 class="text-4xl font-bold text-blue-900">TSUMUGIBA</h1>
-      <p class="text-gray-600 text-lg mt-1">— Novel Idea Studio —</p>
+      <h1 class="text-5xl font-bold text-blue-900">TSUMUGIBA</h1>
+      <p class="text-gray-600 text-lg mt-1">Novel Idea Studio</p>
     </div>
   </div>
 
   <!-- メインボタン -->
-  <div class="mb-6 -mt-4">
-    <% if user_signed_in? %>
-      <%= link_to "アイデアを紡ぐ", works_path,
-          class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
-    <% else %>
-      <%= link_to "アイデアを紡ぐ", new_user_session_path,
-          class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
+  <div class="mb-10">
+    <% path = user_signed_in? ? works_path : new_user_session_path %>
+    <%= link_to path, class: "bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-3 px-10 rounded-full shadow-md text-lg" do %>
+       アイデアを紡ぐ
     <% end %>
-    <p class="mt-4 text-gray-700">ネット小説執筆中時のアイデアを整理しよう</p>
+    <p class="mt-4 text-gray-700">ネット小説執筆中のアイデアを整理しよう</p>
   </div>
 
-  <!-- 説明ブロック -->
-  <div class="space-y-4 mb-8 text-left">
-    <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
-      <%= image_tag "template.PNG", alt: "テンプレート画像", class: "w-16 h-16 mr-4 object-cover rounded" %>
-      <p>「キャラ」「世界観」「章構成」ごとにアイデアをまとめやすくするテンプレートをご用意してます。</p>
-    </div>
-    <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
-      <%= image_tag "ai_support.PNG", alt: "AIサポート画像", class: "w-16 h-16 mr-4 object-cover rounded" %>
-      <p>AI相談で貴方のアイデアの悩みをサポート。</p>
-    </div>
-    <div class="flex items-center bg-gray-100 p-3 rounded-lg shadow-sm">
-      <%= image_tag "community.PNG", alt: "コミュニティ画像", class: "w-16 h-16 mr-4 object-cover rounded" %>
-      <p>ネット小説家仲間と繋がりアイデアを共有しよう。</p>
-    </div>
+  <!-- 機能紹介 -->
+  <div class="space-y-4 mb-10 text-left">
+
+    <!-- 1: テンプレート -->
+    <label for="modal-template" class="w-full flex items-center bg-white hover:bg-blue-50 transition p-4 rounded-xl shadow-sm cursor-pointer">
+      <%= image_tag "template.PNG", class: "w-16 h-16 mr-4 object-cover rounded" %>
+      <p class="text-gray-800">テンプレートでアイデアを整理しやすく。</p>
+    </label>
+
+    <!-- 2: AIサポート -->
+    <label for="modal-ai" class="w-full flex items-center bg-white hover:bg-blue-50 transition p-4 rounded-xl shadow-sm cursor-pointer">
+      <%= image_tag "ai_support.PNG", class: "w-16 h-16 mr-4 object-cover rounded" %>
+      <p class="text-gray-800">AI相談でアイデアの悩みをサポート。</p>
+    </label>
+
+    <!-- 3: コミュニティ -->
+    <label for="modal-community" class="w-full flex items-center bg-white hover:bg-blue-50 transition p-4 rounded-xl shadow-sm cursor-pointer">
+      <%= image_tag "community.PNG", class: "w-16 h-16 mr-4 object-cover rounded" %>
+      <p class="text-gray-800">仲間とつながってアイデア共有。</p>
+    </label>
+
   </div>
 
-  <!-- みんなのアイデアを見る -->
-  <div>
-    <%= link_to "みんなのアイデアを見にいく", posts_path,
-        class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow" %>
+  <!-- みんなのアイデア -->
+  <%= link_to posts_path,
+      class: "bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-3 px-10 rounded-full shadow-md text-lg" do %>
+     みんなのアイデアを見る
+  <% end %>
+</div>
+
+
+<!-- ============================ -->
+<!--   ここから下がモーダル本体   -->
+<!-- ============================ -->
+
+<style>
+  /* モーダルの開閉制御 */
+  input[type="checkbox"]:checked + .modal {
+    display: flex;
+  }
+</style>
+
+<!-- 1. テンプレートモーダル -->
+<input type="checkbox" id="modal-template" class="hidden">
+<div class="modal hidden fixed inset-0 bg-black/40 backdrop-blur-sm items-center justify-center p-4 z-50">
+  <label for="modal-template" class="absolute inset-0"></label>
+
+  <div class="bg-white p-6 rounded-xl max-w-md shadow-xl relative z-10">
+    <h2 class="text-xl font-bold mb-3">テンプレート機能</h2>
+    <%= image_tag "template.PNG", class: "w-full rounded mb-4" %>
+    <p class="text-gray-700 mb-6">
+      キャラ・世界観・章構成ごとにアイデアをまとめられるテンプレート画面です。
+    </p>
+
+    <label for="modal-template"
+           class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full cursor-pointer block text-center">
+      閉じる
+    </label>
+  </div>
+</div>
+
+
+<!-- 2. AIモーダル -->
+<input type="checkbox" id="modal-ai" class="hidden">
+<div class="modal hidden fixed inset-0 bg-black/40 backdrop-blur-sm items-center justify-center p-4 z-50">
+  <label for="modal-ai" class="absolute inset-0"></label>
+
+  <div class="bg-white p-6 rounded-xl max-w-md shadow-xl relative z-10">
+    <h2 class="text-xl font-bold mb-3">AI相談機能</h2>
+    <%= image_tag "ai_support.PNG", class: "w-full rounded mb-4" %>
+    <p class="text-gray-700 mb-6">
+      AIがアイデアの悩みを一緒に解決してくれます。
+    </p>
+
+    <label for="modal-ai"
+           class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full cursor-pointer block text-center">
+      閉じる
+    </label>
+  </div>
+</div>
+
+
+<!-- 3. コミュニティモーダル -->
+<input type="checkbox" id="modal-community" class="hidden">
+<div class="modal hidden fixed inset-0 bg-black/40 backdrop-blur-sm items-center justify-center p-4 z-50">
+  <label for="modal-community" class="absolute inset-0"></label>
+
+  <div class="bg-white p-6 rounded-xl max-w-md shadow-xl relative z-10">
+    <h2 class="text-xl font-bold mb-3">コミュニティ機能</h2>
+    <%= image_tag "community.PNG", class: "w-full rounded mb-4" %>
+    <p class="text-gray-700 mb-6">
+      他の小説家とつながってアイデアを共有できます。
+    </p>
+
+    <label for="modal-community"
+           class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full cursor-pointer block text-center">
+      閉じる
+    </label>
   </div>
 </div>

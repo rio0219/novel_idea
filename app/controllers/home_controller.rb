@@ -3,6 +3,8 @@ class HomeController < ApplicationController
   # skip_before_action :authenticate_user!, only: [:index]
 
   def index
+    render layout: "application", formats: :html
+
     if user_signed_in?
       @works = current_user.works
     end
