@@ -40,18 +40,19 @@ class User < ApplicationRecord
 
   # Google OAuthから情報を受け取り
   def self.from_omniauth(auth)
-    # 既にユーザーが存在する場合はそれを返す
     user = User.find_by(provider: auth.provider, uid: auth.uid)
-
-    # 存在しない場合は新規作成
+  
+    # Googleがemailを返さないケースがあり得るので安全に fallback
+    email = auth.info.email.presence || "#{auth.uid}@google-oauth.fake"
+  
     user ||= User.create(
       provider: auth.provider,
       uid: auth.uid,
-      email: auth.info.email,
+      email: email,
       password: Devise.friendly_token[0, 20],
       name: auth.info.name
     )
-
-    user # Userインスタンスを返す
-  end
+  
+    user
+  end  
 end
