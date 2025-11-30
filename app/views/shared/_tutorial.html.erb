@@ -42,7 +42,7 @@
     <!-- 閉じるボタン -->
     <div class="flex justify-center mt-6">
       <%= link_to '閉じる',
-          url_for(params.permit!.except(:tutorial)),
+          url_for(params.to_unsafe_h.except(:tutorial)),
           class: "px-4 py-2 bg-gray-300 rounded-lg" %>
     </div>
 
