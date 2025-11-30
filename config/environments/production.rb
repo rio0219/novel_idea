@@ -49,7 +49,6 @@ Rails.application.configure do
   config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
   config.hosts << "www.tsumugiba-novel.com"
   config.hosts << "tsumugiba-novel-idea-750a223c9406.herokuapp.com"
   # Skip http-to-https redirect for the default health check endpoint.
