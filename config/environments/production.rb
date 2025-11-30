@@ -79,18 +79,18 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: 'www.tsumugiba-novel.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: "www.tsumugiba-novel.com", protocol: "https" }
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               ENV["SMTP_DOMAIN"],
-    user_name:            ENV["SMTP_USER"],
-    password:             ENV["SMTP_PASSWORD"],
-    authentication:       'plain',
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: ENV.fetch("SMTP_DOMAIN", nil),
+    user_name: ENV.fetch("SMTP_USER", nil),
+    password: ENV.fetch("SMTP_PASSWORD", nil),
+    authentication: "plain",
     enable_starttls_auto: true
   }
 
-  config.action_controller.default_url_options = { host: 'www.tsumugiba-novel.com', protocol: 'https' }
+  config.action_controller.default_url_options = { host: "www.tsumugiba-novel.com", protocol: "https" }
   config.action_dispatch.cookies_same_site_protection = :none
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

@@ -42,18 +42,18 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     # すでに存在：provider + uid の組み合わせ
     user = User.find_by(provider: auth.provider, uid: auth.uid)
-  
+
     email = auth.info.email.presence || "#{auth.uid}@google-oauth.fake"
     name  = auth.info.name.presence  || "Google User"
-  
+
     user ||= User.find_or_initialize_by(email: email)
-  
+
     user.provider = auth.provider
     user.uid      = auth.uid
     user.name     ||= name
     user.password ||= Devise.friendly_token[0, 20]
-  
+
     user.save!
     user
-  end  
+  end
 end
