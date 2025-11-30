@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get "/privacy", to: "pages#privacy"
 
   resources :ai_consultations, only: [ :index, :create ]
-  resources :users, only: [ :show, :edit, :update ]
+  resources :users, path: "accounts", only: [:show, :edit, :update]
   resources :contacts, only: [:new, :create]
 
   resources :works do

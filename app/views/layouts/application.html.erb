@@ -15,7 +15,7 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-softOrange text-deepNavy font-sans" <%= yield :body_data %>>
+  <body class="bg-softOrange text-deepNavy font-sans" <%= yield(:body_data) if content_for?(:body_data) %>>
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
       <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
@@ -37,8 +37,10 @@
               ログイン中: <%= current_user.email %>
             </li>
             <li>
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete,
-                  data: { turbo: false },
+              <%= button_to "ログアウト",
+                  destroy_user_session_path,
+                  method: :delete,
+                  form: { data: { turbo: false } },
                   class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-xs sm:text-sm" %>
             </li>
           <% else %>
@@ -53,10 +55,8 @@
           <% end %>
 
           <li>
-            <button onclick="localStorage.removeItem('tutorial_shown'); location.reload();"
-                class="text-gray-600 hover:text-blue-500 text-lg sm:text-xl">
-              ❔
-            </button>
+            <%= link_to "❔", url_for(tutorial: 1),
+              class: "text-gray-600 hover:text-blue-500 text-lg sm:text-xl" %>
           </li>
         </ul>
       </nav>
