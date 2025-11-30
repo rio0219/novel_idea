@@ -302,6 +302,7 @@ Devise.setup do |config|
       scope: "email,profile",
       prompt: "select_account",
       skip_jwt: true,
+      access_type: "offline",
       redirect_uri: "https://www.tsumugiba-novel.com/users/auth/google_oauth2/callback"
     }
 
