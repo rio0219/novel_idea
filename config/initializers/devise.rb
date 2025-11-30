@@ -296,13 +296,15 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.omniauth :google_oauth2,
-  ENV["GOOGLE_CLIENT_ID"],
-  ENV["GOOGLE_CLIENT_SECRET"],
-  {
-    scope: "email,profile",
-    prompt: "select_account",
-    skip_jwt: true
-  }
+    ENV["GOOGLE_CLIENT_ID"],
+    ENV["GOOGLE_CLIENT_SECRET"],
+    {
+      scope: "email,profile",
+      prompt: "select_account",
+      skip_jwt: true,
+      redirect_uri: "https://www.tsumugiba-novel.com/users/auth/google_oauth2/callback"
+    }
+
   config.omniauth :line,
                   ENV.fetch("LINE_CHANNEL_ID", nil),
                   ENV.fetch("LINE_CHANNEL_SECRET", nil),
