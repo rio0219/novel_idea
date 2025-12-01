@@ -3,8 +3,13 @@ class AiConsultationsController < ApplicationController
 
 
   def index
-    @consultations = current_user.ai_consultations.order(created_at: :desc)
-    @ai_consultation= AiConsultation.new
+    @consultations_all = current_user.ai_consultations.order(created_at: :desc, id: :desc)
+  
+    @latest_consultation = @consultations_all.first     # 最新1件
+    @consultations      = @consultations_all.offset(1)  # 2件目以降
+  
+    @ai_consultation = AiConsultation.new
+  
     if params[:return_to].present?
       session[:return_to] = params[:return_to]
     end
@@ -39,7 +44,7 @@ class AiConsultationsController < ApplicationController
           render json: { error: "保存に失敗しました" }, status: :unprocessable_entity
         end
         format.html do
-          @consultations = current_user.ai_consultations.order(created_at: :desc)
+          @consultations = current_user.ai_consultations.order(created_at: :desc, id: :desc)
           render :index, status: :unprocessable_entity
         end
       end
