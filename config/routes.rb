@@ -3,8 +3,7 @@ Rails.application.routes.draw do
   get "contacts/create"
   get "likes/create"
   get "likes/destroy"
-  get "ai_consultations/index"
-  get "ai_consultations/create"
+
   devise_for :users, controllers: {
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
