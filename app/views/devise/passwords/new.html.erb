@@ -1,4 +1,4 @@
-<div class="max-w-3xl mx-auto mt-12 p-8 bg-cream-50 rounded-2xl shadow-md text-center">
+<div class="max-w-3xl mx-auto mt-12 p-8 bg-white rounded-2xl shadow-lg border border-gray-200 text-center">
 
   <!-- タイトル -->
   <h2 class="text-3xl font-bold text-blue-900 mb-8">
@@ -11,7 +11,9 @@
     <!-- メールアドレス -->
     <div class="text-left mb-6">
       <%= f.label :email, t("devise.passwords.new.email"), class: "block text-gray-700 font-medium mb-2" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email",
+      <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
             class: "w-full px-4 py-3 border border-blue-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none" %>
     </div>
 
@@ -23,9 +25,23 @@
 
   <% end %>
 
-  <!-- 下部リンク -->
-  <div class="mt-8 text-blue-900">
-    <%= render "devise/shared/links" %>
+  <!-- ★ 下部リンク（横並びにカスタム） -->
+  <div class="mt-10">
+    <div class="flex justify-center gap-6 text-blue-900 text-sm font-medium">
+
+      <%# ログイン %>
+      <%= link_to t("devise.shared.links.sign_in"),
+          new_session_path(resource_name),
+          class: "hover:underline" %>
+
+      <%# 新規登録（リソースが登録可能な場合） %>
+      <% if devise_mapping.registerable? %>
+        <%= link_to t("devise.shared.links.sign_up"),
+            new_registration_path(resource_name),
+            class: "hover:underline" %>
+      <% end %>
+
+    </div>
   </div>
 
 </div>
