@@ -18,8 +18,8 @@ export default class extends Controller {
     console.log("consultationsTarget:", this.consultationsTarget) 
     const thinkingElement = document.createElement("div")
     thinkingElement.className = "bg-gray-100 text-gray-600 p-3 rounded-xl my-2 text-sm text-center"
-    thinkingElement.textContent = "🤔 AIが考え中…"
-    this.consultationsTarget.appendChild(thinkingElement)
+    thinkingElement.textContent = "AIが考え中…"
+    this.consultationsTarget.insertAdjacentElement("afterbegin", thinkingElement)
 
     // --- スピナーを表示 ---
     this.spinnerTarget.classList.remove("hidden")
@@ -40,8 +40,7 @@ export default class extends Controller {
       this.spinnerTarget.classList.add("hidden")
 
       // --- 応答追加 ---
-      this.consultationsTarget.insertAdjacentHTML("beforeend", data.html)
-
+      this.consultationsTarget.insertAdjacentHTML("afterbegin", data.html)
       // --- フォームリセット ---
       form.reset()
     } catch (error) {
