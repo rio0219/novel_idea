@@ -1,49 +1,69 @@
-<% show = params[:tutorial] == "1" %>
+<<% show = params[:tutorial] == "1" %>
 
 <div id="tutorial-overlay"
      class="<%= show ? '' : 'hidden' %> fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
 
   <div class="bg-white rounded-xl shadow-xl p-6 w-11/12 max-w-md relative">
 
-    <!-- スライド1：Welcome -->
+    <!-- === スライド 1：Welcome === -->
     <div class="tutorial-slide">
       <h2 class="text-xl font-bold mb-4">ようこそ、TSUMUGIBAへ！</h2>
       <p class="text-sm leading-relaxed">
         あなたの物語を形にするための、アイデア整理＆創作支援アプリです。
-        まずは基本の使い方を軽くご紹介します。
+        まずは基本の使い方をご紹介します。
       </p>
     </div>
 
-    <!-- スライド2：Work -->
-    <div class="tutorial-slide mt-4">
+    <!-- === スライド 2：Work === -->
+    <div class="tutorial-slide hidden">
       <h2 class="text-xl font-bold mb-4">Work：アイデア管理</h2>
       <p class="text-sm leading-relaxed">
-        キャラクター・世界観・プロットなどを体系的にまとめられるページです。
-        テンプレートもあるので、迷わず整理できます。
+        キャラクター・世界観・プロットなどを体系的にまとめるページです。
+        テンプレートを利用して整理を進められます。
       </p>
     </div>
 
-    <!-- スライド3：AI相談 -->
-    <div class="tutorial-slide mt-4">
+    <!-- === スライド 3：AI相談 === -->
+    <div class="tutorial-slide hidden">
       <h2 class="text-xl font-bold mb-4">AI相談：アイデア壁打ち</h2>
       <p class="text-sm leading-relaxed">
         行き詰まったときはAIに相談できます。アイデア出しに役立ちます！
       </p>
     </div>
 
-    <!-- スライド4：Post -->
-    <div class="tutorial-slide mt-4">
+    <!-- === スライド 4：Post === -->
+    <div class="tutorial-slide hidden">
       <h2 class="text-xl font-bold mb-4">Post：みんなのアイデア</h2>
       <p class="text-sm leading-relaxed">
-        他の創作者のアイデアから刺激をもらったり、自分の作品を投稿できます。
+        他の創作者の投稿から刺激を得たり、自分のアイデアを共有できます。
       </p>
     </div>
 
-    <!-- 閉じるボタン -->
-    <div class="flex justify-center mt-6">
-      <%= link_to '閉じる',
-          url_for(params.to_unsafe_h.except(:tutorial)),
-          class: "px-4 py-2 bg-gray-300 rounded-lg" %>
+    <!-- === スライド 5：完了 === -->
+    <div class="tutorial-slide hidden">
+      <h2 class="text-xl font-bold mb-4">準備完了！</h2>
+      <p class="text-sm leading-relaxed">
+        それでは、あなたの創作を始めていきましょう。  
+        TSUMUGIBA はあなたの物語作りを応援します。
+      </p>
+    </div>
+
+    <!-- === ボタン === -->
+    <div class="flex justify-between mt-6">
+      <button id="slide-prev"
+              class="hidden px-4 py-2 bg-gray-300 rounded-lg text-sm">
+        戻る
+      </button>
+
+      <button id="slide-next"
+              class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm">
+        次へ
+      </button>
+
+      <button id="slide-finish"
+              class="hidden px-4 py-2 bg-green-500 text-white rounded-lg text-sm">
+        完了
+      </button>
     </div>
 
   </div>

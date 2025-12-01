@@ -1,5 +1,5 @@
 document.addEventListener("turbo:load", () => {
-  // === work#index だけでチュートリアルを動かす ===
+  // === work#index だけで動作 ===
   const isWorkIndex = document.body.dataset.controller === "works-index";
   if (!isWorkIndex) return;
 
@@ -13,6 +13,7 @@ document.addEventListener("turbo:load", () => {
 
   let current = 0;
 
+  // スライド表示処理
   const showSlide = (index) => {
     slides.forEach((s, i) => {
       s.classList.toggle("hidden", i !== index);
@@ -23,29 +24,26 @@ document.addEventListener("turbo:load", () => {
     finishBtn.classList.toggle("hidden", index !== slides.length - 1);
   };
 
-  // 初回表示 / ?ボタン強制表示
-  if (window.forceTutorial || !localStorage.getItem("tutorial_shown")) {
+  // === 初回表示 / ?ボタン強制表示 ===
+  const forceFromParam = new URLSearchParams(window.location.search).get("tutorial") === "1";
+
+  if (forceFromParam || !localStorage.getItem("tutorial_shown")) {
     overlay.classList.remove("hidden");
   }
 
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      current = Math.min(current + 1, slides.length - 1);
-      showSlide(current);
-    });
-  }
+  // === ボタンイベント ===
+  nextBtn?.addEventListener("click", () => {
+    current = Math.min(current + 1, slides.length - 1);
+    showSlide(current);
+  });
 
-  if (prevBtn) {
-    prevBtn.addEventListener("click", () => {
-      current = Math.max(current - 1, 0);
-      showSlide(current);
-    });
-  }
+  prevBtn?.addEventListener("click", () => {
+    current = Math.max(current - 1, 0);
+    showSlide(current);
+  });
 
-  if (finishBtn) {
-    finishBtn.addEventListener("click", () => {
-      overlay.classList.add("hidden");
-      localStorage.setItem("tutorial_shown", "true");
-    });
-  }
+  finishBtn?.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+    localStorage.setItem("tutorial_shown", "true");
+  });
 });
