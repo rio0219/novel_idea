@@ -22,10 +22,11 @@ class AiConsultationsController < ApplicationController
         format.json do
           html = render_to_string(
             partial: "ai_consultations/ai_consultation",
-            locals: { consultation: @ai_consultation }
+            locals: { consultation: @ai_consultation },
+            formats: [:html]
           )
           render json: { html: html }, status: :ok
-        end
+        end        
   
         format.html do
           redirect_to ai_consultations_path, notice: "相談を送信しました。"
