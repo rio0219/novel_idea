@@ -5,7 +5,7 @@
     </h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
-      html: { class: "space-y-5", data: { turbo: false } }) do |f| %>
+      html: { class: "space-y-5", data: { turbo: "false" } }) do |f| %>
       <!-- メールアドレス -->
       <div>
         <%= f.label :email, t("devise.registrations.new.email"), class: "block text-gray-700 font-medium mb-1" %>
