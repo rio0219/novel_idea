@@ -4,12 +4,12 @@ class AiConsultationsController < ApplicationController
 
   def index
     @consultations_all = current_user.ai_consultations.order(created_at: :desc, id: :desc)
-  
-    @latest_consultation = @consultations_all.first     # 最新1件
-    @consultations      = @consultations_all.offset(1)  # 2件目以降
-  
+
+    @latest_consultation = @consultations_all.first # 最新1件
+    @consultations = @consultations_all.offset(1) # 2件目以降
+
     @ai_consultation = AiConsultation.new
-  
+
     if params[:return_to].present?
       session[:return_to] = params[:return_to]
     end
@@ -18,11 +18,11 @@ class AiConsultationsController < ApplicationController
 
   def create
     @ai_consultation = current_user.ai_consultations.build(ai_consultation_params)
-  
+
     if @ai_consultation.save
       response_text = call_ai_api(@ai_consultation.content)
       @ai_consultation.update(response: response_text)
-  
+
       respond_to do |format|
         format.json do
           html = render_to_string(
@@ -31,13 +31,13 @@ class AiConsultationsController < ApplicationController
             formats: [:html]
           )
           render json: { html: html }, status: :ok
-        end        
-  
+        end
+
         format.html do
           redirect_to ai_consultations_path, notice: "相談を送信しました。"
         end
       end
-  
+
     else
       respond_to do |format|
         format.json do
@@ -49,7 +49,7 @@ class AiConsultationsController < ApplicationController
         end
       end
     end
-  end  
+  end
 
   private
 
