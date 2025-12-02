@@ -46,9 +46,18 @@
       <!-- 登録ボタン -->
       <div class="text-center">
         <%= f.submit t("devise.registrations.new.sign_up"),
-              class: "bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-6 rounded-full shadow transition duration-200" %>
+              class: "bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded w-full shadow transition duration-200 flex items-center justify-center" %>
       </div>
     <% end %>
+  
+        <!-- Googleログイン -->
+    <div class="text-center mt-4">
+      <%= link_to user_google_oauth2_omniauth_authorize_path,
+            class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded w-full inline-flex items-center justify-center shadow" do %>
+        <%= image_tag "google_icon.png", alt: "Google", class: "w-5 h-5 mr-2" %>
+        Googleでログイン
+      <% end %>
+    </div>
 
     <!-- 下部リンク -->
     <div class="mt-4 text-center">
