@@ -1,17 +1,17 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
-    before_action :skip_turbo
+    before_action :disable_turbo, only: [:new, :create]
+
     def create
       super do |user|
-        sign_in(user) if user.persisted? # 登録完了後に自動ログイン
+        sign_in(user) if user.persisted?
       end
     end
 
-
     private
 
-    def skip_turbo
-      request.headers["Turbo-Frame"] = nil
+    def disable_turbo
+      @disable_turbo = true
     end
   end
 end

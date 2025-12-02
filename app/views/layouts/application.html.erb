@@ -8,7 +8,8 @@
     <meta name="turbo-visit-control" content="reload">
     <!-- Tailwind CSS を読み込み -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_importmap_tags unless @disable_turbo %>
+
 
     <%= favicon_link_tag 'favicon.ico' %>
 
