@@ -1,6 +1,6 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
-    before_action :disable_turbo, only: [:new, :create]
+    before_action :disable_turbo, only: %i[new create]
 
     def create
       super do |user|
