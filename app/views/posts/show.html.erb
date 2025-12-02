@@ -1,20 +1,26 @@
 <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md">
+
   <!-- 投稿ヘッダー -->
   <div class="flex items-center mb-4">
-    <%= image_tag @post.user.display_image, class: "w-12 h-12 rounded-full object-cover border shadow" %>
+    <%= image_tag @post.user.display_image,
+        class: "w-12 h-12 rounded-full object-cover border shadow" %>
+
     <div class="ml-3">
-      <p class="font-semibold text-lg text-gray-800"><%= @post.user.display_name %></p>
-      <p class="text-sm text-gray-500">ジャンル：<%= @post.genre.name %></p>
+      <p class="font-semibold text-lg text-gray-800">
+        <%= @post.user.display_name %>
+      </p>
     </div>
   </div>
 
   <!-- 投稿内容 -->
   <div class="border-t border-gray-200 pt-4 mb-6">
-    <p class="text-lg leading-relaxed text-gray-700 whitespace-pre-wrap"><%= @post.content %></p>
+    <p class="text-lg leading-relaxed text-gray-700 whitespace-pre-wrap">
+      <%= @post.content %>
+    </p>
   </div>
 
   <!-- いいねボタン -->
-  <div class="mt-4">
+  <div class="mt-4 mb-6">
     <% if user_signed_in? %>
       <div id="like-button-<%= @post.id %>">
         <%= render "likes/like", post: @post %>
@@ -24,15 +30,25 @@
     <% end %>
   </div>
 
+  <!-- ジャンル -->
+  <div class="mt-4">
+    <p class="font-bold mb-1">ジャンル：</p>
+    <%= link_to search_posts_path(q: { genre_id_eq: @post.genre.id }),
+        class: "inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200" do %>
+      <%= @post.genre.name %>
+    <% end %>
+  </div>
+
   <!-- タグ一覧 -->
   <% if @post.tags.any? %>
     <div class="mt-6">
       <p class="font-bold mb-1">タグ：</p>
       <div class="flex flex-wrap gap-2">
         <% @post.tags.each do |tag| %>
-          <%= link_to tag.name,
-            search_posts_path(q: { tags_name_eq: tag.name }),
-            class: "px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200" %>
+          <%= link_to posts_path(tag_id: tag.id),
+            class: "px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300" do %>
+            #<%= tag.name %>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -44,23 +60,22 @@
       "url=#{CGI.escape(post_url(@post))}" \
       "&text=#{CGI.escape("#{@post.content} - #{@post.genre.name} | TSUMUGIBA")}" \
       "&hashtags=#{CGI.escape('TSUMUGIBA,創作アイデア')}" %>
-  
+
     <%= link_to share_url,
                 target: "_blank",
                 rel: "noopener noreferrer",
                 class: "inline-flex items-center gap-2 bg-black hover:bg-gray-900 text-white font-semibold px-4 py-2 rounded-full shadow transition transform hover:-translate-y-0.5" do %>
-  
-      <!-- Xアイコン（SVG） -->
+
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" fill="currentColor" class="w-5 h-5">
         <path d="M714 519L1160 0H1051L660 450L408 0H0L468 802L0 1227H109L527 748L802 1227H1200L714 519ZM587 682L533 595L145 80H367L660 562L713 649L1077 1147H860L587 682Z"/>
       </svg>
-  
+
       <span>Xでシェア</span>
     <% end %>
   </div>
 
   <!-- コメント一覧 -->
-  <h3 class="text-lg font-semibold mb-3">コメント一覧</h3>
+  <h3 class="text-lg font-semibold mb-3 mt-6">コメント一覧</h3>
   <div id="comments" data-post-id="<%= @post.id %>" class="space-y-3">
     <%= render @comments %>
   </div>
@@ -68,8 +83,12 @@
   <!-- コメント投稿フォーム -->
   <%= form_with model: [@post, @comment], data: { turbo_stream: true }, class: "mt-6" do |f| %>
     <div class="flex gap-2">
-      <%= f.text_area :content, rows: 2, class: "flex-1 border rounded-lg p-2 text-sm focus:ring focus:ring-blue-100", placeholder: "コメントを入力..." %>
-      <%= f.submit "投稿", class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
+      <%= f.text_area :content, rows: 2,
+          class: "flex-1 border rounded-lg p-2 text-sm focus:ring focus:ring-blue-100",
+          placeholder: "コメントを入力..." %>
+      <%= f.submit "投稿",
+          class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
     </div>
   <% end %>
+
 </div>

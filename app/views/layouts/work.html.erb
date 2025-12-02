@@ -14,7 +14,7 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-softOrange text-deepNavy font-sans">
+  <body class="bg-softOrange text-deepNavy font-sans" <%= yield(:body_data) if content_for?(:body_data) %>>
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
       <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
@@ -46,6 +46,13 @@
             <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
             <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
           <% end %>
+
+          <li>
+            <button onclick="localStorage.removeItem('tutorial_shown'); location.href='?tutorial=1';"
+                class="text-gray-600 hover:text-blue-500 text-lg sm:text-xl">
+                ❔
+            </button>
+          </li>
         </ul>
       </nav>
     </header>
@@ -82,5 +89,7 @@
         <%= link_to 'お問い合わせ', new_contact_path %>
       </div>
     </footer>
+
+    <%= render "shared/tutorial" %>
   </body>
 </html>
