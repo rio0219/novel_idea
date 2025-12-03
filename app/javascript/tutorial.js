@@ -9,32 +9,34 @@ document.addEventListener("turbo:load", () => {
 
   let current = 0;
 
-  // === どのページか判定 ===
-  const currentPage = document.body.dataset.controller;  // 例: "works-index"
-
-  // === ?ボタン押したとき（tutorial=1） ===
-  const forceFromParam = new URLSearchParams(window.location.search).get("tutorial") === "1";
-
-  // === 初回表示（work#index のみ）===
+  const currentPage = document.body.dataset.controller;
   const isWorkIndex = currentPage === "works-index";
+  const forceFromParam = new URLSearchParams(window.location.search).get("tutorial") === "1";
   const firstVisit = !localStorage.getItem("tutorial_shown");
 
+  // ===== work#indexでも?tutorial=1でもない → 絶対に非表示 =====
+  if (!isWorkIndex && !forceFromParam) {
+    overlay.style.display = "none";
+    overlay.classList.add("hidden");
+    return;
+  }
+
+  // === 表示条件 ===
   if ((isWorkIndex && firstVisit) || forceFromParam) {
+    overlay.style.display = "block";
     overlay.classList.remove("hidden");
   }
 
-  // === スライド表示 ===
+  // === スライド切替 ===
   const showSlide = (index) => {
     slides.forEach((s, i) => {
       s.classList.toggle("hidden", i !== index);
     });
-
     prevBtn.classList.toggle("hidden", index === 0);
     nextBtn.classList.toggle("hidden", index === slides.length - 1);
     finishBtn.classList.toggle("hidden", index !== slides.length - 1);
   };
 
-  // === ボタン操作 ===
   nextBtn?.addEventListener("click", () => {
     current = Math.min(current + 1, slides.length - 1);
     showSlide(current);
@@ -46,6 +48,7 @@ document.addEventListener("turbo:load", () => {
   });
 
   finishBtn?.addEventListener("click", () => {
+    overlay.style.display = "none";
     overlay.classList.add("hidden");
     localStorage.setItem("tutorial_shown", "true");
   });
