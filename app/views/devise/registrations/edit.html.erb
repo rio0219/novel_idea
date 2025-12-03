@@ -2,7 +2,7 @@
 
 <%= form_for(resource, as: resource_name,
       url: password_path(resource_name),
-      html: { method: :post, data: { turbo: "false" } }) do |f| %
+      html: { method: :post, data: { turbo: "false" } }) do |f| %>
   <div>
     <%= f.label :email, t("devise.registrations.edit.email") %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
