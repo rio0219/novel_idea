@@ -149,7 +149,7 @@
 ---
 ## 機能の実装方針予定
 - **フレームワーク**：Ruby on Rails 7.2.2.1 
-- **言語**：Ruby  3.1.4 / JavaScript(ES6)  
+- **言語**：Ruby  3.2.5 / JavaScript(ES6)  
 - **DB**：PostgreSQL 
 - **デプロイ環境**：Heroku  
 - **主要Gem**：  

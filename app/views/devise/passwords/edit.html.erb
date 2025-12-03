@@ -5,6 +5,17 @@
     <%= t("devise.passwords.edit.title") %>
   </h2>
 
+  <% if resource.errors.any? %>
+    <div class="bg-red-100 text-red-700 border border-red-300 p-4 rounded mb-6">
+      <h3 class="font-bold mb-2">エラーが発生しました</h3>
+      <ul class="list-disc pl-5">
+        <% resource.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <!-- フォーム -->
   <%= form_for(resource, as: resource_name, url: password_path(resource_name),
                html: { method: :put, data: { turbo: false } }) do |f| %>
