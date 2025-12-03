@@ -21,11 +21,11 @@ class User < ApplicationRecord
   end
 
   # 表示用画像（ActiveStorage or assetファイル）
-  def display_image(size: [ 120, 120 ])
-    if image.attached? && image.variable?
-      image.variant(resize_to_fill: size)
+  def display_image(size: [120, 120])
+    if image.attached?
+      image.variant(resize_to_fill: size).processed
     else
-      ActionController::Base.helpers.asset_path("default_user.PNG")
+      "default_user.PNG"
     end
   end
 
