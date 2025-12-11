@@ -34,7 +34,8 @@
 
           <% if user_signed_in? %>
             <li class="text-gray-600 text-xs sm:text-sm">
-              ようこそ、<%= current_user.display_name %> さん
+              <% name = current_user.display_name %>
+              ようこそ、<%= name %><%= " さん" unless name == "名無しさん" %>
             </li>
             <li>
               <%= button_to "ログアウト",
