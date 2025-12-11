@@ -32,8 +32,8 @@
           </li>
 
           <% if user_signed_in? %>
-            <li class="text-gray-600 text-xs sm:text-sm break-all">
-              ログイン中: <%= current_user.email %>
+            <li class="text-gray-600 text-xs sm:text-sm">
+              ようこそ、<%= current_user.display_name %> さん
             </li>
             <li>
               <%= button_to "ログアウト",
