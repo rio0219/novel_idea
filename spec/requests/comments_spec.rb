@@ -21,11 +21,11 @@ RSpec.describe "Comments", type: :request do
         post post_comments_path(post_record),
              params: { comment: { content: "nice!" } },
              headers: @headers
-  
+
         puts "STATUS = #{response.status}"
         puts "BODY = #{response.body}"
       end.to change(Comment, :count).by(1)
-  
+
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq "text/vnd.turbo-stream.html"
     end
