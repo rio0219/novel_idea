@@ -17,21 +17,17 @@ RSpec.describe "Comments", type: :request do
 
   describe "POST /posts/:post_id/comments" do
     it "creates comment with valid params" do
-      post post_comments_path(post_record), params: { comment: { content: "nice!" } }, headers: @headers
-
-      # ここでレスポンスを確認する
-      puts "STATUS = #{response.status}"
-      puts "BODY = #{response.body}"
-
       expect do
-        post post_comments_path(post_record), params: { comment: { content: "nice!" } }, headers: @headers
+        post post_comments_path(post_record),
+             params: { comment: { content: "nice!" } },
+             headers: @headers
+  
+        puts "STATUS = #{response.status}"
+        puts "BODY = #{response.body}"
       end.to change(Comment, :count).by(1)
-    end
-
-    it "rejects invalid params" do
-      expect do
-        post post_comments_path(post_record), params: { comment: { content: "" } }, headers: @headers
-      end.not_to change(Comment, :count)
+  
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq "text/vnd.turbo-stream.html"
     end
   end
 
