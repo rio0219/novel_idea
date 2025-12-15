@@ -6,6 +6,18 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="turbo-visit-control" content="reload">
+
+    <% if Rails.env.production? %>
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5MMMBHPML"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M5MMMBHPML');
+      </script>
+    <% end %>
+
     <!-- Tailwind CSS を読み込み -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags unless @disable_turbo %>
