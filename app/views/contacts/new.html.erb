@@ -8,6 +8,12 @@
 
     <%= form_with model: @contact, local: true do |f| %>
 
+      <!-- Honeypot（人には見えない項目） -->
+      <div class="hidden" aria-hidden="true">
+        <%= f.label :nickname, "ニックネーム（入力しないでください）" %>
+        <%= f.text_field :nickname, autocomplete: "off", tabindex: "-1" %>
+      </div>
+
       <!-- 名前 -->
       <div class="mb-4">
         <%= f.label :name, "お名前", class: "block text-sm font-medium text-deepNavy mb-1" %>
@@ -29,6 +35,10 @@
               rows: 5,
               class: "w-full border rounded-lg p-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-400" %>
       </div>
+
+      <p class="text-xs text-gray-500 mb-4 leading-relaxed">
+        ※営業・勧誘・売り込み目的のお問い合わせはご遠慮ください。内容によっては返信いたしかねます。
+      </p>
 
       <!-- 送信ボタン -->
       <%= f.submit "送信する",
