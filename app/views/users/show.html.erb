@@ -4,8 +4,6 @@
 
   <!-- プロフィールエリア -->
   <div class="flex items-start space-x-6 mb-6">
-
-    <!-- ユーザーアイコン -->
     <%= image_tag(
       @user.display_image.is_a?(String) ?
         asset_path(@user.display_image) :
@@ -13,13 +11,13 @@
       class: "rounded-full w-10 h-10 object-cover border shadow-md"
     ) %>
 
-    <!-- 名前と自己紹介 -->
     <div class="flex-1">
       <h2 class="text-2xl font-bold mb-2"><%= @user.display_name %></h2>
-      <p class="text-gray-700 leading-relaxed"><%= @user.bio.presence || "自己紹介はまだありません" %></p>
+      <p class="text-gray-700 leading-relaxed">
+        <%= @user.bio.presence || "自己紹介はまだありません" %>
+      </p>
     </div>
 
-    <!-- 編集ボタン-->
     <% if current_user == @user %>
       <div class="absolute top-4 right-4">
         <%= link_to t("buttons.plofile_edit"),
@@ -30,32 +28,95 @@
   </div>
 
   <!-- 投稿一覧 -->
-<h3 class="mt-4 mb-2 text-lg font-semibold border-b pb-1">
-  <%= t("titles.my_post_idea") %>
-</h3>
+  <h3 class="mt-4 mb-2 text-lg font-semibold border-b pb-1">
+    <%= t("titles.my_post_idea") %>
+  </h3>
 
   <ul class="space-y-3">
     <% @posts.each do |post| %>
       <li class="p-4 border rounded-xl bg-white shadow-sm flex items-center">
-        <!-- 左側：投稿内容 -->
+
         <div class="flex-1">
-          <%= link_to truncate(post.content, length: 40), post_path(post), class: "text-gray-800 hover:underline" %>
+
+          <div class="flex flex-wrap gap-1 items-center mb-1">
+            <%= link_to search_posts_path(q: { genre_id_eq: post.genre.id }),
+                class: "px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200" do %>
+              <%= post.genre.name %>
+            <% end %>
+
+            <% post.tags.each do |tag| %>
+              <%= link_to posts_path(tag_id: tag.id),
+                  class: "px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300" do %>
+                #<%= tag.name %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <%= link_to truncate(post.content, length: 40),
+                post_path(post),
+                class: "block text-gray-800 hover:underline" %>
         </div>
 
-        <!-- 右側：編集・削除・いいね -->
         <div class="flex items-center gap-2 ml-auto">
-          <%= link_to t("buttons.edit"), edit_post_path(post, from: user_path(@user)),
+          <% if post.user == current_user %>
+            <%= link_to t("buttons.edit"),
+              edit_post_path(post, from: user_path(@user)),
               class: "px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm" %>
 
-          <%= link_to t("buttons.destroy"), post_path(post),
-              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-              class: "px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm" %>
+            <%= button_to t("buttons.destroy"),
+                post_path(post),
+                method: :delete,
+                data: { confirm: "削除しますか？" },
+                class: "px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm" %>
+          <% end %>
 
-          <!-- ❤️ いいねボタン -->
           <div id="like-button-<%= post.id %>">
             <%= render "likes/like", post: post %>
           </div>
         </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <!-- （いいね一覧）  -->
+  <h3 class="mt-6 mb-2 text-lg font-semibold border-b pb-1">
+    いいねしたアイデア
+  </h3>
+
+  <ul class="space-y-3">
+    <% @liked_posts.each do |post| %>
+      <li class="p-4 border rounded-xl bg-white shadow-sm flex items-center">
+
+        <div class="flex-1">
+          <%= link_to truncate(post.content, length: 40),
+              post_path(post),
+              class: "text-gray-800 hover:underline" %>
+
+          <!-- ジャンル + タグ -->
+          <div class="mt-1 flex flex-wrap gap-1 items-center">
+
+            <!-- ジャンルバッジ -->
+            <%= link_to search_posts_path(q: { genre_id_eq: post.genre.id }),
+                class: "px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200" do %>
+              <%= post.genre.name %>
+            <% end %>
+
+            <!-- タグバッジ -->
+            <% post.tags.each do |tag| %>
+              <%= link_to posts_path(tag_id: tag.id),
+                  class: "px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300" do %>
+                #<%= tag.name %>
+              <% end %>
+            <% end %>
+
+          </div>
+        </div>
+
+        <!-- いいねボタン -->
+        <div id="like-button-<%= post.id %>">
+          <%= render "likes/like", post: post %>
+        </div>
+
       </li>
     <% end %>
   </ul>

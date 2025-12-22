@@ -1,13 +1,16 @@
 class PostsController < ApplicationController
-  # layout :select_layout
   before_action :authenticate_user!, except: [:index, :show, :search]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # みんなのアイデア一覧
   def index
-    @posts = Post.includes(:user, :genre).order(created_at: :desc)
     @q = Post.ransack(params[:q])
-    @posts = @q.result(distinct: true).includes(:user, :genre)
+
+    @posts = if params[:tag_id].present?
+      Tag.find(params[:tag_id]).posts.includes(:user, :genre)
+    else
+      @q.result(distinct: true).includes(:user, :genre)
+    end
   end
 
   # コメント一覧兼詳細
@@ -39,21 +42,16 @@ class PostsController < ApplicationController
     query = params[:q]
     results = []
 
-    # 投稿内容にマッチする候補
     post_matches = Post.joins(:user, :genre)
                        .where("posts.content ILIKE ?", "%#{query}%")
                        .limit(5)
                        .pluck(:content)
     results += post_matches
 
-    # ユーザー名にマッチする候補
     user_matches = User.where("name ILIKE ?", "%#{query}%")
                        .limit(5)
                        .pluck(:name)
     results += user_matches
-
-    # 重複削除
-    # results.uniq!
 
     render json: results
   end
@@ -68,6 +66,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to posts_path, notice: t("notices.created", resource: Post.model_name.human)
     else
+      @genres = Genre.all
       render :new, status: :unprocessable_entity
     end
   end
@@ -82,6 +81,7 @@ class PostsController < ApplicationController
       redirect_path = params[:from].presence ? CGI.unescape(params[:from]) : posts_path
       redirect_to redirect_path, notice: t("notices.updated", resource: Post.model_name.human)
     else
+      @genres = Genre.all
       render :edit, status: :unprocessable_entity
     end
   end
@@ -107,6 +107,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:content, :genre_id)
+    params.require(:post).permit(:content, :genre_id, :tag_names)
   end
 end

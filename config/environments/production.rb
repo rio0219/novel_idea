@@ -37,7 +37,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -46,14 +46,15 @@ Rails.application.configure do
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
-  # config.assume_ssl = true
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
-
+  config.hosts << "www.tsumugiba-novel.com"
+  config.hosts << "tsumugiba-novel-idea-750a223c9406.herokuapp.com"
+  config.hosts << "tsumugiba-novel.com"
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
-
+  config.log_level = :debug
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
@@ -78,6 +79,19 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: "www.tsumugiba-novel.com", protocol: "https" }
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: ENV.fetch("SMTP_DOMAIN", nil),
+    user_name: ENV.fetch("SMTP_USER", nil),
+    password: ENV.fetch("SMTP_PASSWORD", nil),
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
+
+  config.action_controller.default_url_options = { host: "www.tsumugiba-novel.com", protocol: "https" }
+  config.action_dispatch.cookies_same_site_protection = :none
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
