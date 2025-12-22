@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update ]
 
   def show
+    @user = User.find_by!(uuid: params[:id])
     @posts = @user.posts
+    @liked_posts = @user.liked_posts.includes(:user, :genre, :tags)
   end
 
   def edit

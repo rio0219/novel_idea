@@ -1,79 +1,102 @@
 require "rails_helper"
 
 RSpec.describe "Posts", type: :request do
-  let!(:user)  { User.create!(email: "test@example.com", password: "password") }
-  let!(:genre) { Genre.create!(name: "ファンタジー") }
-  let(:post_record) { Post.create!(content: "本文です", user: user, genre_id: genre.id) }
+  include Warden::Test::Helpers
+
+  after { Warden.test_reset! }
+
+  let!(:user)  { create(:user) }
+  let!(:genre) { create(:genre) }
+
+  let(:valid_params)   { { post: { content: "本文です", genre_id: genre.id } } }
+  let(:invalid_params) { { post: { content: "", genre_id: "" } } }
 
   before do
     login_as(user, scope: :user)
     @headers = { "ACCEPT" => "text/html" }
-
-    allow_any_instance_of(ApplicationController)
-      .to receive(:verify_authenticity_token).and_return(true)
+    allow_any_instance_of(ApplicationController).to receive(:verify_authenticity_token).and_return(true)
   end
 
-  describe "GET /posts" do
-    it "レスポンスが成功すること" do
+  describe "GET #index" do
+    it "returns 200" do
       get posts_path, headers: @headers
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "GET /posts/new" do
-    it "レスポンスが成功すること" do
+  describe "GET #new" do
+    it "returns 200" do
       get new_post_path, headers: @headers
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "POST /posts" do
-    context "有効なパラメータの場合" do
-      it "Postが作成されること" do
+  describe "POST #create" do
+    context "valid" do
+      it "creates a Post" do
         expect {
-          post posts_path, params: { post: { content: "本文", genre_id: genre.id  } }, headers: @headers
+          post posts_path, params: valid_params, headers: @headers
         }.to change(Post, :count).by(1)
       end
     end
 
-    context "無効なパラメータの場合" do
-      it "Postが作成されないこと" do
+    context "invalid" do
+      it "does not create" do
         expect {
-          post posts_path, params: { post: { content: "", genre_id: "" } }, headers: @headers
+          post posts_path, params: invalid_params, headers: @headers
         }.not_to change(Post, :count)
       end
     end
   end
 
-  describe "GET /posts/:id/edit" do
-    it "レスポンスが成功すること" do
+  describe "GET #edit" do
+    let!(:post_record) { create(:post, user: user, genre: genre) }
+
+    it "returns 200" do
       get edit_post_path(post_record), headers: @headers
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "PATCH /posts/:id" do
-    context "有効なパラメータの場合" do
-      it "Postが更新されること" do
-        patch post_path(post_record), params: { post: { content: "更新後本文", genre_id: genre.id } }, headers: @headers
-        expect(post_record.reload.content).to eq("更新後本文")
+  describe "PATCH #update" do
+    let!(:post_record) { create(:post, user: user, genre: genre, content: "before") }
+
+    context "valid" do
+      it "updates" do
+        patch post_path(post_record), params: { post: { content: "after", genre_id: genre.id } }, headers: @headers
+        expect(post_record.reload.content).to eq("after")
       end
     end
 
-    context "無効なパラメータの場合" do
-      it "Postが更新されないこと" do
-        patch post_path(post_record), params: {  post: { content: nil, genre_id: nil } }, headers: @headers
-        expect(post_record.reload.content).to eq("本文です")
+    context "invalid" do
+      it "does not update" do
+        patch post_path(post_record), params: { post: { content: "" } }, headers: @headers
+        expect(post_record.reload.content).to eq("before")
       end
     end
   end
 
-  describe "DELETE /posts/:id" do
-    it "Postが削除されること" do
-      post_record # 事前作成
+  describe "DELETE #destroy" do
+    let!(:post_record) { create(:post, user: user, genre: genre) }
+
+    it "deletes" do
       expect {
         delete post_path(post_record), headers: @headers
       }.to change(Post, :count).by(-1)
+    end
+  end
+
+  describe "search & autocomplete (collection actions)" do
+    before { create_list(:post, 3, user: user, genre: genre, content: "search-target") }
+
+    it "search returns 200" do
+      get search_posts_path, params: { q: "search-target" }, headers: @headers
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "autocomplete returns 200" do
+      get autocomplete_posts_path, params: { term: "sea" }, headers: @headers
+      expect(response).to have_http_status(:ok)
     end
   end
 end

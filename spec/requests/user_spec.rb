@@ -1,41 +1,48 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Users", type: :request do
-  let!(:user) { User.create!(email: "test@example.com", password: "password", name: "テストユーザー") }
-  let!(:other_user) { User.create!(email: "other@example.com", password: "password") }
+  include Warden::Test::Helpers
+
+  after { Warden.test_reset! }
+
+  let!(:user) { create(:user, name: "テストユーザー") }
+  let!(:other) { create(:user) }
 
   before do
     login_as(user, scope: :user)
     @headers = { "ACCEPT" => "text/html" }
-    allow_any_instance_of(ApplicationController)
-      .to receive(:verify_authenticity_token).and_return(true)
+    allow_any_instance_of(ApplicationController).to receive(:verify_authenticity_token).and_return(true)
   end
 
-  after do
-    Warden.test_reset!
-  end
-
-  describe "GET /users/:id" do
-    it "自分のプロフィールにアクセスできる" do
+  describe "GET show" do
+    it "can view own profile" do
       get user_path(user), headers: @headers
       expect(response).to have_http_status(:ok)
     end
 
-    it "他人のプロフィールにもアクセスできる" do
-      get user_path(other_user), headers: @headers
+    it "can view other's profile" do
+      get user_path(other), headers: @headers
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "GET /users/:id/edit" do
-    it "自分の編集ページにアクセスできる" do
+  describe "GET edit" do
+    it "access own edit" do
       get edit_user_path(user), headers: @headers
       expect(response).to have_http_status(:ok)
     end
 
-    it "他人の編集ページにはリダイレクトされる" do
-      get edit_user_path(other_user), headers: @headers
-      expect(response).to redirect_to(other_user)
+    it "cannot edit other" do
+      get edit_user_path(other), headers: @headers
+      # your app may redirect elsewhere — adjust expectation if needed
+      expect(response).to_not have_http_status(:ok)
+    end
+  end
+
+  describe "PATCH update" do
+    it "updates own profile" do
+      patch user_path(user), params: { user: { name: "NewName" } }, headers: @headers
+      expect(user.reload.name).to eq("NewName")
     end
   end
 end

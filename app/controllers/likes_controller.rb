@@ -35,6 +35,6 @@ class LikesController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by!(uuid: params[:post_id])
   end
 end

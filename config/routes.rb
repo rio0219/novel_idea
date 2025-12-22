@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  get "contacts/new"
+  get "contacts/create"
   get "likes/create"
   get "likes/destroy"
-  get "ai_consultations/index"
-  get "ai_consultations/create"
+
   devise_for :users, controllers: {
+    registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   root "home#index"
@@ -12,9 +14,12 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "/terms", to: "pages#terms"
+  get "/privacy", to: "pages#privacy"
 
   resources :ai_consultations, only: [ :index, :create ]
-  resources :users, only: [ :show, :edit, :update ]
+  resources :users, path: "accounts", only: [:show, :edit, :update]
+  resources :contacts, only: [:new, :create]
 
   resources :works do
     resources :characters, except: :show
@@ -27,6 +32,7 @@ Rails.application.routes.draw do
     resources :likes, only: [ :create, :destroy ]
     collection do
       get :search
+      get :autocomplete
     end
   end
 

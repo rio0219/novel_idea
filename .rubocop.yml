@@ -92,3 +92,12 @@ Style/RedundantReturn:
 # --------------------------------
 Metrics/MethodLength:
   Max: 35 # 長すぎるメソッドを警告（ただし初期設定より少し緩め）
+
+# --------------------------------
+# RSpec のブロック長を許可
+# --------------------------------
+Metrics/BlockLength:
+  AllowedPatterns:
+    - '^RSpec.describe'
+    - '^context'
+  Max: 200
