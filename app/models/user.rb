@@ -9,7 +9,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: %i[google_oauth2 line]
   # 名前が未設定の場合のデフォルト
   def display_name
     name.present? ? name : "名無しさん"
@@ -21,11 +21,11 @@ class User < ApplicationRecord
   end
 
   # 表示用画像（ActiveStorage or assetファイル）
-  def display_image(size: [ 120, 120 ])
-    if image.attached? && image.variable?
-      image.variant(resize_to_fill: size)
+  def display_image(size: [120, 120])
+    if image.attached?
+      image.variant(resize_to_fill: size).processed
     else
-      ActionController::Base.helpers.asset_path("default_user.PNG")
+      "default_user.PNG"
     end
   end
 
@@ -40,18 +40,20 @@ class User < ApplicationRecord
 
   # Google OAuthから情報を受け取り
   def self.from_omniauth(auth)
-    # 既にユーザーが存在する場合はそれを返す
+    # すでに存在：provider + uid の組み合わせ
     user = User.find_by(provider: auth.provider, uid: auth.uid)
 
-    # 存在しない場合は新規作成
-    user ||= User.create(
-      provider: auth.provider,
-      uid: auth.uid,
-      email: auth.info.email,
-      password: Devise.friendly_token[0, 20],
-      name: auth.info.name
-    )
+    email = auth.info.email.presence || "#{auth.uid}@google-oauth.fake"
+    name  = auth.info.name.presence  || "Google User"
 
-    user # Userインスタンスを返す
+    user ||= User.find_or_initialize_by(email: email)
+
+    user.provider = auth.provider
+    user.uid      = auth.uid
+    user.name     ||= name
+    user.password ||= Devise.friendly_token[0, 20]
+
+    user.save!
+    user
   end
 end

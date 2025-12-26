@@ -8,83 +8,114 @@
 
     <!-- Tailwind CSS を読み込み -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_importmap_tags unless @disable_turbo %>
+
 
     <%= favicon_link_tag 'favicon.ico' %>
-
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-softOrange text-deepNavy font-sans">
+  <body class="bg-softOrange text-deepNavy font-sans" <%= yield(:body_data) if content_for?(:body_data) %>>
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
-      <nav class="container mx-auto flex justify-between items-center">
+      <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
         <!-- ロゴ / サイト名 -->
-        <h1 class="text-xl font-bold">
+        <h1 class="text-lg sm:text-xl font-bold">
           <%= link_to "TSUMUGIBA", root_path, class: "hover:text-blue-500" %>
         </h1>
 
         <!-- ナビゲーションリンク -->
-        <ul class="flex space-x-4">
+        <ul class="flex flex-wrap justify-center sm:justify-end items-center space-x-3 sm:space-x-4 text-sm sm:text-base">
           <li>
             <%= link_to works_path do %>
-              <%= image_tag "home.PNG", alt: "Home", class: "w-7 h-7 hover:opacity-70" %>
+              <%= image_tag "home.PNG", alt: "Home", class: "w-5 h-5 sm:w-7 sm:h-7 hover:opacity-70" %>
             <% end %>
           </li>
 
-
           <% if user_signed_in? %>
-            <li class="text-gray-600">ログイン中: <%= current_user.email %></li>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500" %>
+            <li class="text-gray-600 text-xs sm:text-sm">
+              <% name = current_user.display_name %>
+              ようこそ、<%= name %><%= " さん" unless name == "名無しさん" %>
+            </li>
+            <li>
+              <%= button_to "ログアウト",
+                  destroy_user_session_path,
+                  method: :delete,
+                  form: { data: { turbo: false } },
+                  class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-xs sm:text-sm" %>
+            </li>
           <% else %>
-            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500" %></li>
-            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500" %></li>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
           <% end %>
+
+          <li>
+            <button onclick="localStorage.removeItem('tutorial_shown'); location.href='?tutorial=1';"
+                class="text-gray-600 hover:text-blue-500 text-lg sm:text-xl">
+                ❔
+            </button>
+          </li>
         </ul>
       </nav>
     </header>
 
-    <div class="flex">
-    <!-- ナビゲーションリンク -->
-    <aside class="w-64 h-screen bg-white shadow-lg p-4 flex flex-col items-center">
-      <h2 class="text-xl font-bold mb-6 text-blue-900">みんなのアイデア投稿</h2>
+    <!-- コンテンツ全体 -->
+    <div class="flex flex-col sm:flex-row">
+      <!-- サイドバー -->
+      <aside class="bg-gray-100 p-3 sm:p-4 sm:w-64 sm:min-h-screen shadow-sm">
+
+        <h2 class="text-base sm:text-lg font-semibold mb-3 sm:mb-5 text-center text-blue-900">
+          みんなのアイデア投稿
+        </h2>
     
-      <nav class="space-y-8 text-center">
-        <% if user_signed_in? %>
-          <!-- マイページ -->
-          <%= link_to user_path(current_user), class: "block hover:opacity-80 transition" do %>
-            <%= image_tag "mypage_icon.PNG", alt: "マイページ", class: "mx-auto w-[90px] h-[90px] mb-2" %>
-            <p class="text-blue-900"><%= t("buttons.mypage") %></p>
+        <!-- スマホ: 2列, タブレット: 3列, PC: 縦並び -->
+        <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:block sm:space-y-3 text-center">
+    
+          <% icon_classes = "mx-auto w-14 h-14 sm:w-16 sm:h-16 lg:w-[90px] lg:h-[90px] mb-1" %>
+    
+          <% if user_signed_in? %>
+            <!-- マイページ -->
+            <li>
+              <%= link_to user_path(current_user), class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+                <%= image_tag "mypage_icon.PNG", class: icon_classes, alt: "" %>
+                <span class="text-xs sm:text-sm"><%= t("buttons.mypage") %></span>
+              <% end %>
+            </li>
           <% end %>
-        <% end %>
     
-        <% if user_signed_in? %>
-          <!-- 新規投稿 -->
-          <%= link_to new_post_path, class: "block hover:opacity-80 transition" do %>
-            <%= image_tag "newpost_icon.PNG", alt: "新規投稿", class: "mx-auto w-[90px] h-[90px] mb-2" %>
-            <p class="text-blue-900"><%= t("buttons.new") %></p>
+          <% if user_signed_in? %>
+            <!-- 新規投稿 -->
+            <li>
+              <%= link_to new_post_path, class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+                <%= image_tag "newpost_icon.PNG", class: icon_classes, alt: "" %>
+                <span class="text-xs sm:text-sm"><%= t("buttons.new") %></span>
+              <% end %>
+            </li>
+          <% else %>
+            <li class="opacity-60 cursor-not-allowed">
+              <%= image_tag "newpost_icon.PNG", class: icon_classes, alt: "" %>
+              <span class="text-xs sm:text-sm text-gray-400"><%= t("buttons.new_notlogin") %></span>
+            </li>
           <% end %>
-        <% else %>
-          <!-- ログインしていない場合 -->
-          <%= link_to new_user_session_path, class: "block hover:opacity-80 transition" do %>
-            <%= image_tag "newpost_icon.PNG", alt: "新規投稿（未ログイン）", class: "mx-auto w-[90px] h-[90px] mb-2 opacity-50" %>
-            <p class="text-gray-400"><%= t("buttons.new_notlogin") %></p>
-          <% end %>
-        <% end %>
     
-        <!-- 投稿一覧 -->
-        <%= link_to posts_path, class: "block hover:opacity-80 transition" do %>
-          <%= image_tag "list_icon.PNG", alt: "投稿一覧", class: "mx-auto w-[90px] h-[90px] mb-2" %>
-          <p class="text-blue-900"><%= t("buttons.idea_list") %></p>
-        <% end %>
+          <!-- 投稿一覧 -->
+          <li>
+            <%= link_to posts_path, class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+              <%= image_tag "list_icon.PNG", class: icon_classes, alt: "" %>
+              <span class="text-xs sm:text-sm"><%= t("buttons.idea_list") %></span>
+            <% end %>
+          </li>
     
-        <!-- 投稿検索 -->
-        <%= link_to search_posts_path, class: "block hover:opacity-80 transition" do %>
-          <%= image_tag "search_icon.PNG", alt: "検索", class: "mx-auto w-[90px] h-[90px] mb-2" %>
-          <p class="text-blue-900">検索</p>
-        <% end %>
-      </nav>
-    </aside> 
+          <!-- 検索 -->
+          <li>
+            <%= link_to search_posts_path, class: "block px-2 py-1 rounded hover:bg-gray-200" do %>
+              <%= image_tag "search_icon.PNG", class: icon_classes, alt: "" %>
+              <span class="text-xs sm:text-sm">検索</span>
+            <% end %>
+          </li>
+        </ul>
+      </aside>
+    
 
       <!-- メインコンテンツ -->
       <main class="flex-1 container mx-auto p-4">
@@ -100,8 +131,18 @@
     </div>
 
     <!-- フッター -->
-    <footer class="bg-white shadow p-4 mt-10 text-center text-gray-500">
+    <footer class="bg-white shadow p-4 mt-10 text-sm flex flex-col items-center">
       &copy; 2025 TSUMUGIBA
+  
+      <div class="flex gap-3 mt-2">
+        <%= link_to '利用規約', terms_path %>
+        <span>|</span>
+        <%= link_to 'プライバシーポリシー', privacy_path %>
+        <span>|</span>
+        <%= link_to 'お問い合わせ', new_contact_path %>
+      </div>
     </footer>
+
+    <%= render "shared/tutorial" %>
   </body>
 </html>

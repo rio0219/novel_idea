@@ -2,7 +2,28 @@
   <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-300">
     <h2 class="text-2xl font-bold text-[#002776] mb-8"><%= t('devise.sessions.new.sign_in') %></h2>
 
-    <%= form_with model: resource, url: session_path(resource_name), local: true do |f| %>
+    <% if resource.errors.any? %>
+      <div class="bg-red-100 text-red-700 border border-red-300 p-4 rounded mb-4">
+        <h3 class="font-bold mb-2">エラーが発生しました</h3>
+        <ul class="list-disc pl-5">
+          <% resource.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="bg-red-100 text-red-700 border border-red-300 p-4 rounded mb-4">
+        <p><%= flash[:alert] %></p>
+      </div>
+    <% end %>
+
+    <%= form_with model: resource,
+        url: session_path(resource_name),
+        html: { data: { turbo: "false" } },
+        local: true do |f| %>
+
       <div class="mb-6 text-left">
         <%= f.label :email, t('devise.sessions.new.email'), class: "block text-[#002776] font-semibold mb-1" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email",
@@ -28,20 +49,27 @@
       </div>
 
       <div class="text-center mt-4">
+        <!-- Googleログインボタン -->
         <%= link_to user_google_oauth2_omniauth_authorize_path,
-                  class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center" do %>
+              class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center w-full justify-center mb-2" do %>
           <%= image_tag "google_icon.png", alt: "Google", class: "w-5 h-5 mr-2" %>
           Googleでログイン
         <% end %>
+
+    <!--
+      <%= link_to user_line_omniauth_authorize_path,
+        class: "bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center w-full justify-center" do %>
+        <%= image_tag "LINE_Brand_icon.png", alt: "LINE", class: "w-5 h-5 mr-2" %>
+        LINEでログイン
+      <% end %>
+    -->
       </div>
-    
 
     <% end %>
 
     <div class="mt-6 flex justify-between text-sm text-[#002776]">
       <%= link_to t('devise.shared.links.sign_up'), new_registration_path(resource_name), class: "hover:underline" %>
-      <%# パスワードリセットは本リリース後に実装予定 %>
-      <%#= link_to t('devise.shared.links.forgot_your_password'), new_password_path(resource_name), class: "hover:underline" %>
+      <%= link_to t('devise.shared.links.forgot_your_password'), new_password_path(resource_name), class: "hover:underline" %>
     </div>
   </div>
 </div>

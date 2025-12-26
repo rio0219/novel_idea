@@ -37,9 +37,16 @@ class WorksController < ApplicationController
   end
 
   def destroy
-    @work = current_user.works.find(params[:id])
+    @work = Work.find_by!(uuid: params[:id])
+
+    # 本人の作品でなければ 403
+    unless @work.user_id == current_user.id
+      render plain: "Forbidden", status: :forbidden
+      return
+    end
+
     @work.destroy
-    redirect_to root_path, notice: t("notices.destroyed", resource: Work.model_name.human)
+    redirect_to works_path, notice: t("notices.destroyed", resource: Work.model_name.human)
   end
 
   private

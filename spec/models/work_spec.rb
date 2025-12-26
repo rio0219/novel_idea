@@ -45,4 +45,19 @@ RSpec.describe Work, type: :model do
       expect(work).not_to be_valid
     end
   end
+
+  describe "アソシエーション" do
+    it { should belong_to(:user) }
+    it { should belong_to(:genre) }
+    it { should have_many(:characters).dependent(:destroy) }
+    it { should have_many(:plots).dependent(:destroy) }
+    it { should have_one(:worldview).dependent(:destroy) }
+  end
+
+  describe "#to_param" do
+    it "uuid を返す" do
+      work = Work.create!(title: "test", user: user, genre: genre)
+      expect(work.to_param).to eq(work.uuid)
+    end
+  end
 end

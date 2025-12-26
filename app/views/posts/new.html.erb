@@ -13,5 +13,14 @@
     <%= f.text_area :content, class: "w-full border rounded p-2" %>
   </div>
 
+  <!-- タグ入力欄 -->
+  <div class="mb-4">
+    <%= f.label :tag_names, "タグ（カンマ区切り）", class: "block font-semibold mb-1" %>
+    <%= f.text_field :tag_names,
+        value: "",
+        placeholder: "例: 創作, アイデア, SF",
+        class: "w-full border rounded p-2" %>
+  </div>
+
   <%= f.submit t("buttons.post"), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
 <% end %>

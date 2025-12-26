@@ -21,4 +21,8 @@ RSpec.describe Worldview, type: :model do
       expect(worldview).not_to be_valid
     end
   end
+
+  describe "アソシエーション" do
+    it { should belong_to(:work) }
+  end
 end
