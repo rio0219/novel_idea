@@ -1,4 +1,4 @@
-import consumer from "channels/consumer"
+import consumer from "./consumer"
 
 document.addEventListener("turbo:load", () => {
   const commentsContainer = document.getElementById("comments")

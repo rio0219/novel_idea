@@ -34,26 +34,22 @@
     </div>
   <% end %>
 
-  <!-- スピナー -->
+  <!-- ✅ スピナーはこのdivの中に置く -->
   <div data-ai-chat-target="spinner" class="hidden flex justify-center mt-6">
     <div class="h-10 w-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
   </div>
 
   <hr class="my-8">
 
-  <!-- ★ 最新の相談（常に1件だけ） -->
-  <div data-ai-chat-target="latest" class="mb-8">
-    <% if @latest_consultation.present? %>
-      <%= render "ai_consultations/ai_consultation", consultation: @latest_consultation %>
-    <% end %>
-  </div>
-
+  <!-- AIの応答表示 -->
   <h2 class="text-xl font-semibold mb-4"><%= t("titles.previous_consultation") %></h2>
 
-  <!-- ★ 過去の相談（2件目以降） -->
-  <div data-ai-chat-target="consultations" class="flex flex-col gap-4">
+  <div data-ai-chat-target="consultations" class="space-y-4">
     <% @consultations.each do |consultation| %>
-      <%= render "ai_consultations/ai_consultation", consultation: consultation %>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="mb-2"><span class="font-bold text-gray-700">あなた:</span> <%= consultation.content %></p>
+        <p><span class="font-bold text-gray-700">AI:</span> <%= consultation.response.presence || "回答待ち..." %></p>
+      </div>
     <% end %>
   </div>
 </div>

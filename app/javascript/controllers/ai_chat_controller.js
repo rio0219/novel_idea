@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["consultations", "latest", "spinner", "form"]
+  static targets = ["consultations", "spinner", "form"]
 
   connect() {
     console.log("✅ ai-chat controller loaded")
@@ -9,65 +9,45 @@ export default class extends Controller {
 
   async submit(event) {
     event.preventDefault()
+    console.log("🟡 submit開始")
 
-    const form = this.formTarget // event.target でもOKだけど、target名で取る方が安全
+    const form = event.target
     const formData = new FormData(form)
 
-    // ① いま表示されている「最新の相談」を退避しておく
-    const previousLatestHtml = this.latestTarget.innerHTML
-
-    // ② latest に thinking 表示
+    // --- thinkingメッセージを挿入 ---
+    console.log("consultationsTarget:", this.consultationsTarget) 
     const thinkingElement = document.createElement("div")
-    thinkingElement.className =
-      "bg-gray-100 text-gray-600 p-3 rounded-xl my-2 text-sm text-center"
-    thinkingElement.textContent = "AIが考え中…"
+    thinkingElement.className = "bg-gray-100 text-gray-600 p-3 rounded-xl my-2 text-sm text-center"
+    thinkingElement.textContent = "🤔 AIが考え中…"
+    this.consultationsTarget.appendChild(thinkingElement)
 
-    this.latestTarget.innerHTML = ""
-    this.latestTarget.appendChild(thinkingElement)
-
+    // --- スピナーを表示 ---
     this.spinnerTarget.classList.remove("hidden")
 
     try {
       const response = await fetch(form.action, {
         method: form.method,
         body: formData,
-        headers: { Accept: "application/json" },
+        headers: { "Accept": "application/json" },
         credentials: "same-origin",
       })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
       const data = await response.json()
 
-      // ③ thinking を消してスピナーを止める
-      this.latestTarget.innerHTML = ""
+      console.log("📩 response受信:", data)
+
+      // --- thinking削除 & スピナー非表示 ---
+      thinkingElement.remove()
       this.spinnerTarget.classList.add("hidden")
 
-      // ④ さっきまで「最新の相談」だったものを
-      //    「過去の相談」のいちばん上に移動する
-      if (previousLatestHtml && previousLatestHtml.trim() !== "") {
-        this.consultationsTarget.insertAdjacentHTML(
-          "afterbegin",
-          previousLatestHtml
-        )
-      }
+      // --- 応答追加 ---
+      this.consultationsTarget.insertAdjacentHTML("beforeend", data.html)
 
-      // ⑤ 今回の相談＋AI回答を「最新の相談」として表示
-      this.latestTarget.innerHTML = data.html
-
-      // ⑥ フォームリセット
+      // --- フォームリセット ---
       form.reset()
     } catch (error) {
       console.error("❌ fetchエラー:", error)
-
       this.spinnerTarget.classList.add("hidden")
-      this.latestTarget.innerHTML = `
-        <div class="bg-red-50 text-red-700 p-3 rounded-xl my-2 text-sm text-center">
-          応答を取得できませんでした。時間をおいて再度お試しください。
-        </div>
-      `
+      thinkingElement.textContent = "⚠️ 応答を取得できませんでした"
     }
   }
 }

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: user_one
+  genre: one
+  title: サンプル作品1
+  theme: 勇者の冒険
+  synopsis: これはテスト用のあらすじです
+
+two:
+  user: user_two
+  genre: two
+  title: サンプル作品2
+  theme: 事件解決
+  synopsis: これはテスト用のあらすじです

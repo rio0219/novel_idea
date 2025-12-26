@@ -21,11 +21,11 @@ class User < ApplicationRecord
   end
 
   # 表示用画像（ActiveStorage or assetファイル）
-  def display_image(size: [120, 120])
-    if image.attached?
-      image.variant(resize_to_fill: size).processed
+  def display_image(size: [ 120, 120 ])
+    if image.attached? && image.variable?
+      image.variant(resize_to_fill: size)
     else
-      "default_user.PNG"
+      ActionController::Base.helpers.asset_path("default_user.PNG")
     end
   end
 
@@ -40,20 +40,18 @@ class User < ApplicationRecord
 
   # Google OAuthから情報を受け取り
   def self.from_omniauth(auth)
-    # すでに存在：provider + uid の組み合わせ
+    # 既にユーザーが存在する場合はそれを返す
     user = User.find_by(provider: auth.provider, uid: auth.uid)
 
-    email = auth.info.email.presence || "#{auth.uid}@google-oauth.fake"
-    name  = auth.info.name.presence  || "Google User"
+    # 存在しない場合は新規作成
+    user ||= User.create(
+      provider: auth.provider,
+      uid: auth.uid,
+      email: auth.info.email,
+      password: Devise.friendly_token[0, 20],
+      name: auth.info.name
+    )
 
-    user ||= User.find_or_initialize_by(email: email)
-
-    user.provider = auth.provider
-    user.uid      = auth.uid
-    user.name     ||= name
-    user.password ||= Devise.friendly_token[0, 20]
-
-    user.save!
-    user
+    user # Userインスタンスを返す
   end
 end

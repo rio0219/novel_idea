@@ -13,10 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install OS dependencies
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential pkg-config libpq-dev
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
+          bundler: 2.7.2
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
@@ -29,10 +33,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install OS dependencies
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential pkg-config libpq-dev
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
+          bundler: 2.7.2
           bundler-cache: true
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
@@ -40,14 +48,19 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install OS dependencies
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential pkg-config libpq-dev
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
+          bundler: 2.7.2
           bundler-cache: true
 
       - name: Lint code for consistent style
@@ -64,17 +77,15 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
-
-      # redis:
-      #   image: redis
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client build-essential pkg-config libpq-dev
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -83,6 +94,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
+          bundler: 2.7.2
           bundler-cache: true
 
       - name: Run tests
@@ -90,9 +102,7 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          bin/rails db:test:prepare
-          bundle exec rspec
+        run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

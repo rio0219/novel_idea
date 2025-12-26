@@ -3,13 +3,8 @@ class AiConsultationsController < ApplicationController
 
 
   def index
-    @consultations_all = current_user.ai_consultations.order(created_at: :desc, id: :desc)
-
-    @latest_consultation = @consultations_all.first # 最新1件
-    @consultations = @consultations_all.offset(1) # 2件目以降
-
-    @ai_consultation = AiConsultation.new
-
+    @consultations = current_user.ai_consultations.order(created_at: :desc)
+    @ai_consultation= AiConsultation.new
     if params[:return_to].present?
       session[:return_to] = params[:return_to]
     end
@@ -25,12 +20,13 @@ class AiConsultationsController < ApplicationController
 
       respond_to do |format|
         format.json do
+          # ✅ JSON要求でもHTML部分テンプレートを返す（content_typeも強制指定）
           html = render_to_string(
             partial: "ai_consultations/ai_consultation",
             locals: { consultation: @ai_consultation },
             formats: [:html]
           )
-          render json: { html: html }, status: :ok
+          render html: html.html_safe, content_type: "text/html", status: :ok
         end
 
         format.html do
@@ -41,10 +37,10 @@ class AiConsultationsController < ApplicationController
     else
       respond_to do |format|
         format.json do
-          render json: { error: "保存に失敗しました" }, status: :unprocessable_entity
+          render plain: "保存に失敗しました", status: :unprocessable_entity
         end
         format.html do
-          @consultations = current_user.ai_consultations.order(created_at: :desc, id: :desc)
+          @consultations = current_user.ai_consultations.order(created_at: :desc)
           render :index, status: :unprocessable_entity
         end
       end

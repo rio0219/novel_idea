@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = '"TSUMUGIBA 運営" <riomomo555@gmail.com>'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -301,11 +301,8 @@ Devise.setup do |config|
                   {
                     scope: "email,profile",
                     prompt: "select_account",
-                    skip_jwt: true,
-                    access_type: "offline",
-                    redirect_uri: "https://www.tsumugiba-novel.com/users/auth/google_oauth2/callback"
+                    skip_jwt: true
                   }
-
   config.omniauth :line,
                   ENV.fetch("LINE_CHANNEL_ID", nil),
                   ENV.fetch("LINE_CHANNEL_SECRET", nil),

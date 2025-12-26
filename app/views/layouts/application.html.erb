@@ -5,30 +5,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta name="turbo-visit-control" content="reload">
-
-    <% if Rails.env.production? %>
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5MMMBHPML"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-M5MMMBHPML');
-      </script>
-    <% end %>
 
     <!-- Tailwind CSS を読み込み -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags unless @disable_turbo %>
-
+    <%= javascript_importmap_tags %>
 
     <%= favicon_link_tag 'favicon.ico' %>
 
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-softOrange text-deepNavy font-sans" <%= yield(:body_data) if content_for?(:body_data) %>>
+  <body class="bg-softOrange text-deepNavy font-sans">
     <!-- ヘッダー -->
     <header class="bg-white shadow p-4">
       <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
@@ -46,34 +33,16 @@
           </li>
   
           <% if user_signed_in? %>
-            <li class="text-gray-600 text-xs sm:text-sm">
-              <% name = current_user.display_name %>
-              ようこそ、<%= name %><%= " さん" unless name == "名無しさん" %>
+            <li class="text-gray-600 text-xs sm:text-sm break-all">
+              ログイン中: <%= current_user.email %>
             </li>
             <li>
-              <%= button_to "ログアウト",
-                  destroy_user_session_path,
-                  method: :delete,
-                  form: { data: { turbo: false } },
-                  class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-xs sm:text-sm" %>
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "hover:text-blue-500 text-xs sm:text-sm" %>
             </li>
           <% else %>
-            <li>
-              <%= link_to "ログイン", new_user_session_path,
-                  class: "bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full text-xs sm:text-sm" %>
-            </li>
-            <li>
-              <%= link_to "新規登録", new_user_registration_path,
-                  class: "bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-xs sm:text-sm" %>
-            </li>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: "hover:text-blue-500 text-xs sm:text-sm" %></li>
           <% end %>
-
-          <li>
-            <button onclick="localStorage.removeItem('tutorial_shown'); location.href='?tutorial=1';"
-              class="text-gray-600 hover:text-blue-500 text-lg sm:text-xl">
-              ❔
-            </button>        
-          </li>
         </ul>
       </nav>
     </header>
@@ -98,17 +67,8 @@
     </main>
 
     <!-- フッター -->
-    <footer class="bg-white shadow p-4 mt-10 text-sm flex flex-col items-center">
+    <footer class="bg-white shadow p-4 mt-10 text-center text-gray-500">
       &copy; 2025 TSUMUGIBA
-  
-      <div class="flex gap-3 mt-2">
-        <%= link_to '利用規約', terms_path %>
-        <span>|</span>
-        <%= link_to 'プライバシーポリシー', privacy_path %>
-        <span>|</span>
-        <%= link_to 'お問い合わせ', new_contact_path %>
-      </div>
     </footer>
-    <%= render "shared/tutorial" %>
   </body>
 </html>

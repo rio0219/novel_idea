@@ -10,11 +10,10 @@
       <span><%= plot.chapter_title %></span>
       <div class="flex space-x-2">
         <%= link_to t("buttons.edit"), edit_work_plot_path(@work, plot), class: "px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600" %>
-        <%= button_to t("buttons.destroy"),
-            work_plot_path(@work, plot),
-            method: :delete,
-            data: { confirm: "削除しますか？" },
-            class: "px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700" %>
+        <%= link_to t("buttons.destroy"), work_plot_path(@work, plot),
+              method: :delete,
+              data: { confirm: "削除しますか？" },
+              class: "px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700" %>
       </div>
     </div>
   <% end %>

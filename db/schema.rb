@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_27_123343) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_06_045427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -78,27 +78,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_27_123343) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "contacts", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.text "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "idea_tags", force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_idea_tags_on_post_id"
-    t.index ["tag_id"], name: "index_idea_tags_on_tag_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -131,12 +114,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_27_123343) do
     t.index ["genre_id"], name: "index_posts_on_genre_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
     t.index ["uuid"], name: "index_posts_on_uuid", unique: true
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -188,8 +165,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_27_123343) do
   add_foreign_key "characters", "works"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
-  add_foreign_key "idea_tags", "posts"
-  add_foreign_key "idea_tags", "tags"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "plots", "works"
