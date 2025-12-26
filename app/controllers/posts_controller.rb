@@ -68,6 +68,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to posts_path, notice: t("notices.created", resource: Post.model_name.human)
     else
+      @genres = Genre.all
       render :new, status: :unprocessable_entity
     end
   end
@@ -82,6 +83,7 @@ class PostsController < ApplicationController
       redirect_path = params[:from].presence ? CGI.unescape(params[:from]) : posts_path
       redirect_to redirect_path, notice: t("notices.updated", resource: Post.model_name.human)
     else
+      @genres = Genre.all
       render :edit, status: :unprocessable_entity
     end
   end

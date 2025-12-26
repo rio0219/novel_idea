@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :set_post
 
   def create
+    puts "DEBUG: @post = #{@post.inspect}"
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user
 
@@ -20,7 +21,15 @@ class CommentsController < ApplicationController
       end
     else
       @comments = @post.comments.includes(:user).order(created_at: :desc)
-      render "posts/show", status: :unprocessable_entity
+
+      respond_to do |format|
+        format.turbo_stream do
+          head :unprocessable_entity
+        end
+        format.html do
+          render "posts/show", status: :unprocessable_entity
+        end
+      end
     end
   end
 
@@ -46,7 +55,7 @@ class CommentsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by!(uuid: params[:post_id])
   end
 
   def comment_params
