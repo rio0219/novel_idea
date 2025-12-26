@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install OS dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential pkg-config libpq-dev
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install OS dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential pkg-config libpq-dev
@@ -51,7 +51,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install OS dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential pkg-config libpq-dev
@@ -88,7 +88,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client build-essential pkg-config libpq-dev
 
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
